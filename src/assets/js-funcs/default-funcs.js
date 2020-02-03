@@ -47,9 +47,9 @@ export default {
 				window.location.reload();          
 			} else
 				error()
-			setTimeout(function () {
-				preloadScreen.removeAttribute('style');
-			})		
+				setTimeout(function () {
+					preloadScreen.removeAttribute('style');
+				})		
 		})
 	}
 }

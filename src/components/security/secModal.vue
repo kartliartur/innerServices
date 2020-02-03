@@ -94,7 +94,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 	@import url('../../assets/less-templates/base.less');
 	.modal-wrap {
 		position: fixed;
-		top: 35px;
+		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100vh;
@@ -168,7 +168,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 		}
 	}
 	.active {
-		z-index: 100;
+		z-index: 10000000;
 		opacity: 1;
 	}
 </style>
