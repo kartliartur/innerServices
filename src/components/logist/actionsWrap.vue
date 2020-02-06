@@ -6,7 +6,7 @@
 				<option value="Отменено">Отменено</option>
 				<option value="Товар получен">Товар получен</option>
 			</select>
-			<input type="date">
+			<input type="date" v-model="currentDate">
 			<div class="btn-wrap">
 				<button @click="saveChanges()">Изменить</button>
 			</div>
@@ -32,7 +32,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				not_text: 'Error',
 				not_color: 'red',
 				is_not_show: false,
-				currentStatus: 'Товар отгружен'
+				currentStatus: 'Товар отгружен',
+				currentDate: '2020-02-04'
 			}
 		},
 		methods: {
@@ -49,20 +50,30 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				for (let i = 0; i < this.$store.state.ttns.length; i++) {
 					let item = this.$store.state.ttns[i];
 					if (item.isChecked == true) {
-						let old = item.TTNStatus;
-						item.TTNStatus = this.currentStatus;
-						arr.push(item);
-						arr[arr.length-1].old_status = old;
+						arr.push(new Object());
+						arr[arr.length-1].old_status = item.TTNStatus;
+						arr[arr.length-1].TTNStatus = this.currentStatus;
+						arr[arr.length-1].TTNNumber = item.TTNNumber;
+						arr[arr.length-1].DateDelivery = item.DateDelivery;
 					}
 				}
 				Funcs.doRequest(
 					'post',
 					'https://erp.unlogic.ru/api/v1/logistic/ttn',
 					arr,
+					null,
 					res => {
 						let color = 'green';
 						if (res.data.error) {
 							color = 'red';
+						} else {
+							for (let i = 0; i < this.$store.state.ttns.length; i++) {
+								let item = this.$store.state.ttns[i];	
+								if (item.isChecked) {
+									item.TTNStatus = this.currentStatus;	
+									item.DateDelivery = this.currentDate;								
+								}			
+							}			
 						}
 						this.showNotification(res.data.data, color);
 					},

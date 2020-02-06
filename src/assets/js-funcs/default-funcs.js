@@ -44,7 +44,7 @@ export default {
 				localStorage.removeItem('token');
 				localStorage.removeItem('user');
 				localStorage.removeItem('role');
-				window.location.reload();          
+				// window.location.reload();          
 			} else
 				error()
 				setTimeout(function () {

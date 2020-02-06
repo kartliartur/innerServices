@@ -81,9 +81,11 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}, 1500);
 			},
 			saveChanges() {
-				let data = new Object(this.$store.state.ttns[this.$store.state.activeTtnIndex]);
-				data.old_status = this.isActiveIndex.TTNStatus;
+				let data = new Object();
 				data.TTNStatus = this.newValue;
+				data.old_status = this.isActiveIndex.TTNStatus;
+				data.TTNNumber = this.isActiveIndex.TTNNumber;
+				data.DateDelivery = this.isActiveIndex.DateDelivery;
 				window.console.log(data);
 				Funcs.doRequest(
 					'post',
@@ -94,6 +96,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						let color = 'green';
 						if (res.data.error) {
 							color = 'red';
+						} else {
+							this.$store.state.ttns[this.$store.state.activeTtnIndex].TTNStatus = this.newValue;
 						}
 						this.showNotification(res.data.data, color);
 					},
