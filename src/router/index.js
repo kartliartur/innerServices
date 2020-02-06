@@ -68,12 +68,12 @@ router.beforeEach((to, from, next) => {
   } else if (localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) {
     // this.$store.state.fullName = localStorage.getItems('user')
     let role = localStorage.getItem('role')
-    if (role == 'Руководитель отдела' && to.fullPath != '/dashboard') {
-      // if (to.fullPath != '/missions' && to.fullPath != "/sellers")
-      //   router.push({ path: '/missions' })
-      // else 
-      //   next()
-        router.push({ path: '/dashboard' })
+    if (role == 'Руководитель отдела') {
+      if (to.fullPath != '/missions' && to.fullPath != "/sellers")
+        router.push({ path: '/missions' })
+      else 
+        next()
+        // router.push({ path: '/dashboard' })
     } else if (role == 'Юридическая служба (СБ)' && to.fullPath != '/security') {
       router.push({ path: '/security' })
     } else if (role == undefined && to.fullPath != '/logist') {
