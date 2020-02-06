@@ -34,7 +34,7 @@ export default new Vuex.Store({
 				]
 			},
 			{
-				name: 'undefined',
+				name: 'Логист',
 				links: [
 					{
 						link: '/logist',

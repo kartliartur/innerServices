@@ -7,8 +7,8 @@
 		<div class="hover"></div>
 		<div class="modal-frame">
 			<div class="row">
-				<span>№{{ isActiveIndex.ttnNumber }}</span>
-				<span>от {{ isActiveIndex.ttnDate }}</span>
+				<span>№{{ isActiveIndex.TTNNumber }}</span>
+				<span>от {{ isActiveIndex.TTNDate }}</span>
 			</div>
 			<div class="row">
 				<span>Статус:</span>
@@ -24,23 +24,23 @@
 			</div>
 			<div class="row">
 				<span>Дата доставки(отправки):</span>
-				<input type="date" :value="isActiveIndex.ttnDelDate">
+				<input type="date" :value="isActiveIndex.DateDelivery">
 			</div>
 			<div class="row">
 				<span>Транспортная компания:</span>
-				<span>{{ isActiveIndex.ttnCompany }}</span>
+				<span>{{ isActiveIndex.PaymentCompany }}</span>
 			</div>
 			<div class="row">
 				<span>Плательщик:</span>
-				<span>{{ isActiveIndex.ttnPaymenter }}</span>
+				<span>{{ isActiveIndex.Releaser }}</span>
 			</div>
 			<div class="row">
 				<span>Водитель:</span>
-				<span>{{ isActiveIndex.ttnDriver }}</span>
+				<span>{{ isActiveIndex.FIODriver }}</span>
 			</div>
 			<div class="row">
 				<span>Номер водителя:</span>
-				<span>{{ isActiveIndex.ttnDriverNum }}</span>
+				<span>{{ isActiveIndex.DriverNumber }}</span>
 			</div>
 			<div class="btn-wrap">
 				<button @click="saveChanges()">Применить</button>
@@ -81,14 +81,15 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}, 1500);
 			},
 			saveChanges() {
-				this.$store.state.ttns[this.$store.state.activeTtnIndex].TTNStatus = this.newValue;
 				let data = new Object(this.$store.state.ttns[this.$store.state.activeTtnIndex]);
-				data.old_status = this.isActiveIndex.ttnStatus;
+				data.old_status = this.isActiveIndex.TTNStatus;
+				data.TTNStatus = this.newValue;
 				window.console.log(data);
 				Funcs.doRequest(
 					'post',
 					'https://erp.unlogic.ru/api/v1/logistic/ttn',
 					data,
+					null,
 					res => {
 						let color = 'green';
 						if (res.data.error) {
@@ -102,7 +103,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			activeStatus(idx) {
 				let result = new Number();
 				for (let i = 0; i < this.$store.state.statusTypes.length; i++) {
-					if (this.$store.state.statusTypes[i] == this.isActiveIndex.ttnStatus)
+					if (this.$store.state.statusTypes[i] == this.isActiveIndex.TTNStatus)
 						result = i;
 				}
 				if (result == idx)
