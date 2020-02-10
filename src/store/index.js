@@ -39,6 +39,10 @@ export default new Vuex.Store({
 					{
 						link: '/logist',
 						name: 'Страница ттн'
+					},
+					{
+						link: '/tracking',
+						name: 'Отслеживание'
 					}
 				]
 			}

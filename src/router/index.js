@@ -53,6 +53,14 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/tracking',
+    name: 'tracking',
+    component: () => import('../views/Tracking.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
@@ -66,17 +74,17 @@ router.beforeEach((to, from, next) => {
   if ((localStorage.getItem('token') == null || localStorage.getItem('token') == undefined) && to.fullPath != '/') {
     router.push({ path: '/' })
   } else if (localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) {
-    // this.$store.state.fullName = localStorage.getItems('user')
+// this.$store.state.fullName = localStorage.getItems('user')
     let role = localStorage.getItem('role')
     if (role == 'Руководитель отдела') {
       if (to.fullPath != '/missions' && to.fullPath != "/sellers")
         router.push({ path: '/missions' })
-      else 
+      else
         next()
-        // router.push({ path: '/dashboard' })
+// router.push({ path: '/dashboard' })
     } else if (role == 'Юридическая служба (СБ)' && to.fullPath != '/security') {
       router.push({ path: '/security' })
-    } else if (role == undefined && to.fullPath != '/logist') {
+    } else if (role == 'Логист' && to.fullPath != '/logist') {
       router.push({ path: '/logist' })
     } else {
       next()
