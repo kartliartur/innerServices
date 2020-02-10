@@ -4,11 +4,11 @@
 			<div class="block"
 				v-bind:class="{ active: $store.state.missions[missionIndex].isChecked }">
 				<div class="head">
-					<span>{{ title }}</span>
-					<span>{{ limitDate }}</span>						
+					<span class="title">{{ title }}</span>
+					<span>{{ limitDate ? new Date(limitDate).toLocaleString().substring(0, 10) : 'Нет срока' }}</span>						
 				</div>
 				<div class="bot">
-					<span>{{ employee }}</span>
+					<span>{{ employee ? employee : 'Исполнителя нет' }}</span>
 					<span>{{ createDate }}</span>
 				</div>
 			</div>
@@ -41,6 +41,14 @@
 			width: 100%;
 			& span:last-child {
 				min-width: 71px;
+			}
+
+			& .title {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				word-spacing: normal;
+				white-space: pre;
+				width: 100px;
 			}
 		}
 	}

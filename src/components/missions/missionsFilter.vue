@@ -1,10 +1,10 @@
 <template>
 	<div class="filter-wrap">
-		<button @click="openModal()">+</button>
-		<select>
-			<option value="0">Все</option>
-			<option value="1">Истекает срок</option>
-			<option value="2">Просрочено</option>
+		<button @click="openModal()">Создать</button>
+		<select v-model="filterValue" @change="filterMissions()">
+			<option value="Все">Все</option>
+			<option value="Истекает срок">Истекает срок</option>
+			<option value="Просрочено">Просрочено</option>
 		</select>
 	</div>
 </template>
@@ -13,10 +13,37 @@
 	
 export default {
 	name: 'missionsFilter',
-	props: ['isOpne'],
+	props: ['isOpen'],
+	data: () => {
+		return {
+			filterValue: 'Все'
+		}
+	},
 	methods: {
 		openModal() {
 			this.$emit('toggleModal', true);
+		},
+		filterMissions() {
+			for (let i in this.$store.state.missions) {
+				let item = this.$store.state.missions[i];
+				if (this.filterValue === 'Все') {
+					item.isVissible = true;
+				} else if (this.filterValue === 'Истекает срок') {
+					let today = new Date();
+					if ((new Date(item.Deadline) - today)/(3600000*24) < 7 && (new Date(item.Deadline) - today)/(3600000*24) >= 0) {
+						item.isVissible = true;
+					} else {
+						item.isVissible = false;
+					}
+				} else {
+					let today = new Date();
+					if ((new Date(item.Deadline) - today)/(3600000*24) < 0) {
+						item.isVissible = true;
+					} else {
+						item.isVissible = false;
+					}
+				}
+			}
 		}
 	}
 }

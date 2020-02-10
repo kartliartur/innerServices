@@ -7,7 +7,7 @@
 						v-model="missionText"/>
 			<div class="btn-wrap">
 				<div class="check-for-send">
-					<span>Отправить задание</span>
+					<span>Отправить задание:</span>
 					<input type="checkbox" 
 							v-model="isSend"/>
 				</div>
@@ -17,7 +17,7 @@
 					v-model="limitDate"/>
 				</div>
 			</div>
-			<textarea placeholder="Кому?"
+			<input type="text" placeholder="Кому?"
 						v-model="employee"/>
 			<div class="btn-wrap">
 				<button @click="addMission($event)">OK</button>
@@ -82,12 +82,12 @@
 
 		& .modal-frame {
 			position: absolute;
-			width: 90%;
-			top: 10%;
-			left: 5%;
+			width: 100%;
+			top: 0%;
+			left: 0%;
+			height: 100vh;
 			padding: 10px;
 			border-radius: 2px;
-			height: auto;
 			background: @green-color;
 			color: #fff;
 
@@ -102,25 +102,36 @@
 			
 			& textarea, input {
 				.input();
+				width: 100%;
+				padding: 10px;
 			}
 
 			& textarea {
 				width: 100%;
-				height: 150px;
+				height: 100px;
 				padding: 10px;
 			}
 
 			& .btn-wrap {
 				.flex(row, center, center);
+				flex-wrap: wrap;
 				width: 100%;
 				padding: 10px 0;
 				& div {
 					.flex(row, flex-start, center);
-					width: 45%;
-					margin: 0 auto;
+					width: 100%;
+					margin: 10px auto;
 					& span {
-						width: 80%;
 						text-align: left;
+					}
+					& input {
+						width: 60%;
+						margin: 0 auto;
+					}
+					& input[type="checkbox"] {
+						.kartli-check();
+						width: 20px;
+						height: 20px;
 					}
 				}
 				& button {
