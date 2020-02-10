@@ -53,8 +53,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						arr.push(new Object());
 						arr[arr.length-1].old_status = item.TTNStatus;
 						arr[arr.length-1].TTNStatus = this.currentStatus;
-						arr[arr.length-1].TTNNumber = item.TTNNumber;
-						arr[arr.length-1].DateDelivery = item.DateDelivery;
+						arr[arr.length-1].Number = item.TTNNumber;
+						arr[arr.length-1].StatusDate = item.DateDelivery;
+						arr[arr.length-1].TTNDate = item.TTNDate;
+						arr[arr.length-1].Pickup = item.Pickup;
 					}
 				}
 				Funcs.doRequest(

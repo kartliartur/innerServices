@@ -45,36 +45,8 @@ export default new Vuex.Store({
 		],
 		ttns: [],
 		sales: [],
-		missions: [
-			{
-				title: 'Описание поручения',
-				employee: 'Писчальников А.С.',
-				limitDate: '2019-11-25',
-				createDate: '2019-11-25',
-				isChecked: false
-			},
-			{
-				title: 'Описание поручения',
-				employee: 'Писчальников А.С.',
-				limitDate: '2019-11-25',
-				createDate: '2019-11-25',
-				isChecked: false
-			},
-			{
-				title: 'Описание поручения',
-				employee: 'Писчальников А.С.',
-				limitDate: '2019-11-25',
-				createDate: '2019-11-25',
-				isChecked: false
-			},
-			{
-				title: 'Описание поручения',
-				employee: 'Писчальников А.С.',
-				limitDate: '2019-11-25',
-				createDate: '2019-11-25',
-				isChecked: false
-			}
-		],
+		missions: [],
+		missionPerformers: [],
 		tasks: [],
 		statusTypes: ['Без статуса', 'Товар отгружен', 'Отменено', 'Товар получен']
 	},

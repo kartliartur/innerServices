@@ -84,9 +84,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				let data = new Object();
 				data.TTNStatus = this.newValue;
 				data.old_status = this.isActiveIndex.TTNStatus;
-				data.TTNNumber = this.isActiveIndex.TTNNumber;
-				data.DateDelivery = this.isActiveIndex.DateDelivery;
-				window.console.log(data);
+				data.Number = this.isActiveIndex.TTNNumber;
+				data.TTNDate = this.isActiveIndex.TTNDate;
+				data.StatusDate = this.isActiveIndex.DateDelivery;
+				data.Pickup = this.isActiveIndex.Pickup;
 				Funcs.doRequest(
 					'post',
 					'https://erp.unlogic.ru/api/v1/logistic/ttn',

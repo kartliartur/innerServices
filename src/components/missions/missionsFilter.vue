@@ -1,6 +1,6 @@
 <template>
 	<div class="filter-wrap">
-		<button @click="openModal()">+</button>
+		<button @click="openModal()">Создать</button>
 		<select>
 			<option value="0">Все</option>
 			<option value="1">Истекает срок</option>
@@ -13,7 +13,7 @@
 	
 export default {
 	name: 'missionsFilter',
-	props: ['isOpne'],
+	props: ['isOpen'],
 	methods: {
 		openModal() {
 			this.$emit('toggleModal', true);

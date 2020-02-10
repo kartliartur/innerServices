@@ -7,9 +7,9 @@
     <div class="missions-wrap">
       <Mission
               v-for="(item, idx) in $store.state.missions" :key="idx"
-              :title="item.title"
-              :employee="item.employee"
-              :limitDate="item.limitDate"
+              :title="item.Description"
+              :employee="item.Performer"
+              :limitDate="item.Deadline"
               :createDate="item.createDate"
               :missionIndex="idx"/>
     </div>
@@ -70,11 +70,28 @@ export default {
         if (res.data.error) {
           this.showNotification(res.data.data, 'red');
         } else {
-          window.console.log(res.data);
+          for (let item in res.data.data) {
+            res.data.data[item].isChecked = false;
+          }
+          this.$store.state.missions = res.data.data;
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }
-    );    
+    );
+    Funcs.doRequest(
+      'get',
+      'https://erp.unlogic.ru/api/v1/top_managers_instructions/performers',
+      null,
+      null,
+      res => {
+        window.console.log(res.data.error);
+        if (!res.data.error) {
+          this.$store.state.missionPerformers = res.data.data[0].Performers;
+          window.console.log(this.$store.state.missionPerformers);
+        }
+      },
+      () => { this.showNotification('Сервер временно недоступен', 'red') }
+    );   
   }
 }
 </script>

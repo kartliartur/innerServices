@@ -66,6 +66,8 @@ export default {
       res => {
         if (!res.data.error) {
           this.$store.state.tasks = res.data.data;
+        } else {
+          this.showNotification('Список задач пуст', 'red')
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }
