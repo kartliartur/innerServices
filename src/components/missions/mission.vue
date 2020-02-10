@@ -5,7 +5,7 @@
 				v-bind:class="{ active: $store.state.missions[missionIndex].isChecked }">
 				<div class="head">
 					<span class="title">{{ title }}</span>
-					<span>{{ new Date(limitDate).toLocaleString().substring(0, 10) }}</span>						
+					<span>{{ limitDate ? new Date(limitDate).toLocaleString().substring(0, 10) : 'Нет срока' }}</span>						
 				</div>
 				<div class="bot">
 					<span>{{ employee ? employee : 'Исполнителя нет' }}</span>

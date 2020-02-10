@@ -41,6 +41,10 @@
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
   }
+  
+  body {
+    background: #f1f1f1;
+  }
 
   #app {
     height: auto;

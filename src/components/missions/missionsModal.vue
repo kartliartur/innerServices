@@ -82,12 +82,12 @@
 
 		& .modal-frame {
 			position: absolute;
-			width: 90%;
-			top: 10%;
-			left: 5%;
+			width: 100%;
+			top: 0%;
+			left: 0%;
+			height: 100vh;
 			padding: 10px;
 			border-radius: 2px;
-			height: auto;
 			background: @green-color;
 			color: #fff;
 
