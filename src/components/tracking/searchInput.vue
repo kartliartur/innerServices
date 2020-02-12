@@ -6,12 +6,11 @@
                    @focus="isFocus = true"
                    @blur="isFocus = false"
                    v-model="ttnSearchValue"
-                   @change="fillData(ttnSearchValue)"
                    @keyup="searchData(ttnSearchValue)"
             >
-            <div class="hidden-list" :class="{ active: isFocus }">
+            <div class="hidden-list" :style="styleList" :class="{ active: isFocus }">
             <span
-                    v-for="(item, idx) in this.items.length > 0 ? this.items : this.options" :key="idx"
+                    v-for="(item, idx) in this.items === '' ? this.options : this.items" :key="idx"
                     @click="fillData(item)"
             >
                 {{ item.ttn }}
@@ -24,31 +23,32 @@
 <script>
     export default {
         name: "searchInput",
-        props: ['dataArray'],
+        //props: ["options"],
         data: () => {
             return {
                 options: [
                     {
                         ttn: "100",
-                        phone: 100,
+                        phone: "71111111111",
                         status: "100"
                     },
                     {
                         ttn: "200",
-                        phone: 200,
+                        phone: "72222222222",
                         status: "200"
                     },
                     {
                         ttn: "300",
-                        phone: 300,
+                        phone: "73333333333",
                         status: "300"
                     }
                 ],
-                items: [],
+                items: "",
                 ttnSearchValue: "",
                 isFocus: false,
                 status: "",
-                phone: ""
+                phone: "",
+                styleList: "",
             }
         },
         methods: {
@@ -56,6 +56,7 @@
                 if (value) {
                     window.console.log(value);
                     this.ttnSearchValue = value.ttn;
+                    this.$parent.$data.ttn = value.ttn;
                     this.$parent.$data.status = value.status;
                     this.$parent.$data.phone = value.phone;
                     localStorage.setItem('ttn', value.ttn);
@@ -68,15 +69,26 @@
                    this.items = this.options.filter(e => {
                         return e.ttn.includes(searchValue)
                     });
+                   if (this.items.length === 0) {
+                       this.items = "";
+                       this.styleList = 'height: 0; border: unset;';
+                   }
+                   if (this.items.length === 1) {
+                       this.styleList = "height: 29px;"
+                   }
                 } else {
                     this.items = this.options;
+                    this.styleList = "height: 50px;"
                 }
 
             }
         },
         beforeMount() {
             this.ttnSearchValue = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
-        }
+        },
+        /*beforeCreate() {
+            this.items = this.options;
+        }*/
     }
 </script>
 
