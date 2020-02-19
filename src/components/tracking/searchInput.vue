@@ -23,26 +23,14 @@
 <script>
     export default {
         name: "searchInput",
-        //props: ["options"],
+        props: {
+            options: {
+                type: Array,
+                default: () => []
+            },
+        },
         data: () => {
             return {
-                options: [
-                    {
-                        ttn: "100",
-                        phone: "71111111111",
-                        status: "100"
-                    },
-                    {
-                        ttn: "200",
-                        phone: "72222222222",
-                        status: "200"
-                    },
-                    {
-                        ttn: "300",
-                        phone: "73333333333",
-                        status: "300"
-                    }
-                ],
                 items: "",
                 ttnSearchValue: "",
                 isFocus: false,
@@ -59,6 +47,7 @@
                     this.$parent.$data.ttn = value.ttn;
                     this.$parent.$data.status = value.status;
                     this.$parent.$data.phone = value.phone;
+                    this.$parent.$data.Waybill_GUID = value.Waybill_GUID;
                     localStorage.setItem('ttn', value.ttn);
                     localStorage.setItem('phone', value.phone);
                     localStorage.setItem('status', value.status);
@@ -76,6 +65,9 @@
                    if (this.items.length === 1) {
                        this.styleList = "height: 29px;"
                    }
+                   if (this.items.length > 1) {
+                       this.styleList = "height: 50px;"
+                   }
                 } else {
                     this.items = this.options;
                     this.styleList = "height: 50px;"
@@ -85,10 +77,16 @@
         },
         beforeMount() {
             this.ttnSearchValue = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
+            this.items = this.options ? this.options : "";
         },
-        /*beforeCreate() {
-            this.items = this.options;
-        }*/
+        mounted() {
+            let ttnLocal = localStorage.getItem("ttn");
+            if (ttnLocal !== "") {
+                let elem = this.options.filter(e => e.ttn.includes(ttnLocal));
+                if (elem)
+                    this.fillData(elem);
+            }
+        }
     }
 </script>
 
@@ -130,7 +128,7 @@
             }
         }
 
-        .active {
+        & .active {
             height: 50px;
             z-index: 99;
 

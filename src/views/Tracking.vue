@@ -2,9 +2,10 @@
     <div class="tracking">
         <MyHeader />
         <form class="tracking_form">
+            <h2>Отслеживание</h2>
             <div>
                 <search-input
-                        @input="fillData(value)"
+                        :options="this.options"
                 />
             </div>
 
@@ -19,7 +20,7 @@
                        @change="maskPhone"
                 />-->
                 <TheMask
-                        mask="+#(###) ###-##-##" :value="this.phone" type="tel" masked="false" placeholder="+7(___) ___-__-__"
+                        mask="+#(###) ###-##-##" @input="checkPhone" ref="phone" :value="this.phone" type="tel"  placeholder="+7(___) ___-__-__"
                 />
             </div>
 
@@ -28,7 +29,7 @@
                 <span class="status-item">{{ this.status }}</span>
              </div>
 
-            <button class="tracking_button" @click="tracking">Отслеживать</button>
+            <button class="tracking_button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
 
         </form>
     </div>
@@ -39,7 +40,7 @@
     import MyHeader from "../components/other/myHeader";
     import searchInput from '../components/tracking/searchInput';
     import {TheMask} from 'vue-the-mask'
-    import axios from 'axios';
+    import Funcs from '../assets/js-funcs/default-funcs';
 
     export default {
         name: "Tracking",
@@ -50,38 +51,12 @@
                 status: "",
                 value: {},
                 phone: "",
-                /*options: [
-                    {
-                        ttn: "100",
-                        phone: 100,
-                        status: "100"
-                    },
-                    {
-                        ttn: 200,
-                        phone: 200,
-                        status: "200"
-                    },
-                    {
-                        ttn: 300,
-                        phone: 300,
-                        status: "300"
-                    }
-                ]*/
-
+                Waybill_GUID : "",
+                options: [],
+                disabled: false
             }
         },
         methods: {
-            fillData (value) {
-                window.console.log("I'm from TRACKING!!!");
-                if (value) {
-                    window.console.log(value);
-                    this.status = value.status;
-                    this.phone = value.phone;
-                    localStorage.setItem('ttn', value.ttn);
-                    localStorage.setItem('phone', value.phone);
-                    localStorage.setItem('status', value.status);
-                }
-            },
             maskPhone () {
                 let phoneValue = this.$refs.phone.value;
 
@@ -101,19 +76,41 @@
             },
             tracking () {
                 let data = {
-                    ttn: this.ttn,
-                    phone: this.phone,
-                    status: this.status,
+                    Waybill_GUID: this.Waybill_GUID,
+                    Driver_tracking_phone: this.phone,
+                    Actions: ["Send_tracking_request"],
                 };
-                axios.post("", data).then(res => {
-                    let statusRes = res.status;
-                    if (statusRes === "ждет") {
-                       this.status = statusRes;
-                       localStorage.setItem("status", statusRes);
-                    } else {
-                        this.status = statusRes;
+                window.console.log(data);
+                Funcs.doRequest(
+                    "post",
+                    "https://erp.unlogic.ru/api/v1/logist_registrar/send_waybil",
+                    data,
+                    null,
+                    res => {
+                        window.console.log(res);
+                        alert(res)
+                        if (res.data) {
+                            this.status = res.data[0].Tracking_Status;
+                            if (this.status === "Запрос отклонен") {
+                                localStorage.setItem("status", this.status);
+                            } else {
+                                localStorage.removeItem("ttn");
+                                localStorage.removeItem("phone");
+                                localStorage.removeItem("status");
+                            }
+                        }
+                    },
+                    () => {
+                        alert("Error");
                     }
-                })
+                );
+            },
+            checkPhone () {
+                if (this.phone != '') {
+                    if (this.$refs.phone.lastValue.indexOf("8") == 0) {
+                        this.$refs.phone.display = this.$refs.phone.value.replace("8", "7");
+                    }
+                }
             }
         },
         beforeMount() {
@@ -121,9 +118,30 @@
             this.status = (localStorage.getItem('status') && localStorage.getItem('status') !== "undefined") ? localStorage.getItem('status') : "";
         },
         beforeCreate() {
-           /*axios.get("").then(res => {
-               this.options = res.options
-           });*/
+           Funcs.doRequest(
+               "post",
+               "https://erp.unlogic.ru/api/v1/logist_registrar/ttn",
+               null,
+               null,
+               res => {
+                   let val = {};
+                    res.data.data.forEach(elem => {
+                        val = {
+                            ttn: elem.Waybill_ID,
+                            phone: elem.Driver_Phone,
+                            status: elem.Tracking_Status,
+                            Waybill_GUID: elem.Waybill_GUID
+                        };
+                        if (val.phone != '') {
+                            this.options.push(val);
+                        }
+                    });
+                    window.console.log(this.options);
+               },
+               () => {
+                   alert("Ошибка! Список накладных не удалось получить");
+               }
+           );
         }
     }
 </script>
@@ -135,6 +153,13 @@
         .flex(column, center, stretch);
         padding: 20px 0;
         margin: 0 10px;
+
+        & h2 {
+            width: 100%;
+            text-align: center;
+            font-size: 1.5em;
+            padding: 10px 0;
+        }
 
         & .tracking-item {
             .flex(row, space-between, center);
@@ -162,6 +187,12 @@
         & .tracking_button {
             .button(5px, @green-color, @input-bg);
             align-self: center;
+        }
+        & .tracking_button:disabled {
+            cursor: unset;
+            background-color: @input-bg;
+            color: @green-color;
+            border-color: unset;
         }
     }
 </style>

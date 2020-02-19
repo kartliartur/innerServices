@@ -84,8 +84,12 @@ router.beforeEach((to, from, next) => {
 // router.push({ path: '/dashboard' })
     } else if (role == 'Юридическая служба (СБ)' && to.fullPath != '/security') {
       router.push({ path: '/security' })
-    } else if (role == 'Логист' && to.fullPath != '/tracking') {
-      router.push({ path: '/tracking' })
+    } else if (role == 'Логист') {
+      if ( to.fullPath != '/logist' &&  to.fullPath != '/tracking') {
+        router.push({ path: '/logist' })
+      }
+      else
+        next()
     } else {
       next()
     }
