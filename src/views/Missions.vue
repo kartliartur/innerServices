@@ -23,12 +23,17 @@
                 :employee="item.Performer"
                 :limitDate="item.Deadline"
                 :createDate="item.createDate"
-                :missionIndex="idx"/>
+                :missionIndex="idx"
+                v-bind:is-open="isModalOpened"
+                @toggleModal="isModalOpened=true"/>
       </div>
     </div>
     <MissionsModal
                 v-bind:is-open="isModalOpen"
                 @toggleModal="isModalOpen=false"/>
+    <MissionOpenedModal
+            v-bind:is-open="isModalOpened"
+            @toggleModal="isModalOpened=false"/>
     <myNotification
         :text="not_text"
         :textColor="not_color"
@@ -43,6 +48,7 @@ import Mission from '@/components/missions/mission.vue'
 import MissionsFilter from '@/components/missions/missionsFilter.vue'
 import ActionsWrap from '@/components/missions/actionsWrap.vue'
 import MissionsModal from '@/components/missions/missionsModal.vue'
+import MissionOpenedModal from '@/components/missions/missionOpenedModal.vue'
 import myNotification from '@/components/other/notification.vue'
 import Funcs from '../assets/js-funcs/default-funcs.js'
 
@@ -54,11 +60,13 @@ export default {
     MissionsFilter,
     ActionsWrap,
     MissionsModal,
+    MissionOpenedModal,
     myNotification
   },
   data: () => {
     return {
       isModalOpen: false,
+      isModalOpened: false,
       not_text: new String(''),
       not_color: new String(''),
       is_not_show: false,
@@ -172,7 +180,7 @@ export default {
 
     & .toggle-wrap {
       .flex(row, space-between, center);
-      width: 90%;
+      width: 95%;
       padding: 10px 0;
       cursor: pointer;
 

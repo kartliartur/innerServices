@@ -1,7 +1,7 @@
 <template>
   <div class="security">
     <MyHeader/>
-    <h2>Задачи:</h2>
+    <h2>{{ securityTitle }}</h2>
     <div class="block-container">
       <SecurityBlock
                     v-for="(item, idx) in $store.state.tasks" :key="idx"
@@ -44,7 +44,8 @@ export default {
       isModalOpen: false,
       not_text: '',
       not_color: '',
-      is_not_show: false
+      is_not_show: false,
+      securityTitle: 'Задачи:'
     }
   },
   methods: {
@@ -65,7 +66,10 @@ export default {
       null,
       res => {
         if (!res.data.error) {
-          this.$store.state.tasks = res.data.data;
+          if (res.data.data.length > 0)
+            this.$store.state.tasks = res.data.data;
+          else 
+            this.securityTitle = 'Список пуст';
         } else {
           this.showNotification('Список задач пуст', 'red')
         }

@@ -58,7 +58,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					let data = {
 						id: this.$store.state.sales[this.$store.state.activeSaleIndex].id,
 						Comment : this.comment,
-						confirmWithDirector : this.confirmWD,
+						ConfirmWithDirector : this.confirmWD,
 						Approved : aproove,
 					}
 					if (this.isActiveIndex.TaskType == 2 || this.isActiveIndex.TaskType == 3)
@@ -75,6 +75,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							} else {
 								this.comment = new String('');
 								this.confirmWD = false;
+								this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1);
 								this.hideModal();
 							}
 							this.showNotification(res.data.data, color);
