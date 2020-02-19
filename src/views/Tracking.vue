@@ -6,6 +6,7 @@
             <div>
                 <search-input
                         :options="this.options"
+                        :fillData="fillData"
                 />
             </div>
 
@@ -57,6 +58,19 @@
             }
         },
         methods: {
+            fillData (value) {
+                if (value) {
+                    //ndow.console.log(this.$children[1].ttn);
+                    this.$children[1].$data.ttnValue = value.ttn;
+                    this.ttn = value.ttn;
+                    this.status = value.status;
+                    this.phone = value.phone;
+                    this.Waybill_GUID = value.Waybill_GUID;
+                    localStorage.setItem('ttn', value.ttn);
+                    localStorage.setItem('phone', value.phone);
+                    localStorage.setItem('status', value.status);
+                }
+            },
             maskPhone () {
                 let phoneValue = this.$refs.phone.value;
 
@@ -88,7 +102,7 @@
                     null,
                     res => {
                         window.console.log(res);
-                        alert(res)
+                        alert(res);
                         if (res.data) {
                             this.status = res.data[0].Tracking_Status;
                             if (this.status === "Запрос отклонен") {
@@ -110,12 +124,16 @@
                     if (this.$refs.phone.lastValue.indexOf("8") == 0) {
                         this.$refs.phone.display = this.$refs.phone.value.replace("8", "7");
                     }
+                }else {
+                    this.phone = this.$refs.phone.lastValue;
                 }
+                window.console.log(this.$refs.phone.lastValue)
             }
         },
         beforeMount() {
             this.phone = (localStorage.getItem('phone') && localStorage.getItem('phone') !== "undefined") ? localStorage.getItem('phone') : "";
             this.status = (localStorage.getItem('status') && localStorage.getItem('status') !== "undefined") ? localStorage.getItem('status') : "";
+            this.ttn = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
         },
         beforeCreate() {
            Funcs.doRequest(
@@ -142,6 +160,14 @@
                    alert("Ошибка! Список накладных не удалось получить");
                }
            );
+        },
+        mounted() {
+            let ttnLocal = localStorage.getItem("ttn");
+            if (ttnLocal !== "") {
+                let elem = this.options.filter(e => e.ttn.includes(ttnLocal));
+                if (elem)
+                    this.fillData(elem);
+            }
         }
     }
 </script>
@@ -151,7 +177,6 @@
     @import url('../assets/less-templates/base.less');
     .tracking_form {
         .flex(column, center, stretch);
-        padding: 20px 0;
         margin: 0 10px;
 
         & h2 {
@@ -182,7 +207,7 @@
              padding: 10px;
         }
         & label {
-            color: @green-color;
+            color: @black-color;
         }
         & .tracking_button {
             .button(5px, @green-color, @input-bg);
