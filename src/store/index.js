@@ -10,6 +10,7 @@ export default new Vuex.Store({
 		activeTtnIndex: null,
 		activeSaleIndex: null,
 		activeTaskIndex: null,
+		activeMissionIndex: null,
 		rolesLinks: [
 			{
 				name: 'Руководитель отдела',
@@ -57,11 +58,13 @@ export default new Vuex.Store({
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,
 		CHANGE_ACTIVE_TASK_INDEX: (state, active) => state.activeTaskIndex = active,
 		CHANGE_ACTIVE_SALE_INDEX: (state, active) => state.activeSaleIndex = active,
+		CHANGE_ACTIVE_MISSION_INDEX: (state, active) => state.activeMissionIndex = active,
 		ADD_MISSION: (state, data) => state.missions.push(data)
 	},
 	actions: {
 		changeActiveTtnIndex: (context, active) => context.commit('CHANGE_ACTIVE_TTN_INDEX', +active),
-		changeActiveSaleIndex: (context, active) => context.commit('CHANGE_ACTIVE_SALE_INDEX', +active)
+		changeActiveSaleIndex: (context, active) => context.commit('CHANGE_ACTIVE_SALE_INDEX', +active),
+		changeActiveMissionIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_INDEX', +active)
 	},
 	modules: {
 	}

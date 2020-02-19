@@ -77,9 +77,11 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					data,
 					null,
 					res => {
-						let color = 'green';
-						if (res.data.error) {
-							color = 'red';
+						let color = 'red';
+						if (!res.data.error) {
+							color = 'green';
+							this.$store.state.tasks.splice(this.$store.state.activeTaskIndex, 1);
+							this.hideModal();
 						}
 						this.showNotification(res.data.data, color);
 					},

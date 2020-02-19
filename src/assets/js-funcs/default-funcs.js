@@ -20,6 +20,10 @@ export default {
 		let day = +date.substr(8,2);
 		return [year, month-1, day];
 	},
+	getTodayDateToInput() {
+		let today = new Date();
+		return this.dateToInputs(today);
+	},
 	doRequest(type, url, data, params, success, error) {
 		let preloadScreen = document.getElementById('preload');
 		preloadScreen.setAttribute('style', 'display: flex;');
