@@ -31,10 +31,6 @@
             fillData: {
                 type: Function,
             },
-            /*ttn: {
-                type: String,
-                default: ""
-            }*/
         },
         data: () => {
             return {
@@ -91,14 +87,6 @@
             this.ttnValue = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
             this.items = this.options ? this.options : "";
         },
-        /*mounted() {
-            let ttnLocal = localStorage.getItem("ttn");
-            if (ttnLocal !== "") {
-                let elem = this.options.filter(e => e.ttn.includes(ttnLocal));
-                if (elem)
-                    this.fillData(elem);
-            }
-        }*/
     }
 </script>
 
@@ -146,7 +134,6 @@
 
             & span {
                 color: #000;
-                //border: 1px solid @green-color;
             }
         }
     }

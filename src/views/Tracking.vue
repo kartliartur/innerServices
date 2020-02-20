@@ -30,7 +30,7 @@
                 <span class="status-item">{{ this.status }}</span>
              </div>
 
-            <button class="tracking_button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
+            <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
 
         </form>
     </div>
@@ -60,7 +60,6 @@
         methods: {
             fillData (value) {
                 if (value) {
-                    //ndow.console.log(this.$children[1].ttn);
                     this.$children[1].$data.ttnValue = value.ttn;
                     this.ttn = value.ttn;
                     this.status = value.status;
@@ -90,34 +89,36 @@
             },
             tracking () {
                 let data = {
-                    Waybill_GUID: this.Waybill_GUID,
-                    Driver_tracking_phone: this.phone,
-                    Actions: ["Send_tracking_request"],
+                    "Waybill_GUID": this.Waybill_GUID,
+                    "Driver_tracking_phone": this.phone,
+                    "Actions": ["Send_tracking_request"],
                 };
                 window.console.log(data);
-                Funcs.doRequest(
-                    "post",
-                    "https://erp.unlogic.ru/api/v1/logist_registrar/send_waybil",
-                    data,
-                    null,
-                    res => {
-                        window.console.log(res);
-                        alert(res);
-                        if (res.data) {
-                            this.status = res.data[0].Tracking_Status;
-                            if (this.status === "Запрос отклонен") {
-                                localStorage.setItem("status", this.status);
+                if (this.Waybill_GUID || this.Waybill_GUID != "") {
+                    Funcs.doRequest(
+                        "post",
+                        "https://erp.unlogic.ru/api/v1/logist_registrar/send_waybill",
+                        data,
+                        null,
+                        res => {
+                            window.console.log(res);
+                            if (!res.data.error) {
+                                this.status = res.data.data[0].Tracking_Status;
+                                if (this.status === "Запрос отправлен") {
+                                    localStorage.setItem("status", this.status);
+                                } else {
+                                    localStorage.removeItem("ttn");
+                                    localStorage.removeItem("phone");
+                                    localStorage.removeItem("status");
+                                }
                             } else {
-                                localStorage.removeItem("ttn");
-                                localStorage.removeItem("phone");
-                                localStorage.removeItem("status");
+                                alert(res.data.data);
                             }
                         }
-                    },
-                    () => {
-                        alert("Error");
-                    }
-                );
+                    );
+                } else {
+                    alert("Неправильно выбрана накладная!");
+                }
             },
             checkPhone () {
                 if (this.phone != '') {
@@ -193,7 +194,6 @@
             & input {
                 width: 60%;
             }
-
             & .status-item {
                 .input();
                 width: 60%;
@@ -203,7 +203,6 @@
 
         & input {
             .input();
-             //width: auto;
              padding: 10px;
         }
         & label {
@@ -212,12 +211,13 @@
         & .tracking_button {
             .button(5px, @green-color, @input-bg);
             align-self: center;
-        }
-        & .tracking_button:disabled {
-            cursor: unset;
-            background-color: @input-bg;
-            color: @green-color;
-            border-color: unset;
+
+            &:disabled {
+                cursor: initial;
+                background-color: @input-bg;
+                color: @green-color;
+                border-color: @input-bg;
+            }
         }
     }
 </style>
