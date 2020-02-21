@@ -9,7 +9,7 @@
 			<span class="desc">{{ isActiveIndex.Description }}</span>
 			<span>Дата: {{ new Date(isActiveIndex.Deadline).toLocaleString().substring(0, 10) }}</span>
 			<textarea placeholder="Введите комментарий сюда" v-model="comment"></textarea>
-			<label v-if="isActiveIndex.TaskType == 0 || isActiveIndex.TaskType == 1">
+			<label >
 				<span>Согласовать с директором</span>
 				<input type="checkbox" v-model="confirmWD">
 			</label>
@@ -75,7 +75,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							} else {
 								this.comment = new String('');
 								this.confirmWD = false;
-								window.console.log(this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1));
+								this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1);
 								this.hideModal();
 							}
 							this.showNotification(res.data.data, color);

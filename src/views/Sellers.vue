@@ -94,6 +94,8 @@ export default {
             }
           }
         }
+        
+        window.console.log(this.$store.state.sales);
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }
     );

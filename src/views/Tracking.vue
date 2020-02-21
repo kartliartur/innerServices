@@ -70,23 +70,23 @@
                     localStorage.setItem('status', value.status);
                 }
             },
-            maskPhone () {
-                let phoneValue = this.$refs.phone.value;
+            // maskPhone () {
+            //     let phoneValue = this.$refs.phone.value;
 
-                if (typeof phoneValue === 'string') {
-                    this.phone = phoneValue.slice(-1);
-                }
+            //     if (typeof phoneValue === 'string') {
+            //         this.phone = phoneValue.slice(-1);
+            //     }
 
-               let x = phoneValue.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-               window.console.log(x);
-               if(phoneValue.length === 11 && !phoneValue.includes('(')) {
-                   this.phone = '+' + x[1] + '(' + x[2] + ') ' + x[3] + '-' + x[4]  + '-' + x[5];
-               } else {
-                   window.console.log(phoneValue);
-                   this.phone = x[1] + !x[3] ? x[2] : '(' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
-               }
+            //    let x = phoneValue.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            //    window.console.log(x);
+            //    if(phoneValue.length === 11 && !phoneValue.includes('(')) {
+            //        this.phone = '+' + x[1] + '(' + x[2] + ') ' + x[3] + '-' + x[4]  + '-' + x[5];
+            //    } else {
+            //        window.console.log(phoneValue);
+            //        this.phone = x[1] + !x[3] ? x[2] : '(' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+            //    }
 
-            },
+            // },
             tracking () {
                 let data = {
                     "Waybill_GUID": this.Waybill_GUID,
