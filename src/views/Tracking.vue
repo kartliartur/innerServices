@@ -6,6 +6,7 @@
             <div>
                 <search-input
                         :options="this.options"
+                        :fillData="fillData"
                 />
             </div>
 
@@ -29,7 +30,7 @@
                 <span class="status-item">{{ this.status }}</span>
              </div>
 
-            <button class="tracking_button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
+            <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
 
         </form>
     </div>
@@ -57,6 +58,18 @@
             }
         },
         methods: {
+            fillData (value) {
+                if (value) {
+                    this.$children[1].$data.ttnValue = value.ttn;
+                    this.ttn = value.ttn;
+                    this.status = value.status;
+                    this.phone = value.phone;
+                    this.Waybill_GUID = value.Waybill_GUID;
+                    localStorage.setItem('ttn', value.ttn);
+                    localStorage.setItem('phone', value.phone);
+                    localStorage.setItem('status', value.status);
+                }
+            },
             maskPhone () {
                 let phoneValue = this.$refs.phone.value;
 
@@ -76,46 +89,52 @@
             },
             tracking () {
                 let data = {
-                    Waybill_GUID: this.Waybill_GUID,
-                    Driver_tracking_phone: this.phone,
-                    Actions: ["Send_tracking_request"],
+                    "Waybill_GUID": this.Waybill_GUID,
+                    "Driver_tracking_phone": this.phone,
+                    "Actions": ["Send_tracking_request"],
                 };
                 window.console.log(data);
-                Funcs.doRequest(
-                    "post",
-                    "https://erp.unlogic.ru/api/v1/logist_registrar/send_waybil",
-                    data,
-                    null,
-                    res => {
-                        window.console.log(res);
-                        alert(res)
-                        if (res.data) {
-                            this.status = res.data[0].Tracking_Status;
-                            if (this.status === "Запрос отклонен") {
-                                localStorage.setItem("status", this.status);
+                if (this.Waybill_GUID || this.Waybill_GUID != "") {
+                    Funcs.doRequest(
+                        "post",
+                        "https://erp.unlogic.ru/api/v1/logist_registrar/send_waybill",
+                        data,
+                        null,
+                        res => {
+                            window.console.log(res);
+                            if (!res.data.error) {
+                                this.status = res.data.data[0].Tracking_Status;
+                                if (this.status === "Запрос отправлен") {
+                                    localStorage.setItem("status", this.status);
+                                } else {
+                                    localStorage.removeItem("ttn");
+                                    localStorage.removeItem("phone");
+                                    localStorage.removeItem("status");
+                                }
                             } else {
-                                localStorage.removeItem("ttn");
-                                localStorage.removeItem("phone");
-                                localStorage.removeItem("status");
+                                alert(res.data.data);
                             }
                         }
-                    },
-                    () => {
-                        alert("Error");
-                    }
-                );
+                    );
+                } else {
+                    alert("Неправильно выбрана накладная!");
+                }
             },
             checkPhone () {
                 if (this.phone != '') {
                     if (this.$refs.phone.lastValue.indexOf("8") == 0) {
                         this.$refs.phone.display = this.$refs.phone.value.replace("8", "7");
                     }
+                }else {
+                    this.phone = this.$refs.phone.lastValue;
                 }
+                window.console.log(this.$refs.phone.lastValue)
             }
         },
         beforeMount() {
             this.phone = (localStorage.getItem('phone') && localStorage.getItem('phone') !== "undefined") ? localStorage.getItem('phone') : "";
             this.status = (localStorage.getItem('status') && localStorage.getItem('status') !== "undefined") ? localStorage.getItem('status') : "";
+            this.ttn = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
         },
         beforeCreate() {
            Funcs.doRequest(
@@ -142,6 +161,14 @@
                    alert("Ошибка! Список накладных не удалось получить");
                }
            );
+        },
+        mounted() {
+            let ttnLocal = localStorage.getItem("ttn");
+            if (ttnLocal !== "") {
+                let elem = this.options.filter(e => e.ttn.includes(ttnLocal));
+                if (elem)
+                    this.fillData(elem);
+            }
         }
     }
 </script>
@@ -151,7 +178,6 @@
     @import url('../assets/less-templates/base.less');
     .tracking_form {
         .flex(column, center, stretch);
-        padding: 20px 0;
         margin: 0 10px;
 
         & h2 {
@@ -168,7 +194,6 @@
             & input {
                 width: 60%;
             }
-
             & .status-item {
                 .input();
                 width: 60%;
@@ -178,21 +203,21 @@
 
         & input {
             .input();
-             //width: auto;
              padding: 10px;
         }
         & label {
-            color: @green-color;
+            color: @black-color;
         }
         & .tracking_button {
             .button(5px, @green-color, @input-bg);
             align-self: center;
-        }
-        & .tracking_button:disabled {
-            cursor: unset;
-            background-color: @input-bg;
-            color: @green-color;
-            border-color: unset;
+
+            &:disabled {
+                cursor: initial;
+                background-color: @input-bg;
+                color: @green-color;
+                border-color: @input-bg;
+            }
         }
     }
 </style>
