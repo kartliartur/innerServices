@@ -9,7 +9,7 @@
 			<span class="desc">{{ isActiveIndex.Description }}</span>
 			<span>Дата: {{ new Date(isActiveIndex.Deadline).toLocaleString().substring(0, 10) }}</span>
 			<textarea placeholder="Введите комментарий сюда" v-model="comment"></textarea>
-			<label v-if="isActiveIndex.TaskType == 0 || isActiveIndex.TaskType == 1">
+			<label >
 				<span>Согласовать с директором</span>
 				<input type="checkbox" v-model="confirmWD">
 			</label>

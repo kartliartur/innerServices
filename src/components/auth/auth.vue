@@ -49,7 +49,7 @@ export default {
 					if (!res.data.error) {
 						localStorage.setItem('user', res.data.data.full_name);
 						localStorage.setItem('token', res.data.data.token);
-						localStorage.setItem('role', res.data.data.role);
+						localStorage.setItem('role', res.data.data.roles[0]);
 						if (localStorage.getItem('token') != null) {
 							this.$emit('loggedIn')
 							if(this.$route.params.nextUrl != null){
