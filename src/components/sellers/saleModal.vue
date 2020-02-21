@@ -75,7 +75,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							} else {
 								this.comment = new String('');
 								this.confirmWD = false;
-								this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1);
+								window.console.log(this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1));
 								this.hideModal();
 							}
 							this.showNotification(res.data.data, color);
