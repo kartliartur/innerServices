@@ -60,11 +60,11 @@
                 this.fillData(value);
             },
 
-            searchData (searchValue) {
-                searchValue = this.ttnValue = searchValue.toUpperCase();
-                if (searchValue !== "" && searchValue !== undefined && searchValue) {
+            searchData () {
+                this.ttnValue = this.ttnValue.toUpperCase();
+                if (this.ttnValue !== "" && this.ttnValue !== undefined && this.ttnValue) {
                    this.items = this.options.filter(e => {
-                        return e.ttn.includes(searchValue)
+                        return e.ttn.includes(this.ttnValue)
                     });
                    if (this.items.length === 0) {
                        this.items = "";
@@ -80,12 +80,14 @@
                     this.items = this.options;
                     this.styleList = "height: 84px;"
                 }
-
             }
         },
         beforeMount() {
             this.ttnValue = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
             this.items = this.options ? this.options : "";
+            if (this.options.length <= 2) {
+                this.styleList = "height: " + 28 * this.options.length + "px;"
+            }
         },
     }
 </script>
