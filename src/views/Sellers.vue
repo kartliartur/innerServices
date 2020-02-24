@@ -1,9 +1,9 @@
 <template>
   <div class="sellers">
     <MyHeader/>
-    <h2 v-if="$store.state.sales.length == 0">Список пуст</h2>
-    <div class="content" v-else>
-      <h2 v-if="confirmArr.length > 0">Задачи согласования:</h2>
+   <!-- <h2 v-if="$store.state.sales.length == 0">Список пуст</h2>-->
+    <div class="content" >
+      <!--<h2 v-if="confirmArr.length > 0">Задачи согласования:</h2>
       <div class="sales-wrap">
         <Sale v-for="(item, idx) in confirmArr" :key="idx"
             :day="new Date(item.Deadline).getDate()"
@@ -21,10 +21,53 @@
               :company="item.Partner"
               :inn="item.INN"
               :saleIndex="item.lostIndex"
-              @toggleModal="isModalOpen=true"/>        
+              @toggleModal="isModalOpen=true"/>
+      </div>-->
+      <!--<div v-for="(item, idx) in sales" :key="idx">-->
+      <div class="toggle-wrap">
+        <h2>Согласование заказа клиента</h2>
+        <span :class="{ 'active-span': customerIsShow }">></span>
       </div>
+        <div class="sales-wrap">
+          <Sale v-for="(item, idx) in customerApproval" :key="idx"
+                :day="new Date(item.Deadline).getDate()"
+                :month="new Date(item.Deadline).getMonth()"
+                :company="item.Partner"
+                :inn="item.INN"
+                :saleIndex="item.lostIndex"
+                @toggleModal="isModalOpen=true"/>
+        </div>
+      <!--</div>-->
+      <h2 v-if="salesConditions.length > 0">Изменение условий продаж:</h2>
+      <div class="sales-wrap">
+        <Sale v-for="(item, idx) in salesConditions" :key="idx"
+              :day="new Date(item.Deadline).getDate()"
+              :month="new Date(item.Deadline).getMonth()"
+              :company="item.Partner"
+              :inn="item.INN"
+              :saleIndex="item.lostIndex"
+              @toggleModal="isModalOpen=true"/>
+      </div>
+      <!--<h2 v-if="customerApproval > 0">Согласование заказа клиента:</h2>
+      <div class="sales-wrap">
+        <Sale v-for="(item, idx) in customerApproval" :key="idx"
+              :day="new Date(item.Deadline).getDate()"
+              :month="new Date(item.Deadline).getMonth()"
+              :company="item.Partner"
+              :inn="item.INN"
+              @toggleModal="isModalOpen=true"/>
+      </div>
+      <h2 v-if="supplierApproval > 0">Согласование заказа поставщику:</h2>
+      <div class="sales-wrap">
+        <Sale v-for="(item, idx) in supplierApproval" :key="idx"
+              :day="new Date(item.Deadline).getDate()"
+              :month="new Date(item.Deadline).getMonth()"
+              :company="item.Partner"
+              :inn="item.INN"
+              @toggleModal="isModalOpen=true"/>
+      </div>-->
       <SaleModal
-              v-bind:is-open="isModalOpen"
+              :is-open="isModalOpen"
               @toggleModal="isModalOpen=false"/>  
     </div>
     <myNotification
@@ -57,7 +100,12 @@ export default {
       isModalOpen: false,
       is_not_show: false,
       confirmArr: new Array(),
-      learnArr: new Array()
+      learnArr: new Array(),
+      sales: [],
+      salesConditions: [],
+      customerApproval: [],
+      supplierApproval: [],
+      issues: [],
     }
   },
   methods: {
@@ -77,13 +125,29 @@ export default {
       null,
       null,
       res => {
-        window.console.log(res.data.error);
+        //window.console.log(res.data.error);
+        window.console.log(res);
         if (res.data.error) {
-          window.console.log(res.data.data);
           this.showNotification(res.data.data, 'red');
         } else {
           this.$store.state.sales = res.data.data;
-          for (let i = 0; i < this.$store.state.sales.length; i++) {
+          this.$store.state.sales.forEach(item => {
+            switch (item.BusinessProcess) {
+              case "Согласование заказа клиента":
+                this.customerApproval.push(item);
+                this.customerApproval.lastItem.lostIndex = this.customerApproval.lastIndex;
+                break;
+              case "Согласование заказа поставщику":
+                this.supplierApproval.push(item);
+                this.supplierApproval.lastItem.lostIndex = this.supplierApproval.lastIndex;
+                break;
+              case "Изменение условий продаж":
+                this.salesConditions.push(item);
+                this.salesConditions.lastItem.lostIndex = this.salesConditions.lastIndex;
+                break;
+            }
+          });
+          /*for (let i = 0; i < this.$store.state.sales.length; i++) {
             let item = this.$store.state.sales[i];
             if (item.TaskType == 0 || item.TaskType == 1) {
               this.confirmArr.push(item);
@@ -92,13 +156,38 @@ export default {
               this.learnArr.push(item);
               this.learnArr[this.learnArr.length-1].lostIndex = i;
             }
-          }
+          }*/
         }
-        
-        window.console.log(this.$store.state.sales);
+        window.console.log(this.customerApproval);
+        window.console.log(this.supplierApproval);
+        window.console.log(this.salesConditions);
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }
     );
+  },
+  beforeMount() {
+    /*this.sales = this.$store.state.sales;
+    //window.console.log(this.sales);
+    this.sales && this.sales.length > 0 ?
+            this.sales.forEach(item => {
+             switch (item.BusinessProcess) {
+               case "Согласование заказа клиента":
+                 this.customerApproval.push(item);
+                 break;
+               case "Согласование заказа поставщику":
+                 this.supplierApproval.push(item);
+                 break;
+               case "Изменение условий продаж":
+                 this.salesConditions.push(item);
+                 break;
+             }
+            /!* if (item.BusinessProcess == "Согласование заказа поставщику") {
+               this.supplierApproval.push(item);
+             }*!/
+            })
+            : [];
+    
+   // window.console.log(this.supplierApproval, this.customerApproval, this.salesConditions);*/
   }
 }
 </script>
