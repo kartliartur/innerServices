@@ -95,7 +95,7 @@ export default {
       } else {
         Funcs.doRequest(
           'get',
-          'https://erp.unlogic.ru/api/v1/top_managers_instructions/' + item.path,
+          'https://erp.unlogic.ru/ecm/hs/tasks/get/control-list' + item.path,
           null,
           null,
           res => {
@@ -135,7 +135,7 @@ export default {
   beforeCreate() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/api/v1/top_managers_instructions/performers',
+      'https://erp.unlogic.ru/ecm/hs/tasks/get/performers',
       null,
       null,
       res => {

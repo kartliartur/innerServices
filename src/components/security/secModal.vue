@@ -73,7 +73,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}
 				Funcs.doRequest(
 					'post',
-					'https://erp.unlogic.ru/api/v1/security/task',
+					'https://erp.unlogic.ru/erp_local/hs/tasks/approve/legalservice',
 					data,
 					null,
 					res => {

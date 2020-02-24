@@ -74,7 +74,7 @@ export default {
 		updateMissions(data) {
 			Funcs.doRequest(
 				'post',
-				'https://erp.unlogic.ru/api/v1/top_managers_instructions/update_instruction',
+				'https://erp.unlogic.ru/ecm/hs/tasks/update/control',
 				data,
 				null,
 				res => {

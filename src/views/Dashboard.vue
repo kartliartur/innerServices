@@ -135,7 +135,7 @@ export default {
           firstDate: '2018-01-17',
           lastDate: '2019-01-17',
           type: 'line',
-          path: 'month_sales',
+          path: 'sales-by-month',
           secondSelect: false     
         },
         {
@@ -148,7 +148,7 @@ export default {
           lastDate: '2019-01-17',
           isShow: false,
           type: 'pie',
-          path: 'manager_sales',
+          path: 'sales-by-manager',
           secondSelect: false             
         },
         {
@@ -161,7 +161,7 @@ export default {
           lastDate: '2019-01-17',
           isShow: false,
           type: 'pie',
-          path: 'client_sales',
+          path: 'sales-by-clients',
           secondSelect: false             
         }
       ],
@@ -172,7 +172,7 @@ export default {
           actualMark: new String(''),
           firstDate: '2018-01-17',
           lastDate: '2019-01-17',
-          path: 'organization_balance',
+          path: 'balance-by-organization',
           heads: ['Организация', 'Начальный остаток', 'Приход', 'Расход', 'Конечный остаток'],
           content: [],
           isNotWare: true
@@ -182,7 +182,7 @@ export default {
           isShow: false,
           actualMark: new String(''),
           firstDate: '2019-01-17',
-          path: 'warehouse_cost',
+          path: 'cost-by-warehouse',
           heads: ['Организация', 'Начальный остаток', 'Приход', 'Расход', 'Конечный остаток'],
           content: [],
           isNotWare: false
@@ -216,7 +216,7 @@ export default {
       chart.data = [];
       Funcs.doRequest(
         'post',
-        'https://erp.unlogic.ru/api/v1/charts/' + path,
+        'https://erp.unlogic.ru/erp_base/hs/products/get/' + path,
         {
           date_first: chart.firstDate,
           date_last: chart.lastDate,
@@ -352,8 +352,8 @@ export default {
   },
   beforeMount() {
     Funcs.doRequest(
-      'post',
-      'https://erp.unlogic.ru/api/v1/charts/all_products',
+      'get',
+      'https://erp.unlogic.ru/erp_base/hs/products/get/full-list',
       null,
       null,
       res => {

@@ -61,7 +61,7 @@ export default {
   beforeCreate() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/api/v1/security/task',
+      'https://erp.unlogic.ru/erp_local/hs/tasks/get/legalservice',
       null,
       null,
       res => {

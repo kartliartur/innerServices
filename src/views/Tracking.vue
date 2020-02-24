@@ -97,7 +97,7 @@
                 if (this.Waybill_GUID || this.Waybill_GUID != "") {
                     Funcs.doRequest(
                         "post",
-                        "https://erp.unlogic.ru/api/v1/logist_registrar/send_waybill",
+                        "https://erp.unlogic.ru/erp_local/hs/WaybillClient/update/waybill",
                         data,
                         null,
                         res => {
@@ -138,8 +138,8 @@
         },
         beforeCreate() {
            Funcs.doRequest(
-               "post",
-               "https://erp.unlogic.ru/api/v1/logist_registrar/ttn",
+               "get",
+               "https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/waybills",
                null,
                null,
                res => {

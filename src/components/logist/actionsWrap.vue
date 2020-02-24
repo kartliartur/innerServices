@@ -61,7 +61,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}
 				Funcs.doRequest(
 					'post',
-					'https://erp.unlogic.ru/api/v1/logistic/ttn',
+					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN',
 					arr,
 					null,
 					res => {
