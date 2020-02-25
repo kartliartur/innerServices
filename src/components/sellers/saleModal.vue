@@ -9,13 +9,13 @@
 			<span class="desc">{{ isActiveIndex.Description }}</span>
 			<span>Дата: {{ new Date(isActiveIndex.Deadline).toLocaleString().substring(0, 10) }}</span>
 			<textarea placeholder="Введите комментарий сюда" v-model="comment"></textarea>
-			<label >
+			<label v-if="isActiveIndex.TaskType == 'Согласовать'" >
 				<span>Согласовать с директором</span>
 				<input type="checkbox" v-model="confirmWD">
 			</label>
 			<div class="btn-wrap">
-				<button @click="checkAproove(true)">Согласовать</button>
-				<button @click="checkAproove(false)">Не согласовать</button>
+				<button @click="checkAproove(true)">{{ isActiveIndex.TaskType == 'Согласовать' ? 'Согласовать' : 'Ознакомлено' }}</button>
+				<button v-if="isActiveIndex.TaskType == 'Согласовать'" @click="checkAproove(false)">Не согласовать</button>
 				<button @click="hideModal()">Отмена</button>
 			</div>
 		</div>
@@ -75,7 +75,9 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							} else {
 								this.comment = new String('');
 								this.confirmWD = false;
-								this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1);
+								//this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1);
+								this.$store.dispatch('deleteTask', this.$store.state.activeSaleIndex);
+								this.$emit('sortSales', this.$store.state.sales);
 								this.hideModal();
 							}
 							this.showNotification(res.data.data, color);
@@ -113,7 +115,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 <style lang="less">
 	@import url('../../assets/less-templates/base.less');
 	.modal-wrap {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
