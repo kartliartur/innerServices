@@ -76,7 +76,7 @@ export default {
 		}
 		Funcs.doRequest(
 			'get',
-			'https://erp.unlogic.ru/erp_local/hs/WaybillClient/GetWaybills',
+			'https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/Waybills',
 			null,
 			data,
 			res => {

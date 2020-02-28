@@ -3,27 +3,6 @@
     <MyHeader/>
    <h2 v-if="this.$store.state.sales.length === 0">Список пуст</h2>
     <div class="content" >
-      <!--<h2 v-if="confirmArr.length > 0">Задачи согласования:</h2>
-      <div class="sales-wrap">
-        <Sale v-for="(item, idx) in confirmArr" :key="idx"
-            :day="new Date(item.Deadline).getDate()"
-            :month="new Date(item.Deadline).getMonth()"
-            :company="item.Partner"
-            :inn="item.INN"
-            :saleIndex="item.lostIndex"
-            @toggleModal="isModalOpen=true"/>        
-      </div>
-      <h2 v-if="learnArr.length > 0">Задачи ознакомления:</h2>
-      <div class="sales-wrap">
-        <Sale v-for="(item, idx) in learnArr" :key="idx"
-              :day="new Date(item.Deadline).getDate()"
-              :month="new Date(item.Deadline).getMonth()"
-              :company="item.Partner"
-              :inn="item.INN"
-              :saleIndex="item.lostIndex"
-              @toggleModal="isModalOpen=true"/>
-      </div>-->
-      <!--<div v-for="(item, idx) in sales" :key="idx">-->
       <div class="toggle-wrap" @click="openTaskList('customer')">
         <h2 v-if="customerApproval.length > 0">Согласование заказа клиента</h2>
         <span :class="{ 'active-span': customerIsShow }">></span>
@@ -67,24 +46,6 @@
               :taskType="item.TaskType"
               @toggleModal="isModalOpen=true"/>
       </div>
-      <!--<h2 v-if="customerApproval > 0">Согласование заказа клиента:</h2>
-      <div class="sales-wrap">
-        <Sale v-for="(item, idx) in customerApproval" :key="idx"
-              :day="new Date(item.Deadline).getDate()"
-              :month="new Date(item.Deadline).getMonth()"
-              :company="item.Partner"
-              :inn="item.INN"
-              @toggleModal="isModalOpen=true"/>
-      </div>
-      <h2 v-if="supplierApproval > 0">Согласование заказа поставщику:</h2>
-      <div class="sales-wrap">
-        <Sale v-for="(item, idx) in supplierApproval" :key="idx"
-              :day="new Date(item.Deadline).getDate()"
-              :month="new Date(item.Deadline).getMonth()"
-              :company="item.Partner"
-              :inn="item.INN"
-              @toggleModal="isModalOpen=true"/>
-      </div>-->
       <SaleModal
               :is-open="isModalOpen"
               @toggleModal="isModalOpen=false"
@@ -184,22 +145,6 @@ export default {
         } else {
           this.$store.state.sales = res.data.data;
           this.sortSales(this.$store.state.sales);
-          /*this.$store.state.sales.forEach((item, idx) => {
-            switch (item.BusinessProcess) {
-              case "Согласование заказа клиента":
-                this.customerApproval.push(item);
-                this.customerApproval[this.customerApproval.length - 1].lostIndex = idx;
-                break;
-              case "Согласование заказа поставщику":
-                this.supplierApproval.push(item);
-                this.supplierApproval[this.supplierApproval.length - 1].lostIndex = idx;
-                break;
-              case "Изменение условий продаж":
-                this.salesConditions.push(item);
-                this.salesConditions[this.salesConditions.length - 1].lostIndex = idx;
-                break;
-            }
-          });*/
         }
 
       },

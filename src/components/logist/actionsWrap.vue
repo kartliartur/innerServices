@@ -60,7 +60,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					}
 				}
 				Funcs.doRequest(
-					'post',
+					'put',
 					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN',
 					arr,
 					null,

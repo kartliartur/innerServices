@@ -89,7 +89,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				data.StatusDate = this.isActiveIndex.DateDelivery;
 				data.Pickup = this.isActiveIndex.Pickup;
 				Funcs.doRequest(
-					'post',
+					'put',
 					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN',
 					data,
 					null,
