@@ -64,13 +64,15 @@ export default new Vuex.Store({
 		CHANGE_ACTIVE_SALE_INDEX: (state, active) => state.activeSaleIndex = active,
 		CHANGE_ACTIVE_MISSION_INDEX: (state, active) => state.activeMissionIndex = active,
 		ADD_MISSION: (state, data) => state.missions.push(data),
-		DELETE_TASK: (state, index) => state.sales.splice(index, 1)
+		DELETE_TASK: (state, index) => state.sales.splice(index, 1),
+		DELETE_SEC_TASK: (state, index) => state.tasks.splice(index, 1),
 	},
 	actions: {
 		changeActiveTtnIndex: (context, active) => context.commit('CHANGE_ACTIVE_TTN_INDEX', +active),
 		changeActiveSaleIndex: (context, active) => context.commit('CHANGE_ACTIVE_SALE_INDEX', +active),
 		changeActiveMissionIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_INDEX', +active),
 		deleteTask: (context, index) => context.commit('DELETE_TASK', +index),
+		deleteSecTask: (context, index) => context.commit('DELETE_SEC_TASK', +index),
 	},
 	modules: {
 	}

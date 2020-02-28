@@ -80,7 +80,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						let color = 'red';
 						if (!res.data.error) {
 							color = 'green';
-							this.$store.state.tasks.splice(this.$store.state.activeTaskIndex, 1);
+							//this.$store.state.tasks.splice(this.$store.state.activeTaskIndex, 1);
+							this.$store.dispatch('deleteSecTask', this.$store.state.activeTaskIndex);
 							this.hideModal();
 						}
 						this.showNotification(res.data.data, color);

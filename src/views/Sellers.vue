@@ -3,8 +3,8 @@
     <MyHeader/>
    <h2 v-if="this.$store.state.sales.length === 0">Список пуст</h2>
     <div class="content" >
-      <div class="toggle-wrap" @click="openTaskList('customer')">
-        <h2 v-if="customerApproval.length > 0">Согласование заказа клиента</h2>
+      <div v-if="customerApproval.length > 0" class="toggle-wrap" @click="openTaskList('customer')">
+        <h2>Согласование заказа клиента</h2>
         <span :class="{ 'active-span': customerIsShow }">></span>
       </div>
       <div class="sales-wrap" :class="{ 'sales-active': customerIsShow }">
@@ -17,8 +17,8 @@
               :taskType="item.TaskType"
               @toggleModal="isModalOpen=true"/>
       </div>
-      <div class="toggle-wrap" @click="openTaskList('supplier')">
-        <h2 v-if="supplierApproval.length > 0">Согласование заказа поставщику</h2>
+      <div v-if="supplierApproval.length > 0" class="toggle-wrap" @click="openTaskList('supplier')">
+        <h2>Согласование заказа поставщику</h2>
         <span :class="{ 'active-span': supplierIsShow }">></span>
       </div>
       <div class="sales-wrap" :class="{ 'sales-active': supplierIsShow }">
@@ -31,9 +31,8 @@
               :taskType="item.TaskType"
               @toggleModal="isModalOpen=true"/>
       </div>
-      <!--</div>-->
-      <div class="toggle-wrap" @click="openTaskList('sales')">
-        <h2 v-if="salesConditions.length > 0">Изменение условий продаж:</h2>
+      <div v-if="salesConditions.length > 0" class="toggle-wrap" @click="openTaskList('sales')">
+        <h2>Изменение условий продаж:</h2>
         <span :class="{ 'active-span': salesIsShow }">></span>
       </div>
       <div class="sales-wrap" :class="{ 'sales-active': salesIsShow }">
