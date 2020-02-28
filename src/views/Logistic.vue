@@ -43,14 +43,14 @@ export default {
 		ModalFrame,
 		ActionsWrap,
 		MyHeader,
-    myNotification
+		myNotification
 	},
 	data: function () {
 		return {
 			isModalOpen: false,
-      not_text: 'Ошибка',
-      not_color: 'red',
-      is_not_show: false
+			not_text: 'Ошибка',
+			not_color: 'red',
+			is_not_show: false
 		}
 	},
   methods: {
@@ -71,8 +71,8 @@ export default {
 		// 		+ (Funcs.dateToInputs(new Date())[3]) + '-'
 		// 		+ Funcs.dateToInputs(new Date())[0];
 		let data = {
-			date_start: "2018-12-09",
-			date_end: "2018-12-10"
+			DateStart: "20191208",
+			DateEnd: "20191210"
 		}
 		Funcs.doRequest(
 			'get',

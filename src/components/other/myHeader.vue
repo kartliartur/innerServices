@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import Funcs from '../../assets/js-funcs/default-funcs.js'
+
 	export default {
 		name: 'myHeader',
 		data: function () {
@@ -27,10 +29,20 @@
 		},
 		methods: {
 			logout() {
-				localStorage.removeItem('token');
-				localStorage.removeItem('user');
-				localStorage.removeItem('role');
-				this.$router.push({ path: '/' });
+				Funcs.doRequest(
+					'get',
+					'https://erp.unlogic.ru/api/v1/auth/logout',
+					null, 
+					null,
+					res => {
+						localStorage.removeItem('token');
+						localStorage.removeItem('user');
+						localStorage.removeItem('role');
+						this.$router.push({ path: '/' });			
+						alert(res);			
+					},
+					res => { window.console.log(res) }
+				);
 			}
 		},
 		beforeMount() {
