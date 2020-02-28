@@ -6,10 +6,10 @@
     <div class="blocks-container">
       <LogistBlock
           v-for="(item, idx) in $store.state.ttns" :key="idx"
-          :ttn-number="item.TTNNumber"
-          :ttn-date="item.TTNDate"
-          :ttn-status="item.TTNStatus"
-          :ttn-company="item.PaymentCompany"
+          :ttn-number="item.TTN_Number"
+          :ttn-date="item.TTN_Date"
+          :ttn-status="item.TTN_Status"
+          :ttn-company="item.Payment_Company"
           :ttn-index="idx"
           :is-open="isModalOpen"
           v-show="item.isVissible"
@@ -82,12 +82,12 @@ export default {
 			res => {
         if (!res.data.error) {
           for (let i = 0; i <  res.data.data.length; i++) {
-            res.data.data[i].TTNDate = Funcs.dateToInputs(new Date(res.data.data[i].TTNDate))[2] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].TTNDate))[1] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].TTNDate))[0];
-            res.data.data[i].DateDelivery = Funcs.dateToInputs(new Date(res.data.data[i].DateDelivery))[2] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].DateDelivery))[1] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].DateDelivery))[0];
+            res.data.data[i].TTN_Date = Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[2] + '-'
+              + Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1] + '-'
+              + Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0];
+            res.data.data[i].Date_Delivery = Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[2] + '-'
+              + Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1] + '-'
+              + Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0];
             res.data.data[i].isVissible = true
             res.data.data[i].isChecked = false;
           }

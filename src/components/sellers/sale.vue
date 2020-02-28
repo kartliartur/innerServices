@@ -1,7 +1,9 @@
 <template>
 	<transition name="slide-fade">
 		<div class="block-wrap">
-			<div class="block" @click="openModal()">
+			<div class="block" @click="openModal()" :style="this.taskType === 'Согласовать' ?
+               'background-color: #66ab55;'
+               : 'background-color: #faff3e;'">
 				<div class="date">
 					<span class="number">{{ day }}</span>
 					<span class="text">{{ getMonth }}</span>
@@ -18,7 +20,7 @@
 <script>
 	export default {
 		name: 'mission',
-		props: ['day', 'month', 'company', 'inn', 'saleIndex', 'isOpen'],
+		props: ['day', 'month', 'company', 'inn', 'saleIndex', 'isOpen', 'taskType'],
 		computed: {
 			getMonth() {
 				let months = [

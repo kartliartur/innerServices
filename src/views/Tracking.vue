@@ -12,14 +12,6 @@
 
             <div class="tracking-item">
                 <label>Телефон: </label>
-                <!--<input type="tel"
-                       ref="phone"
-                       class="phone"
-                       :value="this.phone"
-                       placeholder="+7(___)___-__-__"
-                       @input="maskPhone"
-                       @change="maskPhone"
-                />-->
                 <TheMask
                         mask="+#(###) ###-##-##" @input="checkPhone" ref="phone" :value="this.phone" type="tel"  placeholder="+7(___) ___-__-__"
                 />
@@ -70,23 +62,6 @@
                     localStorage.setItem('status', value.status);
                 }
             },
-            // maskPhone () {
-            //     let phoneValue = this.$refs.phone.value;
-
-            //     if (typeof phoneValue === 'string') {
-            //         this.phone = phoneValue.slice(-1);
-            //     }
-
-            //    let x = phoneValue.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-            //    window.console.log(x);
-            //    if(phoneValue.length === 11 && !phoneValue.includes('(')) {
-            //        this.phone = '+' + x[1] + '(' + x[2] + ') ' + x[3] + '-' + x[4]  + '-' + x[5];
-            //    } else {
-            //        window.console.log(phoneValue);
-            //        this.phone = x[1] + !x[3] ? x[2] : '(' + x[2] + ') ' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
-            //    }
-
-            // },
             tracking () {
                 let data = {
                     "Waybill_GUID": this.Waybill_GUID,
@@ -138,7 +113,7 @@
         },
         beforeCreate() {
            Funcs.doRequest(
-               "get",
+               "post",
                "https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/waybills",
                null,
                null,

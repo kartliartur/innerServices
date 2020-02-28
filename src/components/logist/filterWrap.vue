@@ -39,7 +39,7 @@ export default {
 		search(e) {
 			e.preventDefault();
 			for (let i = 0; i < this.$store.state.ttns.length; i++) {
-				let arr = Funcs.dateToDef(this.$store.state.ttns[i].TTNDate);
+				let arr = Funcs.dateToDef(this.$store.state.ttns[i].TTN_Date);
 				let arrFirst = Funcs.dateToDef(this.dateFirst);
 				let arrLast = Funcs.dateToDef(this.dateLast);
 				if (new Date(arr[0], arr[1], arr[2]) > new Date(arrFirst[0], arrFirst[1], arrFirst[2])

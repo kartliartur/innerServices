@@ -51,16 +51,16 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					let item = this.$store.state.ttns[i];
 					if (item.isChecked == true) {
 						arr.push(new Object());
-						arr[arr.length-1].old_status = item.TTNStatus;
-						arr[arr.length-1].TTNStatus = this.currentStatus;
-						arr[arr.length-1].Number = item.TTNNumber;
-						arr[arr.length-1].StatusDate = item.DateDelivery;
-						arr[arr.length-1].TTNDate = item.TTNDate;
+						arr[arr.length-1].old_status = item.TTN_Status;
+						arr[arr.length-1].TTN_Status = this.currentStatus;
+						arr[arr.length-1].Number = item.TTN_Number;
+						arr[arr.length-1].Status_Date = item.Date_Delivery;
+						arr[arr.length-1].TTN_Date = item.TTN_Date;
 						arr[arr.length-1].Pickup = item.Pickup;
 					}
 				}
 				Funcs.doRequest(
-					'post',
+					'put',
 					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN',
 					arr,
 					null,
@@ -72,8 +72,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							for (let i = 0; i < this.$store.state.ttns.length; i++) {
 								let item = this.$store.state.ttns[i];	
 								if (item.isChecked) {
-									item.TTNStatus = this.currentStatus;	
-									item.DateDelivery = this.currentDate;								
+									item.TTN_Status = this.currentStatus;
+									item.Date_Delivery = this.currentDate;
 								}			
 							}			
 						}

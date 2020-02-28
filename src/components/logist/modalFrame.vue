@@ -7,8 +7,8 @@
 		<div class="hover"></div>
 		<div class="modal-frame">
 			<div class="row">
-				<span>№{{ isActiveIndex.TTNNumber }}</span>
-				<span>от {{ isActiveIndex.TTNDate }}</span>
+				<span>№{{ isActiveIndex.TTN_Number }}</span>
+				<span>от {{ isActiveIndex.TTN_Date }}</span>
 			</div>
 			<div class="row">
 				<span>Статус:</span>
@@ -24,11 +24,11 @@
 			</div>
 			<div class="row">
 				<span>Дата доставки(отправки):</span>
-				<input type="date" :value="isActiveIndex.DateDelivery">
+				<input type="date" :value="isActiveIndex.Date_Delivery">
 			</div>
 			<div class="row">
 				<span>Транспортная компания:</span>
-				<span>{{ isActiveIndex.PaymentCompany }}</span>
+				<span>{{ isActiveIndex.Payment_Company }}</span>
 			</div>
 			<div class="row">
 				<span>Плательщик:</span>
@@ -36,11 +36,11 @@
 			</div>
 			<div class="row">
 				<span>Водитель:</span>
-				<span>{{ isActiveIndex.FIODriver }}</span>
+				<span>{{ isActiveIndex.FIO_Driver }}</span>
 			</div>
 			<div class="row">
 				<span>Номер водителя:</span>
-				<span>{{ isActiveIndex.DriverNumber }}</span>
+				<span>{{ isActiveIndex.Driver_Number }}</span>
 			</div>
 			<div class="btn-wrap">
 				<button @click="saveChanges()">Применить</button>
@@ -82,14 +82,14 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			},
 			saveChanges() {
 				let data = new Object();
-				data.TTNStatus = this.newValue;
-				data.old_status = this.isActiveIndex.TTNStatus;
-				data.Number = this.isActiveIndex.TTNNumber;
-				data.TTNDate = this.isActiveIndex.TTNDate;
-				data.StatusDate = this.isActiveIndex.DateDelivery;
+				data.TTN_Status = this.newValue;
+				data.old_status = this.isActiveIndex.TTN_Status;
+				data.Number = this.isActiveIndex.TTN_Number;
+				data.TTN_Date = this.isActiveIndex.TTN_Date;
+				data.Status_Date = this.isActiveIndex.Date_Delivery;
 				data.Pickup = this.isActiveIndex.Pickup;
 				Funcs.doRequest(
-					'post',
+					'put',
 					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN',
 					data,
 					null,
@@ -98,7 +98,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						if (res.data.error) {
 							color = 'red';
 						} else {
-							this.$store.state.ttns[this.$store.state.activeTtnIndex].TTNStatus = this.newValue;
+							this.$store.state.ttns[this.$store.state.activeTtnIndex].TTN_Status = this.newValue;
 						}
 						this.showNotification(res.data.data, color);
 					},
@@ -108,7 +108,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			activeStatus(idx) {
 				let result = new Number();
 				for (let i = 0; i < this.$store.state.statusTypes.length; i++) {
-					if (this.$store.state.statusTypes[i] == this.isActiveIndex.TTNStatus)
+					if (this.$store.state.statusTypes[i] == this.isActiveIndex.TTN_Status)
 						result = i;
 				}
 				if (result == idx)
