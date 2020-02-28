@@ -47,7 +47,7 @@ export default {
 				.post('https://erp.unlogic.ru/api/v1/auth/login', data)
 				.then(res => {
 					if (!res.data.error) {
-						localStorage.setItem('user', res.data.data.full_name);
+						localStorage.setItem('user', res.data.data.name);
 						localStorage.setItem('token', res.data.data.token);
 						localStorage.setItem('role', res.data.data.PerformerRoles);
 						if (localStorage.getItem('token') != null) {
