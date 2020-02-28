@@ -34,15 +34,17 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					'https://erp.unlogic.ru/api/v1/auth/logout',
 					null, 
 					null,
-					res => {
-						localStorage.removeItem('token');
-						localStorage.removeItem('user');
-						localStorage.removeItem('role');
-						this.$router.push({ path: '/' });			
-						alert(res);			
+					res => {		
+						window.console.log(res)	
 					},
 					res => { window.console.log(res) }
 				);
+				setTimeout(() => {
+					localStorage.removeItem('token');
+					localStorage.removeItem('user');
+					localStorage.removeItem('role');
+					this.$router.push({ path: '/' });	
+				});
 			}
 		},
 		beforeMount() {

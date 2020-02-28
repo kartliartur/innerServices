@@ -55,8 +55,6 @@ export default {
 							let item = res.data.data.Access_Groups[i];
 							for (let j in this.$store.state.rolesLinks) {
 								let role = this.$store.state.rolesLinks[j];
-								window.console.log(item);
-								window.console.log(role);
 								if (item == role.name) {
 									roles.push(item);
 									break;

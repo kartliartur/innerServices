@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Vuex from 'vuex'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
-Vue.use(Vuex)
 
 const routes = [
   {
@@ -77,26 +76,38 @@ router.beforeEach((to, from, next) => {
     router.push({ path: '/' })
   } else if (localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) {
     let role = localStorage.getItem('role').split(',');
-    window.console.log(Vuex.Store);
-    if (role == 'Руководитель отдела') {
-      if (to.fullPath != '/missions' && to.fullPath != "/sellers")
-        router.push({ path: '/missions' })
-      else
-        next()
-    } else if (role == 'Юридическая служба (СБ)' && to.fullPath != '/security') {
-      router.push({ path: '/security' })
-    } else if (role == 'Логист') {
-      if ( to.fullPath != '/logist' &&  to.fullPath != '/tracking') {
-        router.push({ path: '/logist' })
+    let flag = false;
+    let arr = [];
+    for (let i in store.getters.getRoleLinks) {
+      let item = store.getters.getRoleLinks[i];
+      for (let j in role) {
+        if (role[j] == item.name) {
+          for (let i in item.links) {
+            arr.push(item.links[i])
+          }
+        } 
       }
-      else
-        next()
-    } else {
+    }
+    let index = arr.length;
+    for (let k in arr) {
+      if (to.fullPath != arr[k].link)
+        index--;
+      else 
+        flag = arr[k].link;
+    }
+    if (index == 1 && flag != false)
+      flag = false;
+    else 
+      flag = arr[0].link;
+    if (!flag) {
       next()
+    } else {
+      router.push({ path: flag })
     }
   } else {
     next()
   }
 })
+
 
 export default router

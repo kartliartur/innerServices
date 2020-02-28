@@ -57,6 +57,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		getTtns: state => state.ttns,
+		getRoleLinks: state => state.rolesLinks
 	},
 	mutations: {
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,
