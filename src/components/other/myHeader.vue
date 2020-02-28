@@ -46,10 +46,16 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			}
 		},
 		beforeMount() {
-			let role = localStorage.getItem('role');
+			let role = localStorage.getItem('role').split(',');
 			for (let i = 0; i < this.$store.state.rolesLinks.length; i++) {
-				if (role == this.$store.state.rolesLinks[i].name)
-					this.links = this.$store.state.rolesLinks[i].links;
+				let item = this.$store.state.rolesLinks[i];
+				for (let j in role) {
+					if (role[j] == item.name) {
+						for (let k in item.links) {
+							this.links.push(item.links[k]);
+						}
+					}
+				}
 			}
 			window.console.log(this.links);
 		}

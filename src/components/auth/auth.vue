@@ -49,7 +49,21 @@ export default {
 					if (!res.data.error) {
 						localStorage.setItem('user', res.data.data.name);
 						localStorage.setItem('token', res.data.data.token);
-						localStorage.setItem('role', res.data.data.PerformerRoles);
+						localStorage.setItem('dept', res.data.data.Dept)
+						let roles = [];
+						for (let i in res.data.data.Access_Groups) {
+							let item = res.data.data.Access_Groups[i];
+							for (let j in this.$store.state.rolesLinks) {
+								let role = this.$store.state.rolesLinks[j];
+								window.console.log(item);
+								window.console.log(role);
+								if (item == role.name) {
+									roles.push(item);
+									break;
+								}
+							}
+						}
+						localStorage.setItem('role', roles);
 						if (localStorage.getItem('token') != null) {
 							this.$emit('loggedIn')
 							if(this.$route.params.nextUrl != null){

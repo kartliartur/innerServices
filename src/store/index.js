@@ -26,7 +26,7 @@ export default new Vuex.Store({
 				]
 			},
 			{
-				name: 'Юридическая служба (СБ)',
+				name: 'Юрист (служба безопасности)',
 				links: [
 					{
 						link: '/security',
@@ -35,7 +35,7 @@ export default new Vuex.Store({
 				]
 			},
 			{
-				name: 'Логист',
+				name: 'Логисты',
 				links: [
 					{
 						link: '/logist',

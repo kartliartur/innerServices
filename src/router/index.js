@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
 const routes = [
   {
@@ -74,14 +76,13 @@ router.beforeEach((to, from, next) => {
   if ((localStorage.getItem('token') == null || localStorage.getItem('token') == undefined) && to.fullPath != '/') {
     router.push({ path: '/' })
   } else if (localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) {
-// this.$store.state.fullName = localStorage.getItems('user')
-    let role = localStorage.getItem('role')
+    let role = localStorage.getItem('role').split(',');
+    window.console.log(Vuex.Store);
     if (role == 'Руководитель отдела') {
       if (to.fullPath != '/missions' && to.fullPath != "/sellers")
         router.push({ path: '/missions' })
       else
         next()
-// router.push({ path: '/dashboard' })
     } else if (role == 'Юридическая служба (СБ)' && to.fullPath != '/security') {
       router.push({ path: '/security' })
     } else if (role == 'Логист') {
