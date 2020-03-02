@@ -5,7 +5,9 @@
     <div class="content" >
       <div v-if="customerApproval.length > 0" class="toggle-wrap" @click="openTaskList('customer')">
         <h2>Согласование заказа клиента</h2>
-        <span :class="{ 'active-span': customerIsShow }">></span>
+        <span :class="{ 'active-span': customerIsShow }">
+          <img src="../assets/back.svg" width="15px">
+        </span>
       </div>
       <div class="sales-wrap" :class="{ 'sales-active': customerIsShow }">
         <Sale v-for="(item, idx) in customerApproval" :key="idx"
@@ -19,7 +21,9 @@
       </div>
       <div v-if="supplierApproval.length > 0" class="toggle-wrap" @click="openTaskList('supplier')">
         <h2>Согласование заказа поставщику</h2>
-        <span :class="{ 'active-span': supplierIsShow }">></span>
+        <span :class="{ 'active-span': supplierIsShow }">
+          <img src="../assets/back.svg" width="15px">
+        </span>
       </div>
       <div class="sales-wrap" :class="{ 'sales-active': supplierIsShow }">
         <Sale v-for="(item, idx) in supplierApproval" :key="idx"
@@ -32,8 +36,10 @@
               @toggleModal="isModalOpen=true"/>
       </div>
       <div v-if="salesConditions.length > 0" class="toggle-wrap" @click="openTaskList('sales')">
-        <h2>Изменение условий продаж:</h2>
-        <span :class="{ 'active-span': salesIsShow }">></span>
+        <h2>Изменение условий продаж</h2>
+        <span :class="{ 'active-span': salesIsShow }">
+          <img src="../assets/back.svg" width="15px">
+        </span>
       </div>
       <div class="sales-wrap" :class="{ 'sales-active': salesIsShow }">
         <Sale v-for="(item, idx) in salesConditions" :key="idx"
@@ -176,7 +182,7 @@ export default {
         opacity: 0;
         height: 0;
         transition: height .3s linear;
-        }
+      }
       & .sales-active {
         height: auto;
         z-index: 0;
@@ -189,16 +195,16 @@ export default {
         cursor: pointer;
 
         & h2 {
-          font-size: 1.3em;
+          font-size: 1.1em;
         }
 
         & span {
-          transform: rotate(90deg);
+          transform: rotate(-90deg);
           transition: transform .3s linear;
         }
 
         & .active-span {
-          transform: rotate(-90deg);
+          transform: rotate(-270deg);
         }
       }
     }

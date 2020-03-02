@@ -26,7 +26,7 @@ export default new Vuex.Store({
 				]
 			},
 			{
-				name: 'Юридическая служба (СБ)',
+				name: 'Юрист (служба безопасности)',
 				links: [
 					{
 						link: '/security',
@@ -35,7 +35,7 @@ export default new Vuex.Store({
 				]
 			},
 			{
-				name: 'Логист',
+				name: 'Логисты',
 				links: [
 					{
 						link: '/logist',
@@ -57,6 +57,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		getTtns: state => state.ttns,
+		getRoleLinks: state => state.rolesLinks
 	},
 	mutations: {
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,

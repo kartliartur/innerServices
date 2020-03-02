@@ -2,8 +2,8 @@
 	<transition name="slide-fade">
 		<div class="block-wrap">
 			<div class="block" @click="openModal()" :style="this.taskType === 'Согласовать' ?
-               'background-color: #66ab55;'
-               : 'background-color: #faff3e;'">
+               'background: linear-gradient(120deg, #66ab557a, #fff 45%);'
+               : 'background: linear-gradient(120deg, #eaaa597a, #fff 45%);'">
 				<div class="date">
 					<span class="number">{{ day }}</span>
 					<span class="text">{{ getMonth }}</span>
@@ -56,14 +56,19 @@
 	
 		& div {
 			.flex(column, center, center);
-			width: 50%;
+			width: 40%;
 			& span {
 				text-align: center;
+				font-size: .9em;
 			}
 		}
 
 		& .block {
 			width: 100%;
+		}
+
+		& .column {
+			width: 60%;
 		}
 	}
 
