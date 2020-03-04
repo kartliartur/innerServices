@@ -48,7 +48,7 @@ export default {
 				.then(res => {
 					if (!res.data.error) {
 						localStorage.setItem('user', res.data.data.name);
-						localStorage.setItem('token', res.data.data.token);
+						localStorage.setItem('token', res.data.token);
 						localStorage.setItem('dept', res.data.data.Dept)
 						let roles = [];
 						for (let i in res.data.data.Access_Groups) {

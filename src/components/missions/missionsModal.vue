@@ -17,8 +17,17 @@
 					v-model="limitDate"/>
 				</div>
 			</div>
-			<input type="text" placeholder="Кому?"
+			<div class="select-performer">
+				<label>Назначить на:</label>
+				<div class="performer">
+					<label><input type="radio" class="radio" name="performer" @click="changePerformer('performer')"/>Исполнителя</label>
+					<label><input type="radio" class="radio" name="performer" @click="changePerformer('role')"/>Роль</label>
+				</div>
+			</div>
+
+			<input type="text" @input="searchPerformer" placeholder="Кому"
 						v-model="employee"/>
+			<input type="text" placeholder="От кого">
 			<div class="btn-wrap">
 				<button @click="addMission($event)">OK</button>
 				<button @click="hideModal()">Отмена</button>
@@ -35,10 +44,11 @@
 				missionText: new String(''),
 				isSend: false,
 				limitDate: new String(''),
-				employee: new String('')
+				employee: new String(''),
+				performer: ''
 			}
 		},
-		props: ['isOpen'],
+		props: ['isOpen', 'performers', 'roles'],
 		methods: {
 			hideModal() {
 				this.$emit('toggleModal', false);
@@ -53,6 +63,13 @@
 					isChecked: false
 				}
 				this.$store.commit('ADD_MISSION', data);
+			},
+			changePerformer(performer) {
+				this.performer = performer;
+				window.console.log(this.performer);
+			},
+			searchPerformer () {
+
 			}
 		}
 	}

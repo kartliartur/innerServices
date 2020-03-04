@@ -30,7 +30,10 @@
     </div>
     <MissionsModal
                 v-bind:is-open="isModalOpen"
-                @toggleModal="isModalOpen=false"/>
+                @toggleModal="isModalOpen=false"
+                :performers="this.$store.state.missionPerformers"
+                :roles="this.$store.state.missionRoles"
+    />
     <MissionOpenedModal
             v-bind:is-open="isModalOpened"
             @toggleModal="isModalOpened=false"/>
@@ -75,7 +78,7 @@ export default {
           title: 'Поручения на контроле',
           missionsIsShow: false,
           isFull: false,
-          path: 'instructions'
+          path: 'control-list'
         }
       ]
     }
@@ -95,7 +98,7 @@ export default {
       } else {
         Funcs.doRequest(
           'get',
-          'https://erp.unlogic.ru/ecm/hs/tasks/get/control-list' + item.path,
+          'https://erp.unlogic.ru/ecm/hs/tasks/get/' + item.path,
           null,
           null,
           res => {

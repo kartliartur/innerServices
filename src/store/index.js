@@ -26,6 +26,15 @@ export default new Vuex.Store({
 				]
 			},
 			{
+				name: 'Администратор',
+				links: [
+					{
+						link: '/missions',
+						name: 'Страница поручений'
+					}
+				]
+			},
+			{
 				name: 'Юрист (служба безопасности)',
 				links: [
 					{
