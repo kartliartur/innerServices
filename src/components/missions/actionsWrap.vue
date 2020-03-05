@@ -35,7 +35,8 @@ export default {
 			not_color: '',
 			is_not_show: false,
 			becomeNewDate: false,
-			new_date: Funcs.getTodayDateToInput()[2] + '-' + Funcs.getTodayDateToInput()[1] + '-' + Funcs.getTodayDateToInput()[0]
+			new_date: Funcs.getTodayDateToInput()[2] + '-' + Funcs.getTodayDateToInput()[1] + '-' + Funcs.getTodayDateToInput()[0],
+
 		}
 	},
 	methods: {
@@ -48,7 +49,7 @@ export default {
 					Control_GUID: item.Control_GUID
 				});
 			} 
-			this.updateMissions(data);
+			this.updateMissions(data, 'delete');
 		},
 		showNotification(text, color) {
 			this.not_text = text;
@@ -69,16 +70,30 @@ export default {
 					New_date: this.new_date
 				});
 			} 
-			this.updateMissions(data);
+			this.updateMissions(data, 'change');
 		},
-		updateMissions(data) {
+		updateMissions(data, action = null) {
 			Funcs.doRequest(
 				'post',
 				'https://erp.unlogic.ru/ecm/hs/tasks/update/control',
 				data,
 				null,
 				res => {
-					window.console.log(res);
+					window.console.log(res, data);
+					if (!res.data.error) {
+						this.checkedArr.forEach(v => {
+							if (action === 'delete') {
+								this.$store.dispatch('deleteMisTask', v.idx);
+							}
+							if (action === 'change') {
+								this.$store.dispatch('changeMisDate', {
+									index: v.idx,
+									date: this.new_date + 'T00:00:00'
+								});
+								this.becomeNewDate = false;
+							}
+						});
+					}
 				},
 				() => { this.showNotification('Сервер временно недоступен', 'red') }
 			);			

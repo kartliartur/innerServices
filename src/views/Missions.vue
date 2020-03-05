@@ -126,6 +126,7 @@ export default {
       for (let i in this.$store.state.missions) {
         let item = this.$store.state.missions[i];
         if (item.isChecked) {
+          item.idx = i;
           checkedArr.push(item);
         }
       }
@@ -146,7 +147,7 @@ export default {
         if (!res.data.error) {
           this.$store.state.missionPerformers = res.data.data[0].Performers;
           this.$store.state.missionRoles = res.data.data[1].Performers;
-          window.console.log(this.$store.state.missionPerformers);
+          //window.console.log(this.$store.state.missionPerformers);
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }

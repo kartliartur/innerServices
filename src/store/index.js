@@ -76,6 +76,8 @@ export default new Vuex.Store({
 		ADD_MISSION: (state, data) => state.missions.push(data),
 		DELETE_TASK: (state, index) => state.sales.splice(index, 1),
 		DELETE_SEC_TASK: (state, index) => state.tasks.splice(index, 1),
+		DELETE_MIS_TASK: (state, index) => state.missions.splice(index, 1),
+		CHANGE_MIS_DATE: (state, item) => state.missions[item.index].Deadline = item.date,
 	},
 	actions: {
 		changeActiveTtnIndex: (context, active) => context.commit('CHANGE_ACTIVE_TTN_INDEX', +active),
@@ -83,6 +85,8 @@ export default new Vuex.Store({
 		changeActiveMissionIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_INDEX', +active),
 		deleteTask: (context, index) => context.commit('DELETE_TASK', +index),
 		deleteSecTask: (context, index) => context.commit('DELETE_SEC_TASK', +index),
+		deleteMisTask: (context, index) => context.commit('DELETE_MIS_TASK', +index),
+		changeMisDate: (context, item) => context.commit('CHANGE_MIS_DATE', item),
 	},
 	modules: {
 	}
