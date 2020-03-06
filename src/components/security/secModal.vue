@@ -40,8 +40,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 		},
 		computed: {
 			isActiveIndex() {
-				window.console.log(this.$store.state.activeTaskIndex);
-				if (this.$store.state.activeTaskIndex != null) 
+				if (this.$store.state.activeTaskIndex != null && this.$store.state.tasks.length > 0) 
 					return this.$store.state.tasks[this.$store.state.activeTaskIndex];
 				else 
 					return {
@@ -57,13 +56,15 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			hideModal() {
 				this.$emit('toggleModal', false);
 			},
-			showNotification(text, color) {
+			showNotification(text, color, callback) {
 				this.not_text = text;
 				this.not_color = color;
 				this.is_not_show = true;
 				setTimeout(() => {
 					this.is_not_show = false;
-					this.hideModal();
+					if (callback) {
+						callback();
+					}
 				}, 1500);
 			},
 			finishTask() {
@@ -82,9 +83,13 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							color = 'green';
 							//this.$store.state.tasks.splice(this.$store.state.activeTaskIndex, 1);
 							this.$store.dispatch('deleteSecTask', this.$store.state.activeTaskIndex);
-							this.hideModal();
 						}
-						this.showNotification(res.data.data, color);
+						let message;
+						if (res.data.data.length > 0 && res.data.report.length <= 0)
+							message = res.data.data;
+						else
+							message = res.data.report;						
+						this.showNotification(message, color, () => { this.hideModal(); });
 					},
 					() => { this.showNotification('Сервер временно недоступен', 'red') }
 				)

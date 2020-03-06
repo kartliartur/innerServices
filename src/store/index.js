@@ -17,11 +17,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						link: '/sellers',
-						name: 'Страница продаж'
+						name: 'Согласование задач'
 					},
 					{
 						link: '/missions',
-						name: 'Страница поручений'
+						name: 'Контроль исполнительской дисциплины'
 					}
 				]
 			},
@@ -30,7 +30,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						link: '/missions',
-						name: 'Страница поручений'
+						name: 'Контроль исполнительской дисциплины'
+					},
+					{
+						link: '/dashboard',
+						name: 'Дэшбоард'
 					}
 				]
 			},
@@ -39,7 +43,7 @@ export default new Vuex.Store({
 				links: [
 					{
 						link: '/security',
-						name: 'Страница задач'
+						name: 'Согласование задач'
 					}
 				]
 			},
@@ -48,11 +52,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						link: '/logist',
-						name: 'Страница ттн'
+						name: 'Изменение статуса ТТН'
 					},
 					{
 						link: '/tracking',
-						name: 'Отслеживание'
+						name: 'Оформление остлеживания ТТН'
 					}
 				]
 			}

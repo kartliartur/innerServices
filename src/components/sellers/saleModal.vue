@@ -3,8 +3,8 @@
 		<div class="hover"></div>
 		<div class="modal-frame">
 			<h2>Оставить комментарий</h2>
-			<span>Партнер: {{ isActiveIndex.Partner }}</span>
-			<span>ИНН: {{ isActiveIndex.INN }}</span>
+			<span>Партнер: {{ isActiveIndex.Partner || "Нет" }}</span>
+			<span>ИНН: {{ isActiveIndex.INN || "Нет" }}</span>
 			<span>Автор задачи: {{ isActiveIndex.Author }}</span>
 			<span class="desc">{{ isActiveIndex.Description }}</span>
 			<span>Дата: {{ new Date(isActiveIndex.Deadline).toLocaleString().substring(0, 10) }}</span>
@@ -78,26 +78,33 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 								//this.$store.state.sales.splice(this.$store.state.activeSaleIndex, 1);
 								this.$store.dispatch('deleteTask', this.$store.state.activeSaleIndex);
 								this.$emit('sortSales', this.$store.state.sales);
-								this.hideModal();
 							}
-							this.showNotification(res.data.data, color);
+							let message;
+							if (res.data.data.length > 0 && res.data.report.length <= 0)
+								message = res.data.data;
+							else
+								message = res.data.report;
+							this.showNotification(message, color, () => { this.hideModal() });
 						},
 						() => { this.showNotification('Сервер временно недоступен', 'red'); }
 					);
 				}
 			},
-			showNotification(text, color) {
+			showNotification(text, color, callback) {
 				this.not_text = text;
 				this.not_color = color;
 				this.is_not_show = true;
 				setTimeout(() => {
 					this.is_not_show = false;
+					if (callback) {
+						callback();
+					}
 				}, 1500);
 			}    			
 		},
 		computed: {
 			isActiveIndex() {
-				if (this.$store.state.activeSaleIndex != null) 
+				if (this.$store.state.activeSaleIndex != null && this.$store.state.sales.length > 0) 
 					return this.$store.state.sales[this.$store.state.activeSaleIndex];
 				else 
 					return {
