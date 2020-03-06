@@ -13,19 +13,19 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'addMission',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks/create/control'
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/create/control'
 					},
 					{
 						name: 'updateControl',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks/update/control'
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/update/control'
 					},
 					{
 						name: 'get',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks/get/'
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/get/'
 					},		
 					{
 						name: 'performers',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks/get/performers'
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/get/performers'
 					}			
 				]
 			},
@@ -34,11 +34,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTTNS',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/Waybills'
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/get/Waybills'
 					},
 					{
 						name: 'setStatus',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN'
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/SetStatusTTN'
 					}	
 				]
 			},
@@ -47,11 +47,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTasks',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/get/legalservice'
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/get/legalservice'
 					},
 					{
 						name: 'approve',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/approve/legalservice'
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/approve/legalservice'
 					}	
 				]
 			},
@@ -60,11 +60,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getSellers',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/get/coordinator'
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/get/coordinator'
 					},
 					{
 						name: 'approve',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/approve/coordinator'
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/approve/coordinator'
 					}	
 				]
 			},
@@ -73,11 +73,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'setStatus',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/update/waybill'
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/update/waybill'
 					},
 					{
 						name: 'getTTNS',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/waybills'
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/get/waybills'
 					}	
 				]
 			},
@@ -86,11 +86,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'get',
-						link: 'https://erp.unlogic.ru/erp_local/hs/products/get/'
+						link: 'https://erp.unlogic.ru/erp_local/hs/products-Demo/get/'
 					},
 					{
 						name: 'fullList',
-						link: 'https://erp.unlogic.ru/erp_local/hs/products/get/full-list'
+						link: 'https://erp.unlogic.ru/erp_local/hs/products-Demo/get/full-list'
 					}	
 				]
 			},	

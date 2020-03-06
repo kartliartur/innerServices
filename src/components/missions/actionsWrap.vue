@@ -51,13 +51,14 @@ export default {
 			} 
 			this.updateMissions(data, 'delete');
 		},
-		showNotification(text, color) {
+		showNotification(text, color, callback) {
 			this.not_text = text;
 			this.not_color = color;
 			this.is_not_show = true;
 			setTimeout(() => {
 				this.is_not_show = false;
-				this.hideModal();
+				if (callback)
+					callback()
 			}, 1500);
 		},
 		changeNewDate() {
