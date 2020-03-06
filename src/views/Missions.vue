@@ -102,7 +102,6 @@ export default {
           null,
           null,
           res => {
-            window.console.log(res.data.error);
             if (res.data.error) {
               this.showNotification(res.data.data, 'red');
             } else {
@@ -147,7 +146,6 @@ export default {
         if (!res.data.error) {
           this.$store.state.missionPerformers = res.data.data[0].Performers;
           this.$store.state.missionRoles = res.data.data[1].Performers;
-          //window.console.log(this.$store.state.missionPerformers);
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }
