@@ -64,15 +64,15 @@ export default {
 		}
   },
 	beforeCreate() {
-		// let val = Funcs.dateToInputs(new Date())[2] + '-'
-		// 		+ Funcs.dateToInputs(new Date())[1] + '-'
-		// 		+ Funcs.dateToInputs(new Date())[0];
-		// let val1 = Funcs.dateToInputs(new Date())[2] + '-'
-		// 		+ (Funcs.dateToInputs(new Date())[3]) + '-'
-		// 		+ Funcs.dateToInputs(new Date())[0];
+		let val = Funcs.dateToInputs(new Date())[2] + ''
+				+ Funcs.dateToInputs(new Date())[4] + ''
+				+ Funcs.dateToInputs(new Date())[0];
+		let val1 = Funcs.dateToInputs(new Date())[2] + ''
+				+ (Funcs.dateToInputs(new Date())[3]) + ''
+				+ Funcs.dateToInputs(new Date())[0];
 		let data = {
-			DateStart: "20191208",
-			DateEnd: "20191210"
+			DateStart: val,
+			DateEnd: val1
 		}
 		Funcs.doRequest(
 			'get',

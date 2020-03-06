@@ -79,13 +79,15 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				setTimeout(() => {
 					this.is_not_show = false;
 					this.hideModal();
-				}, 1500);
+				}, 5500);
 			},
 			saveChanges() {
-				let data = new Object();
-				data.TTN_Status = this.newValue;
-				data.TTN_GUID = this.isActiveIndex.TTN_GUID;
-				data.Status_Date = this.currentDate;
+				let data = new Array();
+				data[0] = {
+					TTN_Status: this.newValue,
+					TTN_GUID: this.isActiveIndex.TTN_GUID,
+					Status_Date: this.currentDate
+				}
 				Funcs.doRequest(
 					'put',
 					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/set/StatusTTN',
@@ -95,11 +97,12 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						let color = 'green';
 						if (res.data.error) {
 							color = 'red';
+							this.showNotification(res.data.report, color);
 						} else {
 							this.$store.state.ttns[this.$store.state.activeTtnIndex].TTN_Status = this.newValue;
 							this.$store.state.ttns[this.$store.state.activeTtnIndex].Date_Delivery = this.currentDate;
+							this.showNotification('Успешно', color);
 						}
-						this.showNotification(res.data.report, color);
 					},
 					() => { this.showNotification('Сервер временно недоступен', 'red'); }
 				);
@@ -138,11 +141,6 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						ttnDriverNum: 'Нет'
 					}
 			}
-		},
-		beforeMount() {
-			this.currentDate = Funcs.dateToInputs(new Date())[2] + '-'
-							+ Funcs.dateToInputs(new Date())[1] + '-'
-							+ Funcs.dateToInputs(new Date())[0];
 		}
 	}
 </script>

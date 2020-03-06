@@ -9,10 +9,12 @@ export default {
 		let month = date.getMonth()+1;
 		let year = date.getFullYear();
 		let month_after = date.getMonth()+2;
+		let month_before = date.getMonth();
 		if (month < 10) month = '0' + month;
 		if (month_after < 10) month_after = '0' + month_after;
+		if (month_before < 10) month_before = '0' + month_before;
 		if (day < 10) day = '0' + day;
-		return [day, month, year, month_after];
+		return [day, month, year, month_after, month_before];
 	},
 	dateToDef: (date) => {
 		let year = date.substr(0, 4);

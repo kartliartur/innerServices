@@ -68,6 +68,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						let color = 'green';
 						if (res.data.error) {
 							color = 'red';
+							this.showNotification(res.data.report, color);
 						} else {
 							for (let i = 0; i < this.$store.state.ttns.length; i++) {
 								let item = this.$store.state.ttns[i];	
@@ -75,9 +76,9 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 									item.TTN_Status = this.currentStatus;
 									item.Date_Delivery = this.currentDate;
 								}			
-							}			
+							}
+							this.showNotification('Успешно', color);			
 						}
-						this.showNotification(res.data.report, color);
 					},
 					() => { this.showNotification('Сервер временно недоступен', 'red') }
 				);
