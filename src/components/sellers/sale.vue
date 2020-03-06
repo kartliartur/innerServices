@@ -1,9 +1,7 @@
 <template>
 	<transition name="slide-fade">
 		<div class="block-wrap">
-			<div class="block" @click="openModal()" :style="this.taskType === 'Согласовать' ?
-               'background: linear-gradient(120deg, #66ab557a, #fff 45%);'
-               : 'background: linear-gradient(120deg, #eaaa597a, #fff 45%);'">
+			<div class="block" @click="openModal()" :style="getStyles">
 				<div class="date">
 					<span class="number">{{ day }}</span>
 					<span class="text">{{ getMonth }}</span>
@@ -38,6 +36,11 @@
 					'Декабря'
 				];
 				return months[this.month];
+			},
+			getStyles () {
+				let style = this.taskType === 'Согласовать' ? 'background: linear-gradient(120deg, #66ab557a, #fff 45%);'
+						: 'background: linear-gradient(120deg, #eaaa597a, #fff 45%);'
+				return style;
 			}
 		},
 		methods: {

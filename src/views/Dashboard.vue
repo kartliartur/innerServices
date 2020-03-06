@@ -194,7 +194,7 @@ export default {
           firstDate: '2018-01-17',
           lastDate: '2019-01-17',
           path: 'economy',
-          heads: ['Организация', 'Начальный остаток', 'Приход', 'Расход', 'Конечный остаток'],
+          heads: ['Департамент', 'Валовая прибыль', 'Эффективность(валовая прибыль без НДС)', 'Прибыль от продажи', 'Эффективность (прибыль от продаж) без НДС'],
           content: [],
           isNotWare: true          
         }
@@ -211,6 +211,7 @@ export default {
       }, 2500);
     },
     getChart(path, chart) {
+      //window.console.log(chart);
       chart.isShow = false;
       chart.labels = [];
       chart.data = [];
@@ -218,26 +219,32 @@ export default {
         'post',
         'https://erp.unlogic.ru/erp_local/hs/products/get/' + path,
         {
-          date_first: chart.firstDate,
-          date_last: chart.lastDate,
-          product_code: chart.actualMark
+          DateFirst: chart.firstDate,
+          DateLast: chart.lastDate,
+          ProductCode: chart.actualMark,
         },
         null,
         res => {
           if (!res.data.error) {
             if (res.data.data.length > 0) {
               switch (path) {
-                case 'manager_sales':
+                case 'sales-by-manager':
                   this.managersSuccess(res, chart);
                   break;
-                case 'month_sales':
+                case 'sales-by-month':
                   this.monthSalesSuccess(res, chart);
                   break;
-                case 'client_sales':
+                case 'sales-by-clients':
                   this.clientSalesSuccess(res, chart, 0);
                   break;
-                case 'organization_balance':
+                case 'balance-by-organization':
                   this.organizationSuccess(res, chart);
+                  break;
+                case 'economy':
+                  this.economySuccess(res, chart);
+                  break;
+                case 'cost-by-warehouse':
+                  this.costSuccess(res, chart);
                   break;
                 default:
                   // statements_def
@@ -252,6 +259,37 @@ export default {
         },
         () => { window.console.log('ERR'); }
       );
+    },
+    getFields (data, fields = []) {
+      for (let item in data) {
+        if (typeof data[item] == "object") {
+          this.getFields(data[item], fields);
+        } else {
+          if (item === "Dept") {
+            data[item] = {
+              text: data[item],
+              isTitle: true
+            };
+          }
+          fields.push(data[item]);}
+      }
+      return fields;
+    },
+    economySuccess (res, table) {
+      table.isShow = false;
+      table.content = [];
+      let data = res.data.data;
+      let fields = [];
+      data.forEach(item => {
+        fields = this.getFields(item);
+        fields.splice(table.heads.length);
+        table.content.push(fields);
+      });
+      table.isShow = true;
+
+    },
+    costSuccess () {
+
     },
     organizationSuccess(res, table) {
       table.isShow = false;
@@ -327,6 +365,7 @@ export default {
       chart.isShow = true;                   
     },
     monthSalesSuccess(res, chart) {
+      window.console.log(res, chart);
       for (let i in res.data.data) {
         let month = new Date(res.data.data[i].Month).getMonth();
         let year = new Date(res.data.data[i].Month).getFullYear();

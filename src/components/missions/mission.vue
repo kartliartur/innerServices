@@ -1,7 +1,7 @@
 <template>
 	<transition name="slide-fade">
-		<div class="block-wrap" @click="openModal()">
-			<div class="block"
+		<div class="block-wrap">
+			<div class="block" @click="openModal()"
 				v-bind:class="{ active: $store.state.missions[missionIndex].isChecked }">
 				<div class="head">
 					<span class="title">{{ title }}</span>

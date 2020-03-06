@@ -30,7 +30,10 @@
     </div>
     <MissionsModal
                 v-bind:is-open="isModalOpen"
-                @toggleModal="isModalOpen=false"/>
+                @toggleModal="isModalOpen=false"
+                :performers="this.$store.state.missionPerformers"
+                :roles="this.$store.state.missionRoles"
+    />
     <MissionOpenedModal
             v-bind:is-open="isModalOpened"
             @toggleModal="isModalOpened=false"/>
@@ -75,7 +78,7 @@ export default {
           title: 'Поручения на контроле',
           missionsIsShow: false,
           isFull: false,
-          path: 'instructions'
+          path: 'control-list'
         }
       ]
     }
@@ -95,7 +98,7 @@ export default {
       } else {
         Funcs.doRequest(
           'get',
-          'https://erp.unlogic.ru/ecm/hs/tasks/get/control-list' + item.path,
+          'https://erp.unlogic.ru/ecm/hs/tasks/get/' + item.path,
           null,
           null,
           res => {
@@ -123,6 +126,7 @@ export default {
       for (let i in this.$store.state.missions) {
         let item = this.$store.state.missions[i];
         if (item.isChecked) {
+          item.idx = i;
           checkedArr.push(item);
         }
       }
@@ -143,7 +147,7 @@ export default {
         if (!res.data.error) {
           this.$store.state.missionPerformers = res.data.data[0].Performers;
           this.$store.state.missionRoles = res.data.data[1].Performers;
-          window.console.log(this.$store.state.missionPerformers);
+          //window.console.log(this.$store.state.missionPerformers);
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }

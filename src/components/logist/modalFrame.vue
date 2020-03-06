@@ -90,7 +90,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				data.Pickup = this.isActiveIndex.Pickup;
 				Funcs.doRequest(
 					'put',
-					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN',
+					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/set/StatusTTN',
 					data,
 					null,
 					res => {
