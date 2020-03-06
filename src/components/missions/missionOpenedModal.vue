@@ -103,10 +103,7 @@
 			}
 			
 			& span {
-				background: #fff;
-				padding: 10px;
-				color: #000;
-				border-radius: 5px;
+				color: #fff;
 				margin: 10px 0;
 			}
 
@@ -122,7 +119,7 @@
 				width: 100%;
 				padding: 10px 0;
 				& div {
-					.flex(row, flex-start, center);
+					.flex(row, space-between, center);
 					width: 100%;
 					margin: 10px auto;
 					& span {
@@ -130,7 +127,7 @@
 					}
 					& input {
 						width: 60%;
-						margin: 0 auto;
+						margin: 0;
 					}
 					& input[type="checkbox"] {
 						.kartli-check();

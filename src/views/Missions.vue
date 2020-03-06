@@ -13,7 +13,9 @@
       <div class="toggle-wrap"
         @click="openMissions(obj)">
         <h2>{{ obj.title }}</h2>
-        <span :class="{ 'active-span': obj.missionsIsShow }">></span>
+        <span :class="{ 'active-span': obj.missionsIsShow }">
+          <img src="../assets/back.svg" width="15px">
+        </span>
       </div>
       <div class="missions-wrap" :class="{ active: obj.missionsIsShow }">
         <Mission
@@ -191,13 +193,13 @@ export default {
       }
 
       & span {
-        transform: rotate(90deg);
+        transform: rotate(-90deg);
         transition: transform .3s linear;
       }
 
       & .active-span {
-        transform: rotate(-90deg);
-      }      
+        transform: rotate(-270deg);
+      }     
     }
 	}
 </style>

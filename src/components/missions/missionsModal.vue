@@ -175,6 +175,12 @@
 			background: @green-color;
 			color: #fff;
 
+			& input[type="checkbox"], input[type="radio"] {
+				.kartli-check();
+				width: 20px;
+				height: 20px;
+			}
+
 			& h2 {
 				width: 100%;
 				padding: 10px 0;
@@ -182,6 +188,21 @@
 				font-size: 1.2em;	
 				border-bottom: 1px solid #eee;
 				margin-bottom: 10px;
+			}
+
+			& .select-performer {
+				.flex(column, center, cetner);
+				width: 100%;
+				& label {
+					text-align: center;
+					padding: 10px 0;
+				}
+				& .performer {
+					.flex(row, center, center);
+					& input {
+						margin: auto 10px;
+					}
+				}
 			}
 			
 			& textarea, input {
@@ -212,11 +233,6 @@
 						width: 60%;
 						margin: 0 auto;
 					}
-					& input[type="checkbox"] {
-						.kartli-check();
-						width: 20px;
-						height: 20px;
-					}
 				}
 				& button {
 					.button(5px, @green-color, #fff);
@@ -229,7 +245,7 @@
 			}
 			& .hidden-list {
 				.flex(column, flex-start, center);
-				top: 100%;
+				top: 99%;
 				left: 0;
 				width: 100%;
 				height: 0;
