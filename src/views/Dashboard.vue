@@ -217,7 +217,7 @@ export default {
       chart.data = [];
       Funcs.doRequest(
         'post',
-        'https://erp.unlogic.ru/erp_local/hs/products/get/' + path,
+        this.$store.getters.getLinkByName('dashboard', 'get') + path,
         {
           DateFirst: chart.firstDate,
           DateLast: chart.lastDate,
@@ -392,7 +392,7 @@ export default {
   beforeMount() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/erp_local/hs/products/get/full-list',
+      this.$store.getters.getLinkByName('dashboard','fullList'),
       null,
       null,
       res => {

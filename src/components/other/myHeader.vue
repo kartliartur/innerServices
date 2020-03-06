@@ -31,7 +31,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			logout() {
 				Funcs.doRequest(
 					'get',
-					'https://erp.unlogic.ru/api/v1/auth/logout',
+					this.$store.getters.getLinkByName('auth', 'logout'),
 					null, 
 					null,
 					res => {		

@@ -2,7 +2,7 @@
 	<div class="modal-wrap" :class="{ active: isOpen }">
 		<div class="hover"></div>
 		<div class="modal-frame">
-			<h2>Поручение</h2>
+			<h2 class="title">Поручение</h2>
 			<textarea placeholder="Что сделать?"
 						v-model="missionText"/>
 			<div class="btn-wrap">
@@ -44,14 +44,23 @@
 				<button @click="addMission($event)">OK</button>
 				<button @click="hideModal()">Отмена</button>
 			</div>
+			<myNotification
+				:text="not_text"
+				:textColor="not_color"
+				v-show="is_not_show"/>
 		</div>
 	</div>
 </template>
 
-<script>
+<script>	
+
+	import myNotification from '@/components/other/notification.vue'
 	import Funcs from '../../assets/js-funcs/default-funcs'
 	export default {
 		name: 'missionsModal',
+		components: {
+			myNotification
+		},
 		data: () => {
 			return {
 				missionText: new String(''),
@@ -62,13 +71,25 @@
 				isFocus: false,
 				items: [],
 				styleList: '',
-				Performer_GUID: ''
+				Performer_GUID: '',
+				not_text: '',
+				not_color: '',
+				is_not_show: false
 			}
 		},
 		props: ['isOpen', 'performers', 'roles'],
 		methods: {
 			hideModal() {
 				this.$emit('toggleModal', false);
+			},
+			showNotification(text, color) {
+				this.not_text = text;
+				this.not_color = color;
+				this.is_not_show = true;
+				setTimeout(() => {
+					this.is_not_show = false;
+					this.hideModal();
+				}, 1500);
 			},
 			selectEmployee (item) {
 				this.employee = item.Performer_name;
@@ -88,13 +109,15 @@
 				}
 				Funcs.doRequest(
 						"post",
-						"https://erp.unlogic.ru/ecm/hs/tasks/create/control",
+						this.$store.getters.getLinkByName('missions', 'addMission'),
 						data,
 						null,
 						(res) => {
 							if (!res.error) {
+								data.Control_GUID = res.data.data;
+								data.isVissible = true;
 								this.$store.commit('ADD_MISSION', data);
-								this.hideModal();
+								this.showNotification('Успешно', 'green');
 							}
 						}
 				);
@@ -181,7 +204,7 @@
 				height: 20px;
 			}
 
-			& h2 {
+			& h2.title {
 				width: 100%;
 				padding: 10px 0;
 				text-align: left;		

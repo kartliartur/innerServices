@@ -44,7 +44,7 @@ export default {
 			}
 			if (this.name.length > 0 && this.password.length > 0) {
 				axios
-				.post('https://erp.unlogic.ru/api/v1/auth/login', data)
+				.post(this.$store.getters.getLinkByName('auth','login'), data)
 				.then(res => {
 					if (!res.data.error) {
 						localStorage.setItem('user', res.data.data.name);

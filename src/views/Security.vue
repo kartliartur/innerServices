@@ -61,7 +61,7 @@ export default {
   beforeCreate() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/erp_local/hs/tasks/get/legalservice',
+      this.$store.getters.getLinkByName('security','getTasks'),
       null,
       null,
       res => {

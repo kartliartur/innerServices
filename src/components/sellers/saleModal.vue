@@ -65,7 +65,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						delete data.confirmWithDirector;
 					Funcs.doRequest(
 						'post',
-						'https://erp.unlogic.ru/erp_local/hs/tasks/approve/coordinator',
+						this.$store.getters.getLinkByName('sellers','approve'),
 						data,
 						null,
 						res => {

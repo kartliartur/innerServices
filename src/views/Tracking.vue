@@ -72,7 +72,7 @@
                 if (this.Waybill_GUID || this.Waybill_GUID != "") {
                     Funcs.doRequest(
                         "post",
-                        "https://erp.unlogic.ru/erp_local/hs/WaybillClient/update/waybill",
+                        this.$store.getters.getLinkByName('tracking', 'setStatus'),
                         data,
                         null,
                         res => {
@@ -114,10 +114,10 @@
         beforeCreate() {
            Funcs.doRequest(
                "post",
-               "https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/waybills",
-               null,
-               null,
-               res => {
+                this.$store.getters.getLinkByName('tracking', 'getTTNS'),
+                null,
+                null,
+                res => {
                    let val = {};
                     res.data.data.forEach(elem => {
                         val = {
@@ -131,10 +131,10 @@
                         }
                     });
                     window.console.log(this.options);
-               },
-               () => {
+                },
+                () => {
                    alert("Ошибка! Список накладных не удалось получить");
-               }
+                }
            );
         },
         mounted() {

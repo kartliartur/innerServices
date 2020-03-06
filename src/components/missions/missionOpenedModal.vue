@@ -2,7 +2,7 @@
 	<div class="modal-wrap" :class="{ active: isOpen }">
 		<div class="hover"></div>
 		<div class="modal-frame">
-			<h2>Поручение</h2>
+			<h2 class="title">Поручение</h2>
 			<span class="desc">Описание: {{ isActiveIndex.Description }}</span>
 			<span>Исполнитель: {{ isActiveIndex.Performer }}</span>
 			<span>Срок: {{ isActiveIndex.Deadline || 'Отсутствует' }}</span>
@@ -93,7 +93,7 @@
 			background: @green-color;
 			color: #fff;
 
-			& h2 {
+			& h2.title {
 				width: 100%;
 				padding: 10px 0;
 				text-align: left;		

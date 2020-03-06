@@ -7,6 +7,107 @@ export default new Vuex.Store({
 	state: {
 		fullName: localStorage.getItem('user'),
 		role: new String(''),
+		requestsLinks: [
+			{
+				name: 'missions',
+				links: [
+					{
+						name: 'addMission',
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks/create/control'
+					},
+					{
+						name: 'updateControl',
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks/update/control'
+					},
+					{
+						name: 'get',
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks/get/'
+					},		
+					{
+						name: 'performers',
+						link: 'https://erp.unlogic.ru/ecm/hs/tasks/get/performers'
+					}			
+				]
+			},
+			{
+				name: 'logist',
+				links: [
+					{
+						name: 'getTTNS',
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/Waybills'
+					},
+					{
+						name: 'setStatus',
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/SetStatusTTN'
+					}	
+				]
+			},
+			{
+				name: 'security',
+				links: [
+					{
+						name: 'getTasks',
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/get/legalservice'
+					},
+					{
+						name: 'approve',
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/approve/legalservice'
+					}	
+				]
+			},
+			{
+				name: 'sellers',
+				links: [
+					{
+						name: 'getSellers',
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/get/coordinator'
+					},
+					{
+						name: 'approve',
+						link: 'https://erp.unlogic.ru/erp_local/hs/tasks/approve/coordinator'
+					}	
+				]
+			},
+			{
+				name: 'tracking',
+				links: [
+					{
+						name: 'setStatus',
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/update/waybill'
+					},
+					{
+						name: 'getTTNS',
+						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/waybills'
+					}	
+				]
+			},
+			{
+				name: 'dashboard',
+				links: [
+					{
+						name: 'get',
+						link: 'https://erp.unlogic.ru/erp_local/hs/products/get/'
+					},
+					{
+						name: 'fullList',
+						link: 'https://erp.unlogic.ru/erp_local/hs/products/get/full-list'
+					}	
+				]
+			},	
+			{
+				name: 'auth',
+				links: [
+					{
+						name: 'login',
+						link: 'https://erp.unlogic.ru/api/v1/auth/login'
+					},
+					{
+						name: 'logout',
+						link: 'https://erp.unlogic.ru/api/v1/auth/logout'
+					}
+				]
+			}		
+		],
 		activeTtnIndex: null,
 		activeSaleIndex: null,
 		activeTaskIndex: null,
@@ -70,7 +171,18 @@ export default new Vuex.Store({
 	},
 	getters: {
 		getTtns: state => state.ttns,
-		getRoleLinks: state => state.rolesLinks
+		getRoleLinks: state => state.rolesLinks,
+		getLinkByName: state => (name,surname) => {
+			for (let i in state.requestsLinks) {
+				if (state.requestsLinks[i].name === name) {
+					for (let j in state.requestsLinks[i].links) {
+						let item = state.requestsLinks[i].links[j];
+						if (item.name === surname)
+							return item.link;
+					}
+				}
+			}
+		}
 	},
 	mutations: {
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,

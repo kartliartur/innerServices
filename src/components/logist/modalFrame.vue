@@ -90,7 +90,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}
 				Funcs.doRequest(
 					'put',
-					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/set/StatusTTN',
+					this.$store.getters.getLinkByName('logist','setStatus'),
 					data,
 					null,
 					res => {

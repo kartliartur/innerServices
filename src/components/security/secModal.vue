@@ -74,7 +74,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}
 				Funcs.doRequest(
 					'post',
-					'https://erp.unlogic.ru/erp_local/hs/tasks/approve/legalservice',
+					this.$store.getters.getLinkByName('security','approve'),
 					data,
 					null,
 					res => {

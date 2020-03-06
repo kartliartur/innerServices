@@ -76,26 +76,30 @@ export default {
 		}
 		Funcs.doRequest(
 			'get',
-			'https://erp.unlogic.ru/erp_local/hs/WaybillClient/get/Waybills',
+			this.$store.getters.getLinkByName('logist','getTTNS'),
 			null,
 			data,
 			res => {
-        if (!res.data.error) {
-          for (let i = 0; i <  res.data.data.length; i++) {
-            res.data.data[i].TTN_Date = Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[2] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0];
-            res.data.data[i].Date_Delivery = Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[2] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1] + '-'
-              + Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0];
-            res.data.data[i].isVissible = true
-            res.data.data[i].isChecked = false;
-          }
-          this.$store.state.ttns = res.data.data;
-        } else {
-          this.showNotification(res.data.report, 'red');
-        }
-      },
+				if (!res.data.error) {
+					if (res.data.data.length === 0) {
+						this.showNotification('Список пуст!', 'green')
+					} else {
+						for (let i = 0; i <  res.data.data.length; i++) {
+							res.data.data[i].TTN_Date = Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[2] + '-'
+														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1] + '-'
+														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0];
+							res.data.data[i].Date_Delivery = Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[2] + '-'
+															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1] + '-'
+															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0];
+							res.data.data[i].isVissible = true
+							res.data.data[i].isChecked = false;
+						}
+						this.$store.state.ttns = res.data.data;
+					}
+				} else {
+					this.showNotification(res.data.report, 'red');
+				}
+			},
       () => { this.showNotification('Сервер временно недоступен', 'red'); }
 		)
 	}

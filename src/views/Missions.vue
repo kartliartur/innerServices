@@ -100,7 +100,7 @@ export default {
       } else {
         Funcs.doRequest(
           'get',
-          'https://erp.unlogic.ru/ecm/hs/tasks/get/' + item.path,
+          this.$store.getters.getLinkByName('missions', 'get') + item.path,
           null,
           null,
           res => {
@@ -140,7 +140,7 @@ export default {
   beforeCreate() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/ecm/hs/tasks/get/performers',
+      this.$store.getters.getLinkByName('missions', 'performers'),
       null,
       null,
       res => {

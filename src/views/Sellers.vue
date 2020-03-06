@@ -144,7 +144,7 @@ export default {
   beforeCreate() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/erp_local/hs/tasks/get/coordinator',
+      this.$store.getters.getLinkByName('sellers', 'getSellers'),
       null,
       null,
       res => {

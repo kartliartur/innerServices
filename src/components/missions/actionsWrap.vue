@@ -75,11 +75,10 @@ export default {
 		updateMissions(data, action = null) {
 			Funcs.doRequest(
 				'post',
-				'https://erp.unlogic.ru/ecm/hs/tasks/update/control',
+				this.getLink,
 				data,
 				null,
 				res => {
-					window.console.log(res, data);
 					if (!res.data.error) {
 						this.checkedArr.forEach(v => {
 							if (action === 'delete') {
@@ -93,10 +92,18 @@ export default {
 								this.becomeNewDate = false;
 							}
 						});
+						this.showNotification('Успешно', 'green');
+					} else {
+						this.showNotification(res.data.report, 'red');
 					}
 				},
 				() => { this.showNotification('Сервер временно недоступен', 'red') }
 			);
+		}
+	},
+	computed: {
+		getLink() {
+			return this.$store.getters.getLinkByName('missions', 'updateControl');
 		}
 	}
 }
