@@ -161,6 +161,13 @@
 			} else {
 				this.styleList = "height: 84px;";
 			}
+		},
+		beforeMount() {
+			let date = new Date();
+			date.setDate(date.getDate()+7);
+			this.limitDate = Funcs.dateToInputs(date)[2] + '-'
+							+ Funcs.dateToInputs(date)[1] + '-'
+							+ Funcs.dateToInputs(date)[0];
 		}
 	}
 </script>
