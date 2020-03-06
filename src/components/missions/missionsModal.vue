@@ -24,18 +24,20 @@
 					<label><input type="radio" class="radio" name="performer" @click="changePerformer('role')"/>Роль</label>
 				</div>
 			</div>
-			<input
-					type="text"
-					placeholder="Кому"
-					@input="searchPerformer"
-					v-model="this.employee"
-					@focus="isFocus = true"
-					@blur="isFocus = false"
-			>
-			<div class="hidden-list" :class="{ activeList: isFocus }" :style="this.styleList">
+			<div class="search">
+				<input
+						type="text"
+						placeholder="Кому"
+						@input="searchPerformer"
+						v-model="employee"
+						@focus="isFocus = true"
+						@blur="isFocus = false"
+				>
+				<div class="hidden-list" :class="{ activeList: isFocus }" :style="isFocus ? this.styleList: ''">
 				<span v-for="(item, idx) in this.items" :key="idx" @click="selectEmployee(item)">
 					{{ item.Performer_name }}
 				</span>
+				</div>
 			</div>
 			<!--<input type="text" placeholder="От кого">-->
 			<div class="btn-wrap">
@@ -47,6 +49,7 @@
 </template>
 
 <script>
+	import Funcs from '../../assets/js-funcs/default-funcs'
 	export default {
 		name: 'missionsModal',
 		data: () => {
@@ -54,11 +57,12 @@
 				missionText: new String(''),
 				isSend: false,
 				limitDate: new String(''),
-				employee: new String(''),
+				employee: '',
 				performer: '',
 				isFocus: false,
 				items: [],
-				styleList: ''
+				styleList: '',
+				Performer_GUID: ''
 			}
 		},
 		props: ['isOpen', 'performers', 'roles'],
@@ -68,24 +72,39 @@
 			},
 			selectEmployee (item) {
 				this.employee = item.Performer_name;
+				this.Performer_GUID = item.Performer_GUID;
 			},
 			addMission(e) {
 				e.preventDefault();
 				let data = {
-					title: this.missionText,
-					employee: this.employee,
-					limitDate: this.limitDate,
+					Description: this.missionText,
+					Performer_name: this.employee,
+					Performer_GUID: this.Performer_GUID,
+					Deadline: this.limitDate,
+					SendTask: this.isSend,
+					Controler_GUID: "",
 					createDate: new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate(),
 					isChecked: false
 				}
-				this.$store.commit('ADD_MISSION', data);
+				Funcs.doRequest(
+						"post",
+						"https://erp.unlogic.ru/ecm/hs/tasks/create/control",
+						data,
+						null,
+						(res) => {
+							if (!res.error) {
+								this.$store.commit('ADD_MISSION', data);
+								this.hideModal();
+							}
+						}
+				);
+
 			},
 			changePerformer(performer) {
 				this.performer = performer;
 				window.console.log(this.performer);
 			},
 			searchPerformer () {
-				//window.console.log(this.performers);
 				if (this.employee && this.employee !== '' && this.employee !== undefined) {
 					if (this.performer == 'role') {
 						this.items = this.roles.filter(e => {
@@ -114,6 +133,11 @@
 		},
 		mounted() {
 			this.items = this.performer === 'role' ? this.roles : this.performers;
+			if (this.items.length <= 3) {
+				this.styleList = "height: " + 28 * this.items.length + "px;";
+			} else {
+				this.styleList = "height: 84px;";
+			}
 		}
 	}
 </script>
@@ -212,7 +236,8 @@
 				border: 1px solid @green-color;
 				background: #fafafa;
 				z-index: -2;
-				overflow: scroll;
+				overflow-y: scroll;
+				overflow-x: visible;
 				transition: height .3s linear;
 
 				& span {
@@ -231,6 +256,9 @@
 				& span {
 					color: #000;
 				}
+			}
+			& .search {
+				width: 100%;
 			}
 		}
 	}

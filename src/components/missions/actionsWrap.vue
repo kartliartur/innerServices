@@ -83,7 +83,7 @@ export default {
 					if (!res.data.error) {
 						this.checkedArr.forEach(v => {
 							if (action === 'delete') {
-								this.$store.dispatch('deleteMisTask', v.idx);
+								this.$store.dispatch('deleteMisTask');
 							}
 							if (action === 'change') {
 								this.$store.dispatch('changeMisDate', {
@@ -96,7 +96,7 @@ export default {
 					}
 				},
 				() => { this.showNotification('Сервер временно недоступен', 'red') }
-			);			
+			);
 		}
 	}
 }
