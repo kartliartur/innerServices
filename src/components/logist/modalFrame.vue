@@ -7,7 +7,7 @@
 		<div class="hover"></div>
 		<div class="modal-frame">
 			<div class="row">
-				<span>№{{ isActiveIndex.TTN_Number }}</span>
+				<span>№{{ isActiveIndex.Number }}</span>
 				<span>от {{ isActiveIndex.TTN_Date }}</span>
 			</div>
 			<div class="row">
@@ -24,7 +24,7 @@
 			</div>
 			<div class="row">
 				<span>Дата доставки(отправки):</span>
-				<input type="date" :value="isActiveIndex.Date_Delivery">
+				<input type="date" :value="isActiveIndex.Date_Delivery" @change="dateChange()" id="status_date">
 			</div>
 			<div class="row">
 				<span>Транспортная компания:</span>
@@ -64,7 +64,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					newValue: null,
 					not_text: 'Ошибка',
 					not_color: 'red',
-					is_not_show: false
+					is_not_show: false,
+					currentDate: ''
 			}
 		},
 		methods: {
@@ -83,11 +84,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			saveChanges() {
 				let data = new Object();
 				data.TTN_Status = this.newValue;
-				data.old_status = this.isActiveIndex.TTN_Status;
-				data.Number = this.isActiveIndex.TTN_Number;
-				data.TTN_Date = this.isActiveIndex.TTN_Date;
-				data.Status_Date = this.isActiveIndex.Date_Delivery;
-				data.Pickup = this.isActiveIndex.Pickup;
+				data.TTN_GUID = this.isActiveIndex.TTN_GUID;
+				data.Status_Date = this.currentDate;
 				Funcs.doRequest(
 					'put',
 					'https://erp.unlogic.ru/erp_local/hs/WaybillClient/set/StatusTTN',
@@ -99,8 +97,9 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 							color = 'red';
 						} else {
 							this.$store.state.ttns[this.$store.state.activeTtnIndex].TTN_Status = this.newValue;
+							this.$store.state.ttns[this.$store.state.activeTtnIndex].Date_Delivery = this.currentDate;
 						}
-						this.showNotification(res.data.data, color);
+						this.showNotification(res.data.report, color);
 					},
 					() => { this.showNotification('Сервер временно недоступен', 'red'); }
 				);
@@ -118,6 +117,9 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			},
 			statusChange() {
 				this.newValue = document.getElementById('status_select').value;
+			},
+			dateChange() {
+				this.currentDate = document.getElementById('status_date').value;
 			}
 		},
 		computed: {
@@ -136,6 +138,11 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						ttnDriverNum: 'Нет'
 					}
 			}
+		},
+		beforeMount() {
+			this.currentDate = Funcs.dateToInputs(new Date())[2] + '-'
+							+ Funcs.dateToInputs(new Date())[1] + '-'
+							+ Funcs.dateToInputs(new Date())[0];
 		}
 	}
 </script>

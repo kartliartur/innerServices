@@ -6,7 +6,7 @@
     <div class="blocks-container">
       <LogistBlock
           v-for="(item, idx) in $store.state.ttns" :key="idx"
-          :ttn-number="item.TTN_Number"
+          :ttn-number="item.Number"
           :ttn-date="item.TTN_Date"
           :ttn-status="item.TTN_Status"
           :ttn-company="item.Payment_Company"
@@ -93,7 +93,7 @@ export default {
           }
           this.$store.state.ttns = res.data.data;
         } else {
-          this.showNotification(res.data.data, 'red');
+          this.showNotification(res.data.report, 'red');
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red'); }

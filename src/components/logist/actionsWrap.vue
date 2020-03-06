@@ -2,9 +2,12 @@
 	<transition name="slide-fade">
 		<div class="actions-wrap" v-show="getSome">
 			<select v-model="currentStatus">
-				<option value="Товар отгружен">Товар отгружен</option>
-				<option value="Отменено">Отменено</option>
-				<option value="Товар получен">Товар получен</option>
+				<option
+					v-for="(item, idx) in $store.state.statusTypes" :key="idx"
+					:value="item"
+					>
+					{{ item }}
+				</option>				
 			</select>
 			<input type="date" v-model="currentDate">
 			<div class="btn-wrap">
@@ -43,7 +46,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				this.is_not_show = true;
 				setTimeout(() => {
 					this.is_not_show = false;
-				}, 1500);
+				}, 5500);
 			},
 			saveChanges() {
 				let arr = new Array();
@@ -53,7 +56,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						arr.push(new Object());
 						arr[arr.length-1].TTN_Status = this.currentStatus;
 						arr[arr.length-1].TTN_GUID = item.TTN_GUID;
-						arr[arr.length-1].Status_Date = item.Date_Delivery;
+						arr[arr.length-1].Status_Date = this.currentDate;
 					}
 				}
 				Funcs.doRequest(
@@ -74,7 +77,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 								}			
 							}			
 						}
-						this.showNotification(res.data.data, color);
+						this.showNotification(res.data.report, color);
 					},
 					() => { this.showNotification('Сервер временно недоступен', 'red') }
 				);
@@ -90,6 +93,11 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				}
 				return flag;
 			}
+		},
+		beforeMount() {
+			this.currentDate = Funcs.dateToInputs(new Date())[2] + '-'
+							+ Funcs.dateToInputs(new Date())[1] + '-'
+							+ Funcs.dateToInputs(new Date())[0];
 		}
 	}
 </script>

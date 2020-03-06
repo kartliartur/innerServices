@@ -32,6 +32,9 @@
 	@import url('../../assets/less-templates/base.less');
 	.block-wrap {
 		.default-block();
+		.block span {
+			font-size: .8em;
+		}
 	}
 
 	.slide-fade-enter-active, .slide-fade-leave-active {

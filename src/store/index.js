@@ -43,7 +43,7 @@ export default new Vuex.Store({
 				links: [
 					{
 						link: '/security',
-						name: 'Согласование задач'
+						name: 'Согласование задач безопасности'
 					}
 				]
 			},
@@ -66,7 +66,7 @@ export default new Vuex.Store({
 		missions: [],
 		missionPerformers: [],
 		tasks: [],
-		statusTypes: ['Без статуса', 'Товар отгружен', 'Отменено', 'Товар получен']
+		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен']
 	},
 	getters: {
 		getTtns: state => state.ttns,

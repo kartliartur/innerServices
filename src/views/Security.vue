@@ -71,7 +71,7 @@ export default {
           else 
             this.securityTitle = 'Список пуст';
         } else {
-          this.showNotification('Список задач пуст', 'red')
+          this.showNotification(res.data.report, 'red')
         }
       },
       () => { this.showNotification('Сервер временно недоступен', 'red') }
