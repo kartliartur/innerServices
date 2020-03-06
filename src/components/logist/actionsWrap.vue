@@ -51,12 +51,9 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					let item = this.$store.state.ttns[i];
 					if (item.isChecked == true) {
 						arr.push(new Object());
-						arr[arr.length-1].old_status = item.TTN_Status;
 						arr[arr.length-1].TTN_Status = this.currentStatus;
-						arr[arr.length-1].Number = item.TTN_Number;
+						arr[arr.length-1].TTN_GUID = item.TTN_GUID;
 						arr[arr.length-1].Status_Date = item.Date_Delivery;
-						arr[arr.length-1].TTN_Date = item.TTN_Date;
-						arr[arr.length-1].Pickup = item.Pickup;
 					}
 				}
 				Funcs.doRequest(

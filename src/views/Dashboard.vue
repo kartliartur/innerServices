@@ -216,7 +216,7 @@ export default {
       chart.data = [];
       Funcs.doRequest(
         'post',
-        'https://erp.unlogic.ru/erp_base/hs/products/get/' + path,
+        'https://erp.unlogic.ru/erp_local/hs/products/get/' + path,
         {
           date_first: chart.firstDate,
           date_last: chart.lastDate,
@@ -353,7 +353,7 @@ export default {
   beforeMount() {
     Funcs.doRequest(
       'get',
-      'https://erp.unlogic.ru/erp_base/hs/products/get/full-list',
+      'https://erp.unlogic.ru/erp_local/hs/products/get/full-list',
       null,
       null,
       res => {

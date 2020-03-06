@@ -116,11 +116,11 @@ export default {
           break;
       }
     },
-    sortSales (sales) {
+    sortSales () {
       this.customerApproval = [];
       this.supplierApproval = [];
       this.salesConditions = [];
-      sales.forEach((item, idx) => {
+      this.$store.state.sales.forEach((item, idx) => {
         switch (item.BusinessProcess) {
           case "Согласование заказа клиента":
             this.customerApproval.push(item);
@@ -135,6 +135,9 @@ export default {
             this.salesConditions[this.salesConditions.length - 1].lostIndex = idx;
             break;
         }
+        window.console.log(this.customerApproval);
+        window.console.log(this.supplierApproval);
+        window.console.log(this.salesConditions);
       });
     }
   },
@@ -146,10 +149,15 @@ export default {
       null,
       res => {
         if (res.data.error) {
-          this.showNotification(res.data.data, 'red');
+          let message;
+          if (res.data.data.length > 0 && res.data.report.length <= 0)
+            message = res.data.data;
+          else
+            message = res.data.report;
+          this.showNotification(message, 'red');
         } else {
           this.$store.state.sales = res.data.data;
-          this.sortSales(this.$store.state.sales);
+          this.sortSales();
         }
 
       },
