@@ -46,6 +46,7 @@ export default {
 				axios
 				.post(this.$store.getters.getLinkByName('auth','login'), data)
 				.then(res => {
+					window.console.log('Рамиль ЛОХ');
 					if (!res.data.error) {
 						localStorage.setItem('user', res.data.data.name);
 						localStorage.setItem('token', res.data.token);
