@@ -71,11 +71,14 @@ export default {
 							}
 						}
 					} else {
-						this.showNotification(res.data.data, 'red');
+						this.showNotification(res.data.report, 'red');
 					}
 				})
 				.catch(res => {
-					window.console.log(res);
+					if (res == 'Error: Request failed with status code 401') {
+						this.showNotification('Пользователя не существует', 'red');
+					} else 
+						this.showNotification('Сервер временно недоступен', 'red');
 				});
 			}
 		},
