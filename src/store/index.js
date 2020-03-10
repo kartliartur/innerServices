@@ -34,11 +34,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTTNS',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/get/Waybills'
+						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/get/Waybills'
 					},
 					{
 						name: 'setStatus',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/SetStatusTTN'
+						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/SetStatusTTN'
 					}	
 				]
 			},
@@ -47,11 +47,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTasks',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/get/legalservice'
+						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/get/legalservice'
 					},
 					{
 						name: 'approve',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/approve/legalservice'
+						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/approve/legalservice'
 					}	
 				]
 			},
@@ -60,11 +60,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getSellers',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/get/coordinator'
+						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/get/coordinator'
 					},
 					{
 						name: 'approve',
-						link: 'https://erp.unlogic.ru/erp_local/hs/tasks-Demo/approve/coordinator'
+						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/approve/coordinator'
 					}	
 				]
 			},
@@ -73,11 +73,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'setStatus',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/update/waybill'
+						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/update/waybill'
 					},
 					{
 						name: 'getTTNS',
-						link: 'https://erp.unlogic.ru/erp_local/hs/WaybillClient-Demo/get/waybills'
+						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/get/waybills'
 					}	
 				]
 			},
@@ -86,11 +86,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'get',
-						link: 'https://erp.unlogic.ru/erp_local/hs/products-Demo/get/'
+						link: 'https://erp.unlogic.ru/erp_base/hs/products-Demo/get/'
 					},
 					{
 						name: 'fullList',
-						link: 'https://erp.unlogic.ru/erp_local/hs/products-Demo/get/full-list'
+						link: 'https://erp.unlogic.ru/erp_base/hs/products-Demo/get/full-list'
 					}	
 				]
 			},	
