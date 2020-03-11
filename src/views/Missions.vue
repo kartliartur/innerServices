@@ -81,6 +81,12 @@ export default {
           missionsIsShow: false,
           isFull: false,
           path: 'control-list'
+        },
+        {
+          title: 'Поручения на проверку',
+          missionsIsShow: false,
+          isFull: false,
+          path: 'check-list'
         }
       ]
     }
