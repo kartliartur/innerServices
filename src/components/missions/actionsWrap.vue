@@ -1,14 +1,30 @@
 <template>
 	<div class="actions-wrap">
-		<button @click="closeMissions()">Снять с контроля</button>
-		<button @click="becomeNewDate = true">Перенести срок</button>
-		<div class="action-modal-wrap" v-show="becomeNewDate">
-			<div class="hover"></div>
-			<div class="date-form">
-				<h2>Укажите дату для переноса:</h2>
-				<input type="date" v-model="new_date">		
-				<button @click="changeNewDate()">Подтвердить</button>		
-				<button @click="becomeNewDate = false">Закрыть</button>
+		<div v-if="type === 'control'">
+			<button @click="closeMissions()">Снять с контроля</button>
+			<button @click="becomeNewDate = true">Перенести срок</button>
+			<div class="action-modal-wrap" v-show="becomeNewDate">
+				<div class="hover"></div>
+				<div class="date-form">
+					<h2>Укажите дату для переноса:</h2>
+					<input type="date" v-model="new_date">
+					<button @click="changeNewDate()">Подтвердить</button>
+					<button @click="becomeNewDate = false">Закрыть</button>
+				</div>
+			</div>
+		</div>
+		<div v-if="type === 'check'">
+			<button @click="finishMission('Close')">Завершить</button>
+			<button @click="returnMission = true">Вернуть на доработку</button>
+			<div class="action-modal-wrap" v-show="returnMission">
+				<div class="hover"></div>
+				<div class="return-form">
+					<h2>Вернуть поручение исполнителю:</h2>
+					<input type="text" v-model="comment">
+					<input type="date" v-model="new_date">
+					<button @click="finishMission('Return')">Подтвердить</button>
+					<button @click="becomeNewDate = false">Закрыть</button>
+				</div>
 			</div>
 		</div>
 		<myNotification
@@ -25,7 +41,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 	
 export default {
 	name: 'actionsWrap',
-	props: ['checkedArr'],
+	props: ['checkedArr', 'type'],
 	components: {
 		myNotification
 	},
@@ -35,6 +51,8 @@ export default {
 			not_color: '',
 			is_not_show: false,
 			becomeNewDate: false,
+			returnMission: false,
+			comment: '',
 			new_date: Funcs.getTodayDateToInput()[2] + '-' + Funcs.getTodayDateToInput()[1] + '-' + Funcs.getTodayDateToInput()[0],
 
 		}
@@ -100,11 +118,42 @@ export default {
 				},
 				() => { this.showNotification('Сервер временно недоступен', 'red') }
 			);
+		},
+		finishMission (action) {
+			let data = [];
+			this.checkedArr.forEach(item => {
+				if (action === 'Close') {
+					data.push({
+						Action: action,
+						Task_GUID: item.Task_GUID
+					});
+				}
+				if (action === 'Return') {
+					data.push({
+						Action: action,
+						Comment: this.comment,
+						New_date: this.new_date,
+						Task_GUID: item.Task_GUID
+					});
+				}
+			});
+			Funcs.doRequest(
+					"post",
+					this.getFinishLink,
+					data,
+					null,
+					() => {
+
+					}
+			)
 		}
 	},
 	computed: {
 		getLink() {
 			return this.$store.getters.getLinkByName('missions', 'updateControl');
+		},
+		getFinishLink() {
+			return this.$store.getters.getLinkByName('missions', 'updateCheck')
 		}
 	}
 }
