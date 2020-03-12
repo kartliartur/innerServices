@@ -137,7 +137,8 @@ export default {
 					});
 				}
 			});
-			Funcs.doRequest(
+			window.console.log(data);
+			/*Funcs.doRequest(
 					"post",
 					this.getFinishLink,
 					data,
@@ -145,7 +146,7 @@ export default {
 					() => {
 
 					}
-			)
+			)*/
 		}
 	},
 	computed: {

@@ -116,6 +116,7 @@ export default new Vuex.Store({
 		activeSaleIndex: null,
 		activeTaskIndex: null,
 		activeMissionIndex: null,
+		activeMissionCheckIndex: null,
 		rolesLinks: [
 			{
 				name: 'Руководитель отдела',
@@ -195,7 +196,14 @@ export default new Vuex.Store({
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,
 		CHANGE_ACTIVE_TASK_INDEX: (state, active) => state.activeTaskIndex = active,
 		CHANGE_ACTIVE_SALE_INDEX: (state, active) => state.activeSaleIndex = active,
-		CHANGE_ACTIVE_MISSION_INDEX: (state, active) => state.activeMissionIndex = active,
+		CHANGE_ACTIVE_MISSION_INDEX: (state, active) => {
+			state.activeMissionIndex = active;
+			state.activeMissionCheckIndex = null;
+		},
+		CHANGE_ACTIVE_MISSION_CHECK_INDEX: (state, active) => {
+			state.activeMissionCheckIndex = active;
+			state.activeMissionIndex = null;
+		},
 		ADD_MISSION: (state, data) => state.missions.push(data),
 		DELETE_TASK: (state, index) => state.sales.splice(index, 1),
 		DELETE_SEC_TASK: (state, index) => state.tasks.splice(index, 1),
@@ -210,6 +218,7 @@ export default new Vuex.Store({
 		changeActiveTtnIndex: (context, active) => context.commit('CHANGE_ACTIVE_TTN_INDEX', +active),
 		changeActiveSaleIndex: (context, active) => context.commit('CHANGE_ACTIVE_SALE_INDEX', +active),
 		changeActiveMissionIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_INDEX', +active),
+		changeActiveMissionCheckIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_CHECK_INDEX', +active),
 		deleteTask: (context, index) => context.commit('DELETE_TASK', +index),
 		deleteSecTask: (context, index) => context.commit('DELETE_SEC_TASK', +index),
 		deleteMisTask: (context) => context.commit('DELETE_MIS_TASK'),
