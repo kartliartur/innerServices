@@ -13,100 +13,104 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'addMission',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/create/control'
+						link: '/ecm/hs/tasks-Demo/create/control'
 					},
 					{
 						name: 'updateControl',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/update/control'
+						link: '/ecm/hs/tasks-Demo/update/control'
 					},
 					{
 						name: 'get',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/get/'
-					},		
+						link: '/ecm/hs/tasks-Demo/get/'
+					},
 					{
 						name: 'performers',
-						link: 'https://erp.unlogic.ru/ecm/hs/tasks-Demo/get/performers'
-					}			
+						link: '/ecm/hs/tasks-Demo/get/performers'
+					},
+					{
+						name: 'updateCheck',
+						link: '/ecm/hs/tasks-Demo/update/check'
+					}
 				]
 			},
 			{
-				name: 'logist',
+			name: 'logist',
 				links: [
 					{
 						name: 'getTTNS',
-						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/get/Waybills'
+						link: '/erp_local/hs/WaybillClient-Demo/get/Waybills'
 					},
 					{
 						name: 'setStatus',
-						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/SetStatusTTN'
-					}	
+						link: '/erp_local/hs/WaybillClient-Demo/SetStatusTTN'
+					}
 				]
 			},
 			{
-				name: 'security',
+			name: 'security',
 				links: [
 					{
 						name: 'getTasks',
-						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/get/legalservice'
+						link: '/erp_local/hs/tasks-Demo/get/legalservice'
 					},
 					{
 						name: 'approve',
-						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/approve/legalservice'
+						link: '/erp_local/hs/tasks-Demo/approve/legalservice'
 					}	
 				]
 			},
 			{
-				name: 'sellers',
+			name: 'sellers',
 				links: [
 					{
 						name: 'getSellers',
-						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/get/coordinator'
+						link: '/erp_local/hs/tasks-Demo/get/coordinator'
 					},
 					{
 						name: 'approve',
-						link: 'https://erp.unlogic.ru/erp_base/hs/tasks-Demo/approve/coordinator'
-					}	
+						link: '/erp_local/hs/tasks-Demo/approve/coordinator'
+					}
 				]
 			},
 			{
-				name: 'tracking',
+			name: 'tracking',
 				links: [
 					{
 						name: 'setStatus',
-						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/update/waybill'
+						link: '/erp_local/hs/WaybillClient-Demo/update/waybill'
 					},
 					{
 						name: 'getTTNS',
-						link: 'https://erp.unlogic.ru/erp_base/hs/WaybillClient-Demo/get/waybills'
-					}	
+						link: '/erp_local/hs/WaybillClient-Demo/get/waybills'
+					}
 				]
 			},
 			{
-				name: 'dashboard',
+			name: 'dashboard',
 				links: [
 					{
 						name: 'get',
-						link: 'https://erp.unlogic.ru/erp_base/hs/products-Demo/get/'
+						link: '/erp_local/hs/products-Demo/get/'
 					},
 					{
 						name: 'fullList',
-						link: 'https://erp.unlogic.ru/erp_base/hs/products-Demo/get/full-list'
-					}	
+						link: '/erp_local/hs/products-Demo/get/full-list'
+					}
 				]
-			},	
+			},
 			{
-				name: 'auth',
+			name: 'auth',
 				links: [
 					{
 						name: 'login',
-						link: 'https://erp.unlogic.ru/api/v1/auth/login'
+						link: '/api/v1/auth/login'
 					},
 					{
 						name: 'logout',
-						link: 'https://erp.unlogic.ru/api/v1/auth/logout'
+						link: '/api/v1/auth/logout'
 					}
 				]
-			}		
+			}
 		],
 		activeTtnIndex: null,
 		activeSaleIndex: null,
@@ -167,7 +171,8 @@ export default new Vuex.Store({
 		missions: [],
 		missionPerformers: [],
 		tasks: [],
-		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен']
+		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
+		base_url: 'https://erp.unlogic.ru',
 	},
 	getters: {
 		getTtns: state => state.ttns,
@@ -178,7 +183,7 @@ export default new Vuex.Store({
 					for (let j in state.requestsLinks[i].links) {
 						let item = state.requestsLinks[i].links[j];
 						if (item.name === surname)
-							return item.link;
+							return state.base_url + item.link;
 					}
 				}
 			}
