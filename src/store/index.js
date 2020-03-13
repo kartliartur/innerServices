@@ -38,11 +38,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTTNS',
-						link: '/erp_local/hs/WaybillClient-Demo/get/Waybills'
+						link: '/erp_base/hs/WaybillClient-Demo/get/Waybills'
 					},
 					{
 						name: 'setStatus',
-						link: '/erp_local/hs/WaybillClient-Demo/SetStatusTTN'
+						link: '/erp_base/hs/WaybillClient-Demo/SetStatusTTN'
 					}
 				]
 			},
@@ -51,11 +51,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTasks',
-						link: '/erp_local/hs/tasks-Demo/get/legalservice'
+						link: '/erp_base/hs/tasks-Demo/get/legalservice'
 					},
 					{
 						name: 'approve',
-						link: '/erp_local/hs/tasks-Demo/approve/legalservice'
+						link: '/erp_base/hs/tasks-Demo/approve/legalservice'
 					}	
 				]
 			},
@@ -64,11 +64,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getSellers',
-						link: '/erp_local/hs/tasks-Demo/get/coordinator'
+						link: '/erp_base/hs/tasks-Demo/get/coordinator'
 					},
 					{
 						name: 'approve',
-						link: '/erp_local/hs/tasks-Demo/approve/coordinator'
+						link: '/erp_base/hs/tasks-Demo/approve/coordinator'
 					}
 				]
 			},
@@ -77,11 +77,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'setStatus',
-						link: '/erp_local/hs/WaybillClient-Demo/update/waybill'
+						link: '/erp_base/hs/WaybillClient-Demo/update/waybill'
 					},
 					{
 						name: 'getTTNS',
-						link: '/erp_local/hs/WaybillClient-Demo/get/waybills'
+						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
 					}
 				]
 			},
@@ -90,11 +90,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'get',
-						link: '/erp_local/hs/products-Demo/get/'
+						link: '/erp_base/hs/products-Demo/get/'
 					},
 					{
 						name: 'fullList',
-						link: '/erp_local/hs/products-Demo/get/full-list'
+						link: '/erp_base/hs/products-Demo/get/full-list'
 					}
 				]
 			},
