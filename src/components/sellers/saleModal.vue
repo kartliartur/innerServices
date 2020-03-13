@@ -122,7 +122,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 <style lang="less">
 	@import url('../../assets/less-templates/base.less');
 	.modal-wrap {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -133,7 +133,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 		transition: all .3s linear;
 
 		& .hover {
-			position: absolute;
+			position: fixed;
 			top: 0;
 			left: 0;
 			width: 100%;

@@ -172,7 +172,7 @@ export default {
 	.sellers {
 		.flex(column, flex-start, center);
 		width: 100%;
-        height: auto;
+    min-height: 100vh;
 
     & h2 {
       padding: 10px 0;
@@ -181,7 +181,8 @@ export default {
     & .content {
       .flex(column, flex-start, center);
       width: 100%;
-      height: 100%;
+      height: auto;
+      min-height: 50vh;
 
       & .sales-wrap {
         .flex(column, flex-start, center);
