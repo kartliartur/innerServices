@@ -126,8 +126,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100vh;
-		overflow-y: scroll;
+		min-height: 100vh;
 		opacity: 0;
 		z-index: -2;
 		transition: all .3s linear;
