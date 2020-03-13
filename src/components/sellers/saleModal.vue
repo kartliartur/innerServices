@@ -144,14 +144,15 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 
 		& .modal-frame {
 			.flex(column, flex-start, center);
-			position: absolute;
+			position: fixed;
 			width: 100%;
 			height: 100vh;
 			top: 0;
 			left: 0;
 			padding: 0 5px;
 			border-radius: 2px;
-			min-height: 100vh;
+			height: 100vh;
+			overflow-y: scroll;
 			height: auto;
 			background: @green-color;
 			color: #fff;
