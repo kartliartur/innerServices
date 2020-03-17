@@ -13,7 +13,7 @@
             <div class="tracking-item">
                 <label>Телефон: </label>
                 <TheMask
-                        mask="+#(###) ###-##-##" @input="checkPhone" ref="phone" :value="this.phone" type="tel"  placeholder="+7(___) ___-__-__"
+                        mask="+#(###) ###-##-##" @input="checkPhone" ref="phone" v-model="phone" type="tel"  placeholder="+7(___) ___-__-__"
                 />
             </div>
 
@@ -25,6 +25,10 @@
             <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
 
         </form>
+        <myNotification
+            :text="not_text"
+            :textColor="not_color"
+            v-show="is_not_show"/>  
     </div>
 </template>
 
@@ -33,11 +37,12 @@
     import MyHeader from "../components/other/myHeader";
     import searchInput from '../components/tracking/searchInput';
     import {TheMask} from 'vue-the-mask'
+    import myNotification from '@/components/other/notification.vue'
     import Funcs from '../assets/js-funcs/default-funcs';
 
     export default {
         name: "Tracking",
-        components: {MyHeader, searchInput, TheMask},
+        components: {MyHeader, searchInput, TheMask, myNotification},
         data: () => {
             return {
                 ttn: "",
@@ -46,10 +51,21 @@
                 phone: "",
                 Waybill_GUID : "",
                 options: [],
-                disabled: false
+                disabled: false,
+                not_text: '',
+                not_color: '',
+                is_not_show: false
             }
         },
         methods: {
+            showNotification(text, color) {
+              this.not_text = text;
+              this.not_color = color;
+              this.is_not_show = true;
+              setTimeout(() => {
+                this.is_not_show = false;
+              }, 1500);
+            },            
             fillData (value) {
                 if (value) {
                     this.$children[1].$data.ttnValue = value.ttn;
@@ -68,7 +84,6 @@
                     "Driver_tracking_phone": this.phone,
                     "Actions": ["Send_tracking_request"],
                 };
-                window.console.log(data);
                 if (this.Waybill_GUID || this.Waybill_GUID != "") {
                     Funcs.doRequest(
                         "post",
@@ -76,34 +91,36 @@
                         data,
                         null,
                         res => {
-                            window.console.log(res);
                             if (!res.data.error) {
                                 this.status = res.data.data[0].Tracking_Status;
                                 if (this.status === "Запрос отправлен") {
                                     localStorage.setItem("status", this.status);
+                                    localStorage.setItem("ttn", this.ttn);
+                                    localStorage.setItem("phone", this.phone);
                                 } else {
                                     localStorage.removeItem("ttn");
                                     localStorage.removeItem("phone");
                                     localStorage.removeItem("status");
                                 }
                             } else {
-                                alert(res.data.data);
+                                this.showNotification(res.data.report, 'red');
                             }
                         }
                     );
                 } else {
-                    alert("Неправильно выбрана накладная!");
+                    this.showNotification('ГУИД накладной пуст', 'red');
                 }
             },
             checkPhone () {
-                if (this.phone != '') {
-                    if (this.$refs.phone.lastValue.indexOf("8") == 0) {
-                        this.$refs.phone.display = this.$refs.phone.value.replace("8", "7");
+                if (this.$refs.phone != undefined) {
+                    if (this.phone != '') {
+                        if (this.$refs.phone.lastValue.indexOf("8") == 0) {
+                            this.$refs.phone.display = this.$refs.phone.value.replace("8", "7");
+                        }
+                    } else {
+                        this.phone = this.$refs.phone.lastValue;
                     }
-                }else {
-                    this.phone = this.$refs.phone.lastValue;
                 }
-                window.console.log(this.$refs.phone.lastValue)
             }
         },
         beforeMount() {
@@ -118,32 +135,33 @@
                 null,
                 null,
                 res => {
-                   let val = {};
-                    res.data.data.forEach(elem => {
-                        val = {
-                            ttn: elem.Waybill_ID,
-                            phone: elem.Driver_Phone,
-                            status: elem.Tracking_Status,
-                            Waybill_GUID: elem.Waybill_GUID
-                        };
-                        if (val.phone != '') {
+                    if (!res.data.error) {
+                        let val = {};
+                        res.data.data.forEach(elem => {
+                            val = {
+                                ttn: elem.Waybill_ID,
+                                phone: elem.Driver_Phone,
+                                status: elem.Tracking_Status,
+                                Waybill_GUID: elem.Waybill_GUID
+                            };
                             this.options.push(val);
-                        }
-                    });
-                    window.console.log(this.options);
+                        });
+                        if (localStorage.getItem('ttn') != undefined) {
+                            for (let i in this.options) {
+                                let item = this.options[i];
+                                if (item.ttn == localStorage.getItem('ttn')) {
+                                    this.fillData(item);
+                                }
+                            }
+                        }                        
+                    } else {
+                        this.showNotification(res.data.report, 'red');
+                    }
                 },
                 () => {
-                   alert("Ошибка! Список накладных не удалось получить");
+                    this.showNotification('Сервер временно недоступен', 'red');
                 }
            );
-        },
-        mounted() {
-            let ttnLocal = localStorage.getItem("ttn");
-            if (ttnLocal !== "") {
-                let elem = this.options.filter(e => e.ttn.includes(ttnLocal));
-                if (elem)
-                    this.fillData(elem);
-            }
         }
     }
 </script>
