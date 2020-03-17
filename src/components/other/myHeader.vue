@@ -115,7 +115,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			top: 35px;
 			right: 0;
 			width: 100%;
-			height: 200px;
+			min-height: 200px;
+			height: auto;
 			border-top: 1px solid #fff;
 			background: @green-color;
 			z-index: 999;
