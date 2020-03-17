@@ -52,7 +52,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				this.$emit('toggleModal', false);
 			},
 			checkAproove(aproove) {
-				if (this.comment == '') {
+				if (this.comment == '' && aproove == false) {
 					this.showNotification('Заполните поле комментария', 'red');
 				} else {
 					let data = {
