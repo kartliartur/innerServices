@@ -48,8 +48,8 @@ export default {
 				.then(res => {
 					window.console.log('Рамиль pidr');
 					if (!res.data.error) {
-						if (res.data.Access_Groups == undefined || res.data.Access_Groups == null || res.data.Access_Groups.length == 0) {
-							this.showNotification("Список ролей пуст", 'red');
+						if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
+							this.showNotification("У вас нет прав доступа", 'red');
 						} else {
 							localStorage.setItem('user', res.data.data.name);
 							localStorage.setItem('token', res.data.token);
