@@ -48,27 +48,31 @@ export default {
 				.then(res => {
 					window.console.log('Рамиль pidr');
 					if (!res.data.error) {
-						localStorage.setItem('user', res.data.data.name);
-						localStorage.setItem('token', res.data.token);
-						localStorage.setItem('dept', res.data.data.Dept)
-						let roles = [];
-						for (let i in res.data.data.Access_Groups) {
-							let item = res.data.data.Access_Groups[i];
-							for (let j in this.$store.state.rolesLinks) {
-								let role = this.$store.state.rolesLinks[j];
-								if (item == role.name) {
-									roles.push(item);
-									break;
+						if (res.data.Access_Groups == undefined || res.data.Access_Groups == null || res.data.Access_Groups.length == 0) {
+							this.showNotification("Список ролей пуст", 'red');
+						} else {
+							localStorage.setItem('user', res.data.data.name);
+							localStorage.setItem('token', res.data.token);
+							localStorage.setItem('dept', res.data.data.Dept)
+							let roles = [];
+							for (let i in res.data.data.Access_Groups) {
+								let item = res.data.data.Access_Groups[i];
+								for (let j in this.$store.state.rolesLinks) {
+									let role = this.$store.state.rolesLinks[j];
+									if (item == role.name) {
+										roles.push(item);
+										break;
+									}
 								}
 							}
-						}
-						localStorage.setItem('role', roles);
-						if (localStorage.getItem('token') != null) {
-							this.$emit('loggedIn')
-							if(this.$route.params.nextUrl != null){
-								this.$router.push(this.$route.params.nextUrl)
-							} else {
-								this.$router.push('/logist');
+							localStorage.setItem('role', roles);
+							if (localStorage.getItem('token') != null) {
+								this.$emit('loggedIn')
+								if(this.$route.params.nextUrl != null){
+									this.$router.push(this.$route.params.nextUrl)
+								} else {
+									this.$router.push('/logist');
+								}
 							}
 						}
 					} else {
