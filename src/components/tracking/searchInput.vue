@@ -74,11 +74,11 @@
                        this.styleList = "height: " + 28 * this.items.length + "px;"
                    }
                    if (this.items.length >= 3) {
-                       this.styleList = "height: 84px;"
+                       this.styleList = "height: 200px;"
                    }
                 } else {
                     this.items = this.options;
-                    this.styleList = "height: 84px;"
+                    this.styleList = "height: 200px;"
                 }
             }
         },
