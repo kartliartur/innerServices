@@ -68,7 +68,7 @@ export default {
 				+ Funcs.dateToInputs(new Date())[4] + ''
 				+ Funcs.dateToInputs(new Date())[0];
 		let val1 = Funcs.dateToInputs(new Date())[2] + ''
-				+ (Funcs.dateToInputs(new Date())[3]) + ''
+				+ (Funcs.dateToInputs(new Date())[1]) + ''
 				+ Funcs.dateToInputs(new Date())[0];
 		let data = {
 			DateStart: val,
@@ -82,7 +82,7 @@ export default {
 			res => {
 				if (!res.data.error) {
 					if (res.data.data.length === 0) {
-						this.showNotification('Список пуст!', 'green')
+						this.showNotification('Список пуст!', 'red')
 					} else {
 						for (let i = 0; i <  res.data.data.length; i++) {
 							res.data.data[i].TTN_Date = Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[2] + '-'
