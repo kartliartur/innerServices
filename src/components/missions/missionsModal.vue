@@ -100,6 +100,7 @@
 				let data = {
 					Description: this.missionText,
 					Performer_name: this.employee,
+					Performer: this.employee,
 					Performer_GUID: this.Performer_GUID,
 					Deadline: this.limitDate,
 					SendTask: this.isSend,
