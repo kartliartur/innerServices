@@ -20,7 +20,7 @@
 			<div class="select-performer">
 				<label>Назначить на:</label>
 				<div class="performer">
-					<label><input type="radio" class="radio" name="performer" @click="changePerformer('performer')"/>Исполнителя</label>
+					<label><input type="radio" class="radio" checked name="performer" @click="changePerformer('performer')"/>Исполнителя</label>
 					<label><input type="radio" class="radio" name="performer" @click="changePerformer('role')"/>Роль</label>
 				</div>
 			</div>
@@ -156,12 +156,23 @@
 			}
 		},
 		mounted() {
-			this.items = this.performer === 'role' ? this.roles : this.performers;
-			if (this.items.length <= 3) {
-				this.styleList = "height: " + 28 * this.items.length + "px;";
-			} else {
-				this.styleList = "height: 200px;";
+			window.console.log(this.$store.state.missionPerformers)
+			if (this.roles != undefined && this.performers != undefined) {
+				window.console.log(this.roles.length && this.performers.length)
+				if (this.roles && this.performer == 'role') {
+					this.items = this.roles;
+				}
+				if (this.performers && this.performer == 'performer') {
+					this.items = this.performers;
+				}
+				window.console.log(this.performers, this.role)
+				if (this.items.length <= 3 && this.items.length != 0) {
+					this.styleList = "height: " + 28 * this.items.length + "px;";
+				} else {
+					this.styleList = "height: 200px;";
+				}
 			}
+			
 		},
 		beforeMount() {
 			let date = new Date();
