@@ -158,7 +158,12 @@ export default new Vuex.Store({
 					{
 						link: '/logist',
 						name: 'Изменение статуса ТТН'
-					},
+					}
+				]
+			},
+			{
+				name: 'HTTP запрос (Чтение/изменение транспортных накладных)',
+				links: [
 					{
 						link: '/tracking',
 						name: 'Оформление остлеживания ТТН'
@@ -201,7 +206,7 @@ export default new Vuex.Store({
 		missionPerformers: [],
 		tasks: [],
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
-		base_url: 'https://erp.unlogic.ru',
+		base_url: 'https://erp.test.unlogic.ru',
 	},
 	getters: {
 		getTtns: state => state.ttns,
