@@ -85,7 +85,7 @@
         beforeMount() {
             this.ttnValue = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
             this.items = this.options ? this.options : "";
-            if (this.options.length <= 2) {
+            if (this.options.length <= 2 && this.options.length !== 0) {
                 this.styleList = "height: " + 28 * this.options.length + "px;"
             }
         },

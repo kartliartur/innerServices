@@ -114,8 +114,8 @@
             checkPhone () {
                 if (this.$refs.phone != undefined) {
                     if (this.phone != '') {
-                        if (this.$refs.phone.lastValue.indexOf("8") == 0) {
-                            this.$refs.phone.display = this.$refs.phone.value.replace("8", "7");
+                        if (this.$refs.phone.lastValue[0] != "7") {
+                            this.$refs.phone.display = this.$refs.phone.lastValue.replace(this.$refs.phone.lastValue[0], "7");
                         }
                     } else {
                         this.phone = this.$refs.phone.lastValue;
