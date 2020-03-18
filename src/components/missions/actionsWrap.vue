@@ -20,10 +20,12 @@
 				<div class="hover"></div>
 				<div class="return-form">
 					<h2>Вернуть поручение исполнителю:</h2>
-					<input type="text" v-model="comment">
+					<label>Оставьте комментарий:</label>
+					<textarea type="text" v-model="comment"/>
+					<label>Выберете дату:</label>
 					<input type="date" v-model="new_date">
 					<button @click="finishMission('Return')">Подтвердить</button>
-					<button @click="becomeNewDate = false">Закрыть</button>
+					<button @click="returnMission = false">Закрыть</button>
 				</div>
 			</div>
 		</div>
@@ -138,15 +140,19 @@ export default {
 				}
 			});
 			window.console.log(data);
-			/*Funcs.doRequest(
+			Funcs.doRequest(
 					"post",
 					this.getFinishLink,
 					data,
 					null,
 					() => {
-
+						if (action === 'Return') {
+							this.returnMission = false;
+							this.checkedArr = [];
+						}
+						window.location.reload();
 					}
-			)*/
+			)
 		}
 	},
 	computed: {
@@ -208,6 +214,38 @@ export default {
 					.input();
 					width: 80%;
 					margin-bottom: 20px;
+				}
+
+				& button:last-child {
+					.button(5px, #fff, @green-color);
+				}
+			}
+
+			& .return-form {
+				.flex(row, center, center);
+				flex-wrap: wrap;
+				width: 80%;
+				height: 300px;
+				margin-top: 50px;
+				background: #fff;
+				z-index: 2;
+
+				& h2 {
+					font-size: 1.2em;
+					margin-bottom: 20px;
+				}
+
+				& input {
+					.input();
+					width: 80%;
+					margin-bottom: 20px;
+				}
+
+				& textarea {
+					.input();
+					width: 80%;
+					height: 70px;
+					padding: 10px;
 				}
 
 				& button:last-child {
