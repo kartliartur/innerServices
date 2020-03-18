@@ -132,7 +132,9 @@
            Funcs.doRequest(
                "post",
                 this.$store.getters.getLinkByName('tracking', 'getTTNS'),
-                null,
+                {
+                    "Sending_Address_Stavrolen": true
+                },
                 null,
                 res => {
                     if (!res.data.error) {

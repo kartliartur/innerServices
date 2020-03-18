@@ -158,7 +158,12 @@ export default new Vuex.Store({
 					{
 						link: '/logist',
 						name: 'Изменение статуса ТТН'
-					},
+					}
+				]
+			},
+			{
+				name: 'HTTP запрос (Чтение/изменение транспортных накладных)',
+				links: [
 					{
 						link: '/tracking',
 						name: 'Оформление остлеживания ТТН'
