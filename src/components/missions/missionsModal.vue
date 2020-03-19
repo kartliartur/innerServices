@@ -147,11 +147,11 @@
 						this.styleList = "height: " + 28 * this.items.length + "px;"
 					}
 					if (this.items.length >= 3) {
-						this.styleList = "height: 84px;"
+						this.styleList = "height: 200px;"
 					}
 				} else {
 					this.items = this.performer === 'role' ? this.roles : this.performers;
-					this.styleList = "height: 84px;"
+					this.styleList = "height: 200px;"
 				}
 			}
 		},
@@ -160,7 +160,7 @@
 			if (this.items.length <= 3) {
 				this.styleList = "height: " + 28 * this.items.length + "px;";
 			} else {
-				this.styleList = "height: 84px;";
+				this.styleList = "height: 200px;";
 			}
 		},
 		beforeMount() {
@@ -297,7 +297,7 @@
 				}
 			}
 			& .activeList {
-				height: 84px;
+				height: 300px;
 				z-index: 999;
 
 				& span {

@@ -9,7 +9,7 @@
 						$store.state.missionsCheck[missionIndex].isChecked }"
 			>
 				<div class="head">
-					<span class="title">{{ type === 'control' ? 'title' : "Поручение " + (missionIndex+1)  }}</span>
+					<span class="title">{{ title }}</span>
 					<span>{{ limitDate ? new Date(limitDate).toLocaleString().substring(0, 10) : 'Нет срока' }}</span>
 				</div>
 				<div class="bot">

@@ -23,7 +23,7 @@
         <Mission
                 v-for="(item, idx) in obj.type === 'control' ? $store.state.missions : $store.state.missionsCheck" :key="idx"
                 v-show="item.isVissible"
-                :title="item.Description"
+                :title="item.Name"
                 :employee="item.Performer"
                 :limitDate="item.Deadline"
                 :createDate="item.createDate"

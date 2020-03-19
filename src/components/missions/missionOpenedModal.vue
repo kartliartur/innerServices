@@ -115,6 +115,7 @@
 				white-space: pre-wrap;
 				text-align: left;
 				padding-left: 10px;
+				border-left: 1px solid #fff;
 			}
 
 			& .btn-wrap {
