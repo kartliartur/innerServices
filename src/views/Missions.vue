@@ -9,7 +9,7 @@
         :checkedArr="isSomeOneChecked[1]"
         :type="isSomeOneChecked[2]"
     />
-    <div class="global-wrap" 
+    <div class="global-wrap"
       v-for="(obj, index) in this.ObjectsArr"
       :key="index">
       <div class="toggle-wrap"
@@ -107,6 +107,7 @@ export default {
       }, 1500);
     },
     openMissions(object) {
+      window.scrollTo(0,0);
       if (object.isFull) {
         object.missionsIsShow = !object.missionsIsShow;
         if (object.type === 'control') {
