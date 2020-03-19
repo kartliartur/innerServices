@@ -14,17 +14,27 @@
 			</div>
 		</div>
 		<div v-if="type === 'check'">
-			<button @click="finishMission('Close')">Завершить</button>
+			<button @click="finishMission = true">Завершить</button>
+			<div class="action-modal-wrap" v-show="finishMission">
+				<div class="hover"></div>
+				<div class="return-form">
+					<h2>Завершить поручение</h2>
+					<label>Оставьте комментарий:</label>
+					<textarea type="text" v-model="closeComment"/>
+					<button @click="checkMission('Close')">Подтвердить</button>
+					<button @click="finishMission = false">Закрыть</button>
+				</div>
+			</div>
 			<button @click="returnMission = true">Вернуть на доработку</button>
 			<div class="action-modal-wrap" v-show="returnMission">
 				<div class="hover"></div>
 				<div class="return-form">
 					<h2>Вернуть поручение исполнителю:</h2>
 					<label>Оставьте комментарий:</label>
-					<textarea type="text" v-model="comment"/>
+					<textarea type="text" v-model="returnComment"/>
 					<label>Выберете дату:</label>
-					<input type="date" v-model="new_date">
-					<button @click="finishMission('Return')">Подтвердить</button>
+					<input  required type="date" v-model="new_date">
+					<button @click="checkMission('Return')">Подтвердить</button>
 					<button @click="returnMission = false">Закрыть</button>
 				</div>
 			</div>
@@ -54,7 +64,9 @@ export default {
 			is_not_show: false,
 			becomeNewDate: false,
 			returnMission: false,
-			comment: '',
+			finishMission: false,
+			closeComment: '',
+			returnComment: '',
 			new_date: Funcs.getTodayDateToInput()[2] + '-' + Funcs.getTodayDateToInput()[1] + '-' + Funcs.getTodayDateToInput()[0],
 
 		}
@@ -121,21 +133,26 @@ export default {
 				() => { this.showNotification('Сервер временно недоступен', 'red') }
 			);
 		},
-		finishMission (action) {
+		checkMission (action) {
 			let data = [];
 			this.checkedArr.forEach(item => {
 				if (action === 'Close') {
 					data.push({
 						Action: action,
-						Task_GUID: item.Task_GUID
+						Task_GUID: item.Task_GUID,
+						Comment: this.closeComment,
 					});
 				}
 				if (action === 'Return') {
+					if (this.returnComment == '') {
+						this.showNotification('Необходимо оставить комментарий!', 'orange');
+						return false;
+					}
 					data.push({
 						Action: action,
-						Comment: this.comment,
+						Task_GUID: item.Task_GUID,
+						Comment: this.returnComment,
 						New_date: this.new_date,
-						Task_GUID: item.Task_GUID
 					});
 				}
 			});

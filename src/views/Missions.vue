@@ -122,7 +122,7 @@ export default {
           null,
           res => {
             if (res.data.error) {
-              this.showNotification(res.data.data, 'red');
+              this.showNotification(res.data.report, 'red');
             } else {
               for (let item in res.data.data) {
                 res.data.data[item].isChecked = false;
