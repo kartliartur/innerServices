@@ -118,7 +118,7 @@
             border: 1px solid @green-color;
             background: #fafafa;
             z-index: -2;
-            overflow: scroll;
+            overflow-y: scroll;
             transition: all .3s linear;
 
             & span {
@@ -126,12 +126,13 @@
                 width: 100%;
                 color: #000;
                 border-bottom: 1px solid @green-color;
-                padding: 5px 10px;
+                padding: 0 10px;
+                min-height: 30px;
             }
         }
 
         & .active {
-            height: 84px;
+            height: 300px;
             z-index: 99;
 
             & span {

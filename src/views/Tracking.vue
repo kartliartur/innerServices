@@ -133,7 +133,8 @@
                "post",
                 this.$store.getters.getLinkByName('tracking', 'getTTNS'),
                 {
-                    "Sending_Address_Stavrolen": true
+                    "Sending_Address_Stavrolen": true,
+                    "Filter_Waybill_Status": ""
                 },
                 null,
                 res => {
