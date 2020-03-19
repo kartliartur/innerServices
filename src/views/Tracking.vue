@@ -141,6 +141,17 @@
                     if (!res.data.error) {
                         let val = {};
                         res.data.data.forEach(elem => {
+                            if (elem.Driver_Phone == undefined || elem.Driver_Phone == "") {
+                                let str = elem.Driver_Phone_Non_Validation;
+                                let result = [];
+                                for (let i in str) {
+                                   if (!isNaN(+str[i]) && str[i] != ' ') {
+                                        result.push(str[i]);
+                                   }
+                                }
+                                result = result.join('');
+                                elem.Driver_Phone = result.substring(0, 11);
+                            }
                             val = {
                                 ttn: elem.Waybill_ID,
                                 phone: elem.Driver_Phone,
