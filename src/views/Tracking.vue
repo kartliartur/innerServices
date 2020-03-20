@@ -22,7 +22,7 @@
                 <span class="status-item">{{ this.status }}</span>
              </div>
 
-            <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.ttn || !this.phone)">Отслеживать</button>
+            <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.document_id || !this.phone)">Отслеживать</button>
 
         </form>
         <myNotification
@@ -45,7 +45,7 @@
         components: {MyHeader, searchInput, TheMask, myNotification},
         data: () => {
             return {
-                ttn: "",
+                document_id: "",
                 status: "",
                 value: {},
                 phone: "",
@@ -68,12 +68,12 @@
             },            
             fillData (value) {
                 if (value) {
-                    this.$children[1].$data.ttnValue = value.ttn;
-                    this.ttn = value.ttn;
+                    this.$children[1].$data.documentValue = value.document_id;
+                    this.document_id = value.document_id;
                     this.status = value.status;
                     this.phone = value.phone;
                     this.Waybill_GUID = value.Waybill_GUID;
-                    localStorage.setItem('ttn', value.ttn);
+                    localStorage.setItem('document_id', value.document_id);
                     localStorage.setItem('phone', value.phone);
                     localStorage.setItem('status', value.status);
                 }
@@ -95,10 +95,10 @@
                                 this.status = res.data.data[0].Tracking_Status;
                                 if (this.status === "Запрос отправлен") {
                                     localStorage.setItem("status", this.status);
-                                    localStorage.setItem("ttn", this.ttn);
+                                    localStorage.setItem("document_id", this.document_id);
                                     localStorage.setItem("phone", this.phone);
                                 } else {
-                                    localStorage.removeItem("ttn");
+                                    localStorage.removeItem("document_id");
                                     localStorage.removeItem("phone");
                                     localStorage.removeItem("status");
                                 }
@@ -126,7 +126,7 @@
         beforeMount() {
             this.phone = (localStorage.getItem('phone') && localStorage.getItem('phone') !== "undefined") ? localStorage.getItem('phone') : "";
             this.status = (localStorage.getItem('status') && localStorage.getItem('status') !== "undefined") ? localStorage.getItem('status') : "";
-            this.ttn = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
+            this.document_id = (localStorage.getItem('document_id') && localStorage.getItem('document_id') !== "undefined") ? localStorage.getItem('document_id') : "";
         },
         beforeCreate() {
            Funcs.doRequest(
@@ -153,17 +153,17 @@
                                 elem.Driver_Phone = result.substring(0, 11);
                             }
                             val = {
-                                ttn: elem.Waybill_ID,
+                                document_id: elem.Document_ID,
                                 phone: elem.Driver_Phone,
                                 status: elem.Tracking_Status,
                                 Waybill_GUID: elem.Waybill_GUID
                             };
                             this.options.push(val);
                         });
-                        if (localStorage.getItem('ttn') != undefined) {
+                        if (localStorage.getItem('document_id') != undefined) {
                             for (let i in this.options) {
                                 let item = this.options[i];
-                                if (item.ttn == localStorage.getItem('ttn')) {
+                                if (item.document_id == localStorage.getItem('document_id')) {
                                     this.fillData(item);
                                 }
                             }

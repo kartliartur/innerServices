@@ -1,19 +1,19 @@
 <template>
     <div class="global-wrap">
-        <label>ТТН: </label>
+        <label>Номер документа: </label>
         <div class="search-wrap">
             <input type="text"
                    @focus="isFocus = true"
                    @blur="isFocus = false"
-                   v-model="ttnValue"
-                   @input="searchData(ttnValue)"
+                   v-model="documentValue"
+                   @input="searchData(documentValue)"
             >
             <div class="hidden-list" :style="styleList" :class="{ active: isFocus }">
             <span
                     v-for="(item, idx) in this.items === '' ? this.options : this.items" :key="idx"
                     @click="selectItem(item)"
             >
-                {{ item.ttn }}
+                {{ item.document_id }}
             </span>
             </div>
         </div>
@@ -35,7 +35,7 @@
         data: () => {
             return {
                 items: "",
-                ttnValue: "",
+                documentValue: "",
                 isFocus: false,
                 status: "",
                 phone: "",
@@ -61,10 +61,10 @@
             },
 
             searchData () {
-                this.ttnValue = this.ttnValue.toUpperCase();
-                if (this.ttnValue !== "" && this.ttnValue !== undefined && this.ttnValue) {
+                this.documentValue = this.documentValue.toUpperCase();
+                if (this.documentValue !== "" && this.documentValue !== undefined && this.documentValue) {
                    this.items = this.options.filter(e => {
-                        return e.ttn.includes(this.ttnValue)
+                        return e.document_id.includes(this.documentValue)
                     });
                    if (this.items.length === 0) {
                        this.items = "";
@@ -83,7 +83,7 @@
             }
         },
         beforeMount() {
-            this.ttnValue = (localStorage.getItem('ttn') && localStorage.getItem('ttn') !== "undefined") ? localStorage.getItem('ttn') : "";
+            this.documentValue = (localStorage.getItem('document_id') && localStorage.getItem('document_id') !== "undefined") ? localStorage.getItem('document_id') : "";
             this.items = this.options ? this.options : "";
             if (this.options.length <= 2 && this.options.length !== 0) {
                 this.styleList = "height: " + 28 * this.options.length + "px;"
