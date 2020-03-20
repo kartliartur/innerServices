@@ -43,9 +43,13 @@
 		},
 		computed: {
 			isActiveIndex() {
-				window.console.log(this.$store.state.activeMissionIndex);
-				if (this.$store.state.activeMissionIndex != null) 
+				if (this.$store.state.activeMissionIndex != null) {
 					return this.$store.state.missions[this.$store.state.activeMissionIndex];
+				}
+				if (this.$store.state.activeMissionCheckIndex != null) {
+					return this.$store.state.missionsCheck[this.$store.state.activeMissionCheckIndex];
+				}
+
 				else 
 					return {
 						Partner: 'Нет',
@@ -111,6 +115,7 @@
 				white-space: pre-wrap;
 				text-align: left;
 				padding-left: 10px;
+				border-left: 1px solid #fff;
 			}
 
 			& .btn-wrap {

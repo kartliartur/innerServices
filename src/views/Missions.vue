@@ -6,8 +6,10 @@
                 @toggleModal="isModalOpen=true"/>
     <ActionsWrap 
         v-show="isSomeOneChecked[0]"
-        :checkedArr="isSomeOneChecked[1]"/>
-    <div class="global-wrap" 
+        :checkedArr="isSomeOneChecked[1]"
+        :type="isSomeOneChecked[2]"
+    />
+    <div class="global-wrap"
       v-for="(obj, index) in this.ObjectsArr"
       :key="index">
       <div class="toggle-wrap"
@@ -19,15 +21,17 @@
       </div>
       <div class="missions-wrap" :class="{ active: obj.missionsIsShow }">
         <Mission
-                v-for="(item, idx) in $store.state.missions" :key="idx"
+                v-for="(item, idx) in obj.type === 'control' ? $store.state.missions : $store.state.missionsCheck" :key="idx"
                 v-show="item.isVissible"
-                :title="item.Description"
+                :title="item.Name"
                 :employee="item.Performer"
                 :limitDate="item.Deadline"
                 :createDate="item.createDate"
                 :missionIndex="idx"
                 v-bind:is-open="isModalOpened"
-                @toggleModal="isModalOpened=true"/>
+                @toggleModal="isModalOpened=true"
+                :type="obj.type"
+        />
       </div>
     </div>
     <MissionsModal
@@ -80,13 +84,15 @@ export default {
           title: 'Поручения на контроле',
           missionsIsShow: false,
           isFull: false,
-          path: 'control-list'
+          path: 'control-list',
+          type: 'control'
         },
         {
           title: 'Поручения на проверку',
           missionsIsShow: false,
           isFull: false,
-          path: 'check-list'
+          path: 'check-list',
+          type: 'check'
         }
       ]
     }
@@ -100,13 +106,19 @@ export default {
         this.is_not_show = false;
       }, 1500);
     },
-    openMissions(item) {
-      if (item.isFull) {
-        item.missionsIsShow = !item.missionsIsShow;
+    openMissions(object) {
+      window.scrollTo(0,0);
+      if (object.isFull) {
+        object.missionsIsShow = !object.missionsIsShow;
+        if (object.type === 'control') {
+          this.ObjectsArr[1].missionsIsShow = false;
+        } else if (object.type === 'check') {
+          this.ObjectsArr[0].missionsIsShow = false;
+        }
       } else {
         Funcs.doRequest(
           'get',
-          this.$store.getters.getLinkByName('missions', 'get') + item.path,
+          this.$store.getters.getLinkByName('missions', 'get') + object.path,
           null,
           null,
           res => {
@@ -116,10 +128,19 @@ export default {
               for (let item in res.data.data) {
                 res.data.data[item].isChecked = false;
                 res.data.data[item].isVissible = true;
+                res.data.data[item].type = object.type;
               }
-              this.$store.state.missions = res.data.data;
-              item.isFull = true;
-              item.missionsIsShow = true;
+              if (object.type === 'control') {
+                this.$store.state.missions = res.data.data;
+                this.ObjectsArr[1].missionsIsShow = false;
+              } else if (object.type === 'check') {
+                this.$store.state.missionsCheck = res.data.data;
+                this.ObjectsArr[0].missionsIsShow = false;
+              }
+
+              window.console.log(res.data.data)
+              object.isFull = true;
+              object.missionsIsShow = true;
             }
           },
           () => { this.showNotification('Сервер временно недоступен', 'red') }
@@ -130,15 +151,27 @@ export default {
   computed: {
     isSomeOneChecked() {
       let checkedArr = [];
-      for (let i in this.$store.state.missions) {
-        let item = this.$store.state.missions[i];
-        if (item.isChecked) {
-          item.idx = i;
-          checkedArr.push(item);
+      let array = [];
+      let type = '';
+      if (this.ObjectsArr[0].missionsIsShow) {
+        array = this.$store.state.missions;
+        type = 'control';
+      }
+      if (this.ObjectsArr[1].missionsIsShow) {
+        array = this.$store.state.missionsCheck;
+        type = 'check';
+      }
+      if (array.length > 0) {
+        for (let i in array) {
+          let item = array[i];
+          if (item.isChecked) {
+            item.idx = i;
+            checkedArr.push(item);
+          }
         }
       }
       if (checkedArr.length > 0)
-        return [true, checkedArr];
+        return [true, checkedArr, type];
       else
         return [false, null];
     }
@@ -185,6 +218,7 @@ export default {
       & .active {
         z-index: 1;
         opacity: 1;
+        height: auto;
       }
     }
 
