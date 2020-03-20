@@ -20,7 +20,7 @@
 			<div class="select-performer">
 				<label>Назначить на:</label>
 				<div class="performer">
-					<label><input type="radio" class="radio" name="performer" @click="changePerformer('performer')"/>Исполнителя</label>
+					<label><input type="radio" class="radio" checked name="performer" @click="changePerformer('performer')"/>Исполнителя</label>
 					<label><input type="radio" class="radio" name="performer" @click="changePerformer('role')"/>Роль</label>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 						@blur="isFocus = false"
 				>
 				<div class="hidden-list" :class="{ activeList: isFocus }" :style="isFocus ? this.styleList: ''">
-				<span v-for="(item, idx) in this.items" :key="idx" @click="selectEmployee(item)">
+				<span v-for="(item, idx) in getItem" :key="idx" @click="selectEmployee(item)">
 					{{ item.Performer_name }}
 				</span>
 				</div>
@@ -42,7 +42,7 @@
 			<!--<input type="text" placeholder="От кого">-->
 			<div class="btn-wrap">
 				<button @click="addMission($event)">OK</button>
-				<button @click="hideModal()">Отмена</button>
+				<button @click="Cancel()">Отмена</button>
 			</div>
 			<myNotification
 				:text="not_text"
@@ -67,7 +67,7 @@
 				isSend: false,
 				limitDate: new String(''),
 				employee: '',
-				performer: '',
+				performer: 'performer',
 				isFocus: false,
 				items: [],
 				styleList: '',
@@ -78,9 +78,35 @@
 			}
 		},
 		props: ['isOpen', 'performers', 'roles'],
+		computed: {
+			// eslint-disable-next-line vue/return-in-computed-property
+			getItem() {
+				if (this.items.length == 0) {
+					if (this.performer && this.performer != undefined) {
+						if (this.performers.length != 0 && this.performer == 'performer') {
+							return this.performers;
+						}
+					}
+					if (this.roles && this.roles != undefined) {
+						if (this.roles.length != 0 && this.roles == 'role') {
+							return this.roles;
+						}
+					}
+				} else {
+					return this.items
+				}
+			}
+		},
 		methods: {
 			hideModal() {
 				this.$emit('toggleModal', false);
+			},
+			Cancel () {
+				this.missionText = '';
+				this.isSend = false;
+				this.limitDate = '';
+				this.employee = '';
+				this.hideModal();
 			},
 			showNotification(text, color) {
 				this.not_text = text;
@@ -100,6 +126,7 @@
 				let data = {
 					Description: this.missionText,
 					Performer_name: this.employee,
+					Performer: this.employee,
 					Performer_GUID: this.Performer_GUID,
 					Deadline: this.limitDate,
 					SendTask: this.isSend,
@@ -125,7 +152,7 @@
 			},
 			changePerformer(performer) {
 				this.performer = performer;
-				window.console.log(this.performer);
+				this.items = performer == 'role' ? this.roles : this.performers;
 			},
 			searchPerformer () {
 				if (this.employee && this.employee !== '' && this.employee !== undefined) {
@@ -146,20 +173,12 @@
 						this.styleList = "height: " + 28 * this.items.length + "px;"
 					}
 					if (this.items.length >= 3) {
-						this.styleList = "height: 84px;"
+						this.styleList = "height: 200px;"
 					}
 				} else {
 					this.items = this.performer === 'role' ? this.roles : this.performers;
-					this.styleList = "height: 84px;"
+					this.styleList = "height: 200px;"
 				}
-			}
-		},
-		mounted() {
-			this.items = this.performer === 'role' ? this.roles : this.performers;
-			if (this.items.length <= 3) {
-				this.styleList = "height: " + 28 * this.items.length + "px;";
-			} else {
-				this.styleList = "height: 84px;";
 			}
 		},
 		beforeMount() {
@@ -296,7 +315,7 @@
 				}
 			}
 			& .activeList {
-				height: 84px;
+				height: 300px;
 				z-index: 999;
 
 				& span {
