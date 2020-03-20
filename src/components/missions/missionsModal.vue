@@ -34,7 +34,7 @@
 						@blur="isFocus = false"
 				>
 				<div class="hidden-list" :class="{ activeList: isFocus }" :style="isFocus ? this.styleList: ''">
-				<span v-for="(item, idx) in this.items" :key="idx" @click="selectEmployee(item)">
+				<span v-for="(item, idx) in getItem" :key="idx" @click="selectEmployee(item)">
 					{{ item.Performer_name }}
 				</span>
 				</div>
@@ -42,7 +42,7 @@
 			<!--<input type="text" placeholder="От кого">-->
 			<div class="btn-wrap">
 				<button @click="addMission($event)">OK</button>
-				<button @click="hideModal()">Отмена</button>
+				<button @click="Cancel()">Отмена</button>
 			</div>
 			<myNotification
 				:text="not_text"
@@ -67,7 +67,7 @@
 				isSend: false,
 				limitDate: new String(''),
 				employee: '',
-				performer: '',
+				performer: 'performer',
 				isFocus: false,
 				items: [],
 				styleList: '',
@@ -78,9 +78,35 @@
 			}
 		},
 		props: ['isOpen', 'performers', 'roles'],
+		computed: {
+			// eslint-disable-next-line vue/return-in-computed-property
+			getItem() {
+				if (this.items.length == 0) {
+					if (this.performer && this.performer != undefined) {
+						if (this.performers.length != 0 && this.performer == 'performer') {
+							return this.performers;
+						}
+					}
+					if (this.roles && this.roles != undefined) {
+						if (this.roles.length != 0 && this.roles == 'role') {
+							return this.roles;
+						}
+					}
+				} else {
+					return this.items
+				}
+			}
+		},
 		methods: {
 			hideModal() {
 				this.$emit('toggleModal', false);
+			},
+			Cancel () {
+				this.missionText = '';
+				this.isSend = false;
+				this.limitDate = '';
+				this.employee = '';
+				this.hideModal();
 			},
 			showNotification(text, color) {
 				this.not_text = text;
@@ -126,7 +152,7 @@
 			},
 			changePerformer(performer) {
 				this.performer = performer;
-				window.console.log(this.performer);
+				this.items = performer == 'role' ? this.roles : this.performers;
 			},
 			searchPerformer () {
 				if (this.employee && this.employee !== '' && this.employee !== undefined) {
@@ -154,25 +180,6 @@
 					this.styleList = "height: 200px;"
 				}
 			}
-		},
-		mounted() {
-			window.console.log(this.$store.state.missionPerformers)
-			if (this.roles != undefined && this.performers != undefined) {
-				window.console.log(this.roles.length && this.performers.length)
-				if (this.roles && this.performer == 'role') {
-					this.items = this.roles;
-				}
-				if (this.performers && this.performer == 'performer') {
-					this.items = this.performers;
-				}
-				window.console.log(this.performers, this.role)
-				if (this.items.length <= 3 && this.items.length != 0) {
-					this.styleList = "height: " + 28 * this.items.length + "px;";
-				} else {
-					this.styleList = "height: 200px;";
-				}
-			}
-			
 		},
 		beforeMount() {
 			let date = new Date();

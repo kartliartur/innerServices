@@ -172,9 +172,10 @@ export default new Vuex.Store({
 		missions: [],
 		missionsCheck: [],
 		missionPerformers: [],
+		missionRoles: [],
 		tasks: [],
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
-		base_url: 'https://erp.test.unlogic.ru',
+		base_url: 'https://erp.unlogic.ru',
 	},
 	getters: {
 
