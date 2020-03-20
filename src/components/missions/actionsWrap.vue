@@ -166,8 +166,8 @@ export default {
 						if (!res.data.error) {
 							if (action === 'Return') {
 								this.returnMission = false;
-								this.checkedArr = [];
 							}
+							this.checkedArr = [];
 							this.showNotification('Успешно', 'green');
 							window.location.reload();
 						} else {
