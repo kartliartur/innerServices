@@ -8,6 +8,7 @@
                    v-model="documentValue"
                    @input="searchData(documentValue)"
             >
+            <span class="deleter" @click="clearData()">×</span>
             <div class="hidden-list" :style="styleList" :class="{ active: isFocus }">
             <span
                     v-for="(item, idx) in this.items === '' ? this.options : this.items" :key="idx"
@@ -43,19 +44,15 @@
             }
         },
         methods: {
-            /*fillData (value) {
-                if (value) {
-                    window.console.log(value);
-                    this.ttnSearchValue = value.ttn;
-                    this.$parent.$data.ttn = value.ttn;
-                    this.$parent.$data.status = value.status;
-                    this.$parent.$data.phone = value.phone;
-                    this.$parent.$data.Waybill_GUID = value.Waybill_GUID;
-                    localStorage.setItem('ttn', value.ttn);
-                    localStorage.setItem('phone', value.phone);
-                    localStorage.setItem('status', value.status);
-                }
-            },*/
+            clearData() {
+              this.fillData({
+                document_id: '',
+                phone: '',
+                driver: '',
+                Waybill_GUID: ''
+              });
+            },
+
             selectItem (value) {
                 this.fillData(value);
             },
@@ -106,6 +103,16 @@
 
         & input {
             width: 100%;
+        }
+
+        .deleter {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          font-weight: bold;
+          font-size: 1.5em;
+          cursor: pointer;
+          color: @alert-color;
         }
 
         & .hidden-list {
