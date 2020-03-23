@@ -229,6 +229,18 @@
                                for (let i in this.options) {
                                    let item = this.options[i];
                                    if (item.document_id == localStorage.getItem('document_id')) {
+                                       if (item.status != localStorage.getItem('status')) {
+                                         let k = 0;
+                                         for (let j in this.timers) {
+                                           let elem = this.timers[j];
+                                           if (elem.document_id == item.document_id) {
+                                             k = j;
+                                             break;
+                                           }
+                                         }
+                                         this.timers.splice(k,1);
+                                         localStorage.setItem('timers', JSON.stringify(this.timers));
+                                       }
                                        this.fillData(item);
                                    }
                                }
