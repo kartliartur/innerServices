@@ -117,6 +117,7 @@ export default new Vuex.Store({
 		activeTaskIndex: null,
 		activeMissionIndex: null,
 		activeMissionCheckIndex: null,
+		activeMissionPerformIndex: null,
 		rolesLinks: [
 			{
 				name: 'Руководитель отдела',
@@ -171,11 +172,12 @@ export default new Vuex.Store({
 		sales: [],
 		missions: [],
 		missionsCheck: [],
+		missionsPerform: [],
 		missionPerformers: [],
 		missionRoles: [],
 		tasks: [],
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
-		base_url: 'https://erp.unlogic.ru',
+		base_url: 'https://erp.test.unlogic.ru',
 	},
 	getters: {
 
@@ -197,9 +199,23 @@ export default new Vuex.Store({
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,
 		CHANGE_ACTIVE_TASK_INDEX: (state, active) => state.activeTaskIndex = active,
 		CHANGE_ACTIVE_SALE_INDEX: (state, active) => state.activeSaleIndex = active,
-		CHANGE_ACTIVE_MISSION_INDEX: (state, active) => {
-			state.activeMissionIndex = active;
-			state.activeMissionCheckIndex = null;
+		CHANGE_ACTIVE_MISSION_INDEX: (state, active, type) => {
+			if (type === 'control') {
+				state.activeMissionIndex = active;
+				state.activeMissionCheckIndex = null;
+				state.activeMissionPerformIndex = null;
+			}
+			if (type === 'check') {
+				state.activeMissionCheckIndex = active;
+				state.activeMissionIndex = null;
+				state.activeMissionPerformIndex = null;
+			}
+			if (type === 'perform') {
+				state.activeMissionPerformIndex = active;
+				state.activeMissionIndex = null;
+				state.activeMissionCheckIndex = null;
+			}
+			
 		},
 		CHANGE_ACTIVE_MISSION_CHECK_INDEX: (state, active) => {
 			state.activeMissionCheckIndex = active;
@@ -218,7 +234,7 @@ export default new Vuex.Store({
 	actions: {
 		changeActiveTtnIndex: (context, active) => context.commit('CHANGE_ACTIVE_TTN_INDEX', +active),
 		changeActiveSaleIndex: (context, active) => context.commit('CHANGE_ACTIVE_SALE_INDEX', +active),
-		changeActiveMissionIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_INDEX', +active),
+		changeActiveMissionIndex: (context, active, type) => context.commit('CHANGE_ACTIVE_MISSION_INDEX', +active, type),
 		changeActiveMissionCheckIndex: (context, active) => context.commit('CHANGE_ACTIVE_MISSION_CHECK_INDEX', +active),
 		deleteTask: (context, index) => context.commit('DELETE_TASK', +index),
 		deleteSecTask: (context, index) => context.commit('DELETE_SEC_TASK', +index),
