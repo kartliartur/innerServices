@@ -65,7 +65,10 @@ export default {
 									}
 								}
 							}
-							localStorage.setItem('role', roles);
+							if (roles.length === 0) {
+								this.showNotification('Ваша роль отсутствует в системе', 'red');
+							} else
+								localStorage.setItem('role', roles);
 							if (localStorage.getItem('token') != null) {
 								this.$emit('loggedIn')
 								if(this.$route.params.nextUrl != null){
@@ -82,7 +85,7 @@ export default {
 				.catch(res => {
 					if (res == 'Error: Request failed with status code 401') {
 						this.showNotification('Пользователя не существует', 'red');
-					} else 
+					} else
 						this.showNotification('Сервер временно недоступен', 'red');
 				});
 			}
