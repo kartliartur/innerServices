@@ -32,10 +32,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				Funcs.doRequest(
 					'get',
 					this.$store.getters.getLinkByName('auth', 'logout'),
-					null, 
 					null,
-					res => {		
-						window.console.log(res)	
+					null,
+					res => {
+						window.console.log(res)
 					},
 					res => { window.console.log(res) }
 				);
@@ -43,7 +43,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					localStorage.removeItem('token');
 					localStorage.removeItem('user');
 					localStorage.removeItem('role');
-					this.$router.push({ path: '/' });	
+					this.$router.push({ path: '/' });
 				});
 			}
 		},
@@ -82,10 +82,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			&:after, &:before {
 				position: absolute;
 				content: '';
-				top: 0;
+				top: 1px;
 				left: 0;
 				width: 100%;
-				height: 2px;
+				height: 1.5px;
 				background: #fff;
 				transition: all .2s linear;
 			}
@@ -100,7 +100,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				transform: rotate(45deg);
 			}
 			&:before {
-				top: 0px;
+				top: 1px;
 				transform: rotate(-45deg);
 			}
 		}
@@ -115,7 +115,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			top: 35px;
 			right: 0;
 			width: 100%;
-			height: 200px;
+			min-height: 200px;
+			height: auto;
 			border-top: 1px solid #fff;
 			background: @green-color;
 			z-index: 999;

@@ -22,7 +22,7 @@ export default new Vuex.Store({
 					{
 						name: 'get',
 						link: '/ecm/hs/tasks-Demo/get/'
-					},		
+					},
 					{
 						name: 'performers',
 						link: '/ecm/hs/tasks-Demo/get/performers'
@@ -38,72 +38,72 @@ export default new Vuex.Store({
 				]
 			},
 			{
-				name: 'logist',
+			name: 'logist',
 				links: [
 					{
 						name: 'getTTNS',
-						link: '/erp_local/hs/WaybillClient-Demo/get/Waybills'
+						link: '/erp_base/hs/WaybillClient-Demo/get/Waybills'
 					},
 					{
 						name: 'setStatus',
-						link: '/erp_local/hs/WaybillClient-Demo/SetStatusTTN'
-					}	
+						link: '/erp_base/hs/WaybillClient-Demo/SetStatusTTN'
+					}
 				]
 			},
 			{
-				name: 'security',
+			name: 'security',
 				links: [
 					{
 						name: 'getTasks',
-						link: '/erp_local/hs/tasks-Demo/get/legalservice'
+						link: '/erp_base/hs/tasks-Demo/get/legalservice'
 					},
 					{
 						name: 'approve',
-						link: '/erp_local/hs/tasks-Demo/approve/legalservice'
+						link: '/erp_base/hs/tasks-Demo/approve/legalservice'
 					}	
 				]
 			},
 			{
-				name: 'sellers',
+			name: 'sellers',
 				links: [
 					{
 						name: 'getSellers',
-						link: '/erp_local/hs/tasks-Demo/get/coordinator'
+						link: '/erp_base/hs/tasks-Demo/get/coordinator'
 					},
 					{
 						name: 'approve',
-						link: '/erp_local/hs/tasks-Demo/approve/coordinator'
-					}	
+						link: '/erp_base/hs/tasks-Demo/approve/coordinator'
+					}
 				]
 			},
 			{
-				name: 'tracking',
+			name: 'tracking',
 				links: [
 					{
 						name: 'setStatus',
-						link: '/erp_local/hs/WaybillClient-Demo/update/waybill'
+						link: '/erp_base/hs/WaybillClient-Demo/update/waybill'
 					},
 					{
 						name: 'getTTNS',
-						link: '/erp_local/hs/WaybillClient-Demo/get/waybills'
-					}	
+						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
+					}
 				]
 			},
 			{
-				name: 'dashboard',
+			name: 'dashboard',
 				links: [
 					{
 						name: 'get',
-						link: '/erp_local/hs/products-Demo/get/'
+						link: '/erp_base/hs/products-Demo/get/'
 					},
 					{
 						name: 'fullList',
-						link: '/erp_local/hs/products-Demo/get/full-list'
-					}	
+						link: '/erp_base/hs/products-Demo/get/full-list'
+					}
 				]
-			},	
+			},
 			{
-				name: 'auth',
+			name: 'auth',
 				links: [
 					{
 						name: 'login',
@@ -114,7 +114,7 @@ export default new Vuex.Store({
 						link: '/api/v1/auth/logout'
 					}
 				]
-			}		
+			}
 		],
 		activeTtnIndex: null,
 		activeSaleIndex: null,
@@ -164,10 +164,44 @@ export default new Vuex.Store({
 					{
 						link: '/logist',
 						name: 'Изменение статуса ТТН'
+					}
+				]
+			},
+			{
+				name: 'HTTP запрос (Чтение/изменение транспортных накладных)',
+				links: [
+					{
+						link: '/tracking',
+						name: 'Оформление остлеживания ТТН'
+					}
+				]
+			},
+			{
+				name: 'Администратор дополнительных отчетов и обработок',
+				links: [
+					{
+						link: '/logist',
+						name: 'Изменение статуса ТТН'
 					},
 					{
 						link: '/tracking',
 						name: 'Оформление остлеживания ТТН'
+					},
+					{
+						link: '/security',
+						name: 'Согласование задач безопасности'
+					},
+					{
+						link: '/sellers',
+						name: 'Согласование задач'
+					},
+					{
+						link: '/missions',
+						name: 'Контроль исполнительской дисциплины'
+					},
+					{
+						link: '/dashboard',
+						name: 'Дэшбоард'
 					}
 				]
 			}
@@ -184,7 +218,6 @@ export default new Vuex.Store({
 		base_url: 'https://erp.unlogic.ru',
 	},
 	getters: {
-
 		getTtns: state => state.ttns,
 		getRoleLinks: state => state.rolesLinks,
 		getLinkByName: state => (name,surname) => {

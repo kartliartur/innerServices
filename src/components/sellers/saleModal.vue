@@ -52,7 +52,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				this.$emit('toggleModal', false);
 			},
 			checkAproove(aproove) {
-				if (this.comment == '') {
+				if (this.comment == '' && aproove == false) {
 					this.showNotification('Заполните поле комментария', 'red');
 				} else {
 					let data = {
@@ -122,18 +122,17 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 <style lang="less">
 	@import url('../../assets/less-templates/base.less');
 	.modal-wrap {
-		position: fixed;
+		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100vh;
-		overflow-y: scroll;
+		min-height: 100vh;
 		opacity: 0;
 		z-index: -2;
 		transition: all .3s linear;
 
 		& .hover {
-			position: absolute;
+			position: fixed;
 			top: 0;
 			left: 0;
 			width: 100%;
@@ -146,13 +145,11 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			.flex(column, flex-start, center);
 			position: absolute;
 			width: 100%;
-			height: 100vh;
+			min-height: 100vh;
 			top: 0;
 			left: 0;
 			padding: 0 5px;
 			border-radius: 2px;
-			min-height: 100vh;
-			height: auto;
 			background: @green-color;
 			color: #fff;
 
