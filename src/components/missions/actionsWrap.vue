@@ -238,7 +238,10 @@ export default {
 			return this.$store.getters.getLinkByName('missions', 'updateControl');
 		},
 		getFinishLink() {
-			return this.$store.getters.getLinkByName('missions', 'updateCheck')
+			return this.$store.getters.getLinkByName('missions', 'updateCheck');
+		},
+		getPerformLink() {
+			return this.$store.getters.getLinkByName('missions', 'updatePerform');
 		}
 	}
 }

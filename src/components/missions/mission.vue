@@ -62,7 +62,11 @@
 					this.$store.dispatch('changeActiveMissionPerformIndex', this.missionIndex);
 				}*/
 				this.$emit('toggleModal', true);
-				this.$store.dispatch('changeActiveMissionIndex', this.missionIndex, this.type);
+				let item = {
+					active: this.missionIndex,
+					type: this.type
+				};
+				this.$store.dispatch('changeActiveMissionIndex', item);
 
 			}
 		}

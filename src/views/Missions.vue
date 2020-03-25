@@ -158,8 +158,6 @@ export default {
                 this.ObjectsArr[0].missionsIsShow = false;
                 this.ObjectsArr[1].missionsIsShow = false;
               }
-
-              window.console.log(res.data.data)
               object.isFull = true;
               object.missionsIsShow = true;
             }
@@ -208,7 +206,6 @@ export default {
       null,
       null,
       res => {
-        window.console.log(res.data.error);
         if (!res.data.error) {
           this.$store.state.missionPerformers = res.data.data[0].Performers;
           this.$store.state.missionRoles = res.data.data[1].Performers;
