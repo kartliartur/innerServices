@@ -21,7 +21,10 @@
       </div>
       <div class="missions-wrap" :class="{ active: obj.missionsIsShow }">
         <Mission
-                v-for="(item, idx) in obj.type === 'control' ? $store.state.missions : $store.state.missionsCheck" :key="idx"
+                v-for="(item, idx) in obj.type === 'control' ? $store.state.missions :
+                 (obj.type === 'check' ? $store.state.missionsCheck :
+                  (obj.type === 'perform' ? $store.state.missionsPerform : []))" 
+                :key="idx"
                 v-show="item.isVissible"
                 :title="item.Name"
                 :employee="item.Performer"
@@ -93,6 +96,13 @@ export default {
           isFull: false,
           path: 'check-list',
           type: 'check'
+        },
+        {
+          title: 'Поручения на исполнение',
+          missionsIsShow: false,
+          isFull: false,
+          path: 'perform-list',
+          type: 'perform'
         }
       ]
     }
@@ -112,8 +122,13 @@ export default {
         object.missionsIsShow = !object.missionsIsShow;
         if (object.type === 'control') {
           this.ObjectsArr[1].missionsIsShow = false;
+          this.ObjectsArr[2].missionsIsShow = false;
         } else if (object.type === 'check') {
           this.ObjectsArr[0].missionsIsShow = false;
+          this.ObjectsArr[2].missionsIsShow = false;
+        } else if (object.type === 'perform') {
+          this.ObjectsArr[0].missionsIsShow = false;
+          this.ObjectsArr[1].missionsIsShow = false;
         }
       } else {
         Funcs.doRequest(
@@ -133,12 +148,16 @@ export default {
               if (object.type === 'control') {
                 this.$store.state.missions = res.data.data;
                 this.ObjectsArr[1].missionsIsShow = false;
+                this.ObjectsArr[2].missionsIsShow = false;
               } else if (object.type === 'check') {
                 this.$store.state.missionsCheck = res.data.data;
                 this.ObjectsArr[0].missionsIsShow = false;
+                this.ObjectsArr[2].missionsIsShow = false;
+              } else if (object.type === 'perform') {
+                this.$store.state.missionsPerform = res.data.data;
+                this.ObjectsArr[0].missionsIsShow = false;
+                this.ObjectsArr[1].missionsIsShow = false;
               }
-
-              window.console.log(res.data.data)
               object.isFull = true;
               object.missionsIsShow = true;
             }
@@ -160,6 +179,10 @@ export default {
       if (this.ObjectsArr[1].missionsIsShow) {
         array = this.$store.state.missionsCheck;
         type = 'check';
+      }
+      if (this.ObjectsArr[2].missionsIsShow) {
+        array = this.$store.state.missionsPerform;
+        type = 'perform';
       }
       if (array.length > 0) {
         for (let i in array) {
@@ -183,7 +206,6 @@ export default {
       null,
       null,
       res => {
-        window.console.log(res.data.error);
         if (!res.data.error) {
           this.$store.state.missionPerformers = res.data.data[0].Performers;
           this.$store.state.missionRoles = res.data.data[1].Performers;

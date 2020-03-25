@@ -49,6 +49,9 @@
 				if (this.$store.state.activeMissionCheckIndex != null) {
 					return this.$store.state.missionsCheck[this.$store.state.activeMissionCheckIndex];
 				}
+				if (this.$store.state.activeMissionPerformIndex != null) {
+					return this.$store.state.missionsPerform[this.$store.state.activeMissionPerformIndex];
+				}
 
 				else 
 					return {
