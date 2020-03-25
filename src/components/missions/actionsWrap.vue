@@ -39,6 +39,30 @@
 				</div>
 			</div>
 		</div>
+		<div v-if="type === 'perform'">
+			<button @click="performMission = true">Исполнить</button>
+			<div class="action-modal-wrap" v-show="performMission">
+				<div class="hover"></div>
+				<div class="return-form">
+					<h2>Исполнить поручение</h2>
+					<label>Оставьте комментарий:</label>
+					<textarea type="text" v-model="performComment"/>
+					<button @click="execMission('Perform')">Подтвердить</button>
+					<button @click="performMission = false">Закрыть</button>
+				</div>
+			</div>
+			<button @click="redirectMission = true">Вернуть на доработку</button>
+			<div class="action-modal-wrap" v-show="redirectMission">
+				<div class="hover"></div>
+				<div class="return-form">
+					<h2>Вернуть поручение исполнителю:</h2>
+					<label>Оставьте комментарий:</label>
+					<textarea type="text" v-model="performComment"/>
+					<button @click="execMission('Redirect')">Подтвердить</button>
+					<button @click="redirectMission = false">Закрыть</button>
+				</div>
+			</div>
+		</div>
 		<myNotification
 			:text="not_text"
 			:textColor="not_color"
@@ -65,6 +89,9 @@ export default {
 			becomeNewDate: false,
 			returnMission: false,
 			finishMission: false,
+			performMission: false,
+			redirectMission: false,
+			performComment: '',
 			closeComment: '',
 			returnComment: '',
 			new_date: Funcs.getTodayDateToInput()[2] + '-' + Funcs.getTodayDateToInput()[1] + '-' + Funcs.getTodayDateToInput()[0],
@@ -166,8 +193,8 @@ export default {
 						if (!res.data.error) {
 							if (action === 'Return') {
 								this.returnMission = false;
-								this.checkedArr = [];
 							}
+							this.checkedArr = [];
 							this.showNotification('Успешно', 'green');
 							window.location.reload();
 						} else {
@@ -175,6 +202,35 @@ export default {
 						}
 					}
 			)
+		},
+		execMission (action) {
+			let data = [];
+			if (this.performComment == '') {
+				this.showNotification('Необходимо оставить комментарий!', 'orange');
+				return false;
+			}
+			this.checkedArr.forEach(item => {
+				data.push({
+					Action: action,
+					Task_GUID: item.Task_GUID,
+					Comment: this.performComment
+				});
+			});
+			Funcs.doRequest(
+				"post",
+				this.getPerformLink,
+				data,
+				null,
+				(res) => {
+					if (!res.data.error) {
+						this.checkedArr = [];
+						this.showNotification('Успешно', 'green');
+						window.location.reload();
+					} else {
+						this.showNotification(res.data.report, 'red');
+					}
+				}
+			);
 		}
 	},
 	computed: {
@@ -182,7 +238,10 @@ export default {
 			return this.$store.getters.getLinkByName('missions', 'updateControl');
 		},
 		getFinishLink() {
-			return this.$store.getters.getLinkByName('missions', 'updateCheck')
+			return this.$store.getters.getLinkByName('missions', 'updateCheck');
+		},
+		getPerformLink() {
+			return this.$store.getters.getLinkByName('missions', 'updatePerform');
 		}
 	}
 }

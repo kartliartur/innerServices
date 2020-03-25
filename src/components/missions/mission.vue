@@ -6,7 +6,8 @@
 					@click="openModal()"
 					v-bind:class="{ active:
 					type === 'control' ? $store.state.missions[missionIndex].isChecked :
-						$store.state.missionsCheck[missionIndex].isChecked }"
+						(type === 'check' ? $store.state.missionsCheck[missionIndex].isChecked : 
+						(type === 'perform' ? $store.state.missionsPerform[missionIndex].isChecked : []))}"
 			>
 				<div class="head">
 					<span class="title">{{ title }}</span>
@@ -19,6 +20,7 @@
 			</div>
 			<input v-if="type === 'control'" type="checkbox" v-model="$store.state.missions[missionIndex].isChecked">
 			<input v-if="type === 'check'" type="checkbox" v-model="$store.state.missionsCheck[missionIndex].isChecked">
+			<input v-if="type === 'perform'" type="checkbox" v-model="$store.state.missionsPerform[missionIndex].isChecked">
 			<!--<div v-if="type === 'check'">
 				<div
 						class="block"
@@ -49,13 +51,23 @@
 		props: ['title', 'employee', 'limitDate', 'createDate', 'missionIndex', 'type'],
 		methods: {
 			openModal() {
-				this.$emit('toggleModal', true);
+				/*this.$emit('toggleModal', true);
 				if (this.type === 'control') {
 					this.$store.dispatch('changeActiveMissionIndex', this.missionIndex);
 				}
 				if (this.type === 'check') {
 					this.$store.dispatch('changeActiveMissionCheckIndex', this.missionIndex);
 				}
+				if (this.type === 'perform') {
+					this.$store.dispatch('changeActiveMissionPerformIndex', this.missionIndex);
+				}*/
+				this.$emit('toggleModal', true);
+				let item = {
+					active: this.missionIndex,
+					type: this.type
+				};
+				this.$store.dispatch('changeActiveMissionIndex', item);
+
 			}
 		}
 	}
