@@ -51,6 +51,9 @@
                 driver: '',
                 Waybill_GUID: ''
               });
+              this.documentValue = "";
+              this.$parent.$data.timers = [];
+              localStorage.setItem("timers", []);
             },
 
             selectItem (value) {

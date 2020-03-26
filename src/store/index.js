@@ -215,7 +215,7 @@ export default new Vuex.Store({
 		missionRoles: [],
 		tasks: [],
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
-		base_url: 'https://erp.unlogic.ru',
+		base_url: 'https://erp.test.unlogic.ru',
 	},
 	getters: {
 		getTtns: state => state.ttns,

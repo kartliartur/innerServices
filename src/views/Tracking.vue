@@ -81,6 +81,7 @@
             },
             fillData (value) {
                 if (value) {
+                    let old_doc_id = this.document_id;
                     this.$children[1].$data.documentValue = value.document_id;
                     this.document_id = value.document_id;
                     this.status = value.status;
@@ -90,6 +91,11 @@
                     localStorage.setItem('document_id', value.document_id);
                     localStorage.setItem('phone', value.phone);
                     localStorage.setItem('status', value.status);
+                    localStorage.setItem('driver', value.driver);
+                    if (old_doc_id != this.document_id) {
+                        this.timers = [];
+                        localStorage.setItem('timers', []);
+                    }
                 }
             },
             tracking () {
@@ -177,7 +183,7 @@
               let old_status = this.status;
               this.getDataFromServer();
               if (old_status === this.status) {
-                this.showNotification('Статус не изменился', 'red');
+                //this.showNotification('Статус не изменился', 'red');
                 this.startTimer(this.document_id);
               }
             },
