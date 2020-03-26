@@ -161,7 +161,7 @@
                   result = true;
                 }
               }
-              if (new Date(this.timers[index].stop_time).getMinutes() > new Date().getMinutes()) {
+              if (new Date(this.timers[index].stop_time) > new Date()) {
                 setTimeout(() => {
                   this.getTimer();
                 }, 1000);
