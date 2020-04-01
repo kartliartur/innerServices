@@ -5,6 +5,7 @@
 			<h2 class="title">Поручение</h2>
 			<span class="desc">Описание: {{ isActiveIndex.Description }}</span>
 			<span>Исполнитель: {{ isActiveIndex.Performer }}</span>
+			<span>Комментарий: {{ isActiveIndex.Comment }}</span>
 			<span>Срок: {{ isActiveIndex.Deadline || 'Отсутствует' }}</span>
 			<div class="btn-wrap">
 				<button @click="hideModal()">Закрыть</button>

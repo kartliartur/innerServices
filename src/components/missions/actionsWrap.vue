@@ -62,6 +62,16 @@
 					<button @click="redirectMission = false">Закрыть</button>
 				</div>
 			</div>
+			<button @click="setComment = true">Комментарий</button>
+			<div class="action-modal-wrap" v-show="setComment">
+				<div class="hover"></div>
+				<div class="return-form">
+					<h2>Оставить комментарий</h2>
+					<textarea type="text" v-model="performComment"/>
+					<button @click="execMission('Save')">Сохранить</button>
+					<button @click="setComment = false">Закрыть</button>
+				</div>
+			</div>
 		</div>
 		<myNotification
 			:text="not_text"
@@ -91,6 +101,7 @@ export default {
 			finishMission: false,
 			performMission: false,
 			redirectMission: false,
+			setComment: false,
 			performComment: '',
 			closeComment: '',
 			returnComment: '',
