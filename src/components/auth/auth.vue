@@ -85,8 +85,12 @@ export default {
 				.catch(res => {
 					if (res == 'Error: Request failed with status code 401') {
 						this.showNotification('Пользователя не существует', 'red');
-					} else
+					} 
+					if (res == 'Error: Request failed with status code 403') {
+						this.showNotification('Недостаточно прав', 'red');
+					} else {
 						this.showNotification('Сервер временно недоступен', 'red');
+					}
 				});
 			}
 		},
