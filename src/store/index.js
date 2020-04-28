@@ -33,7 +33,7 @@ export default new Vuex.Store({
 					},
 					{
 						name: 'updatePerform',
-						link: '/ecm/hs/tasks/update/perform'
+						link: '/ecm/hs/tasks-Demo/update/perform'
 					}
 				]
 			},
