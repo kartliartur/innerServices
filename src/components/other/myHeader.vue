@@ -8,6 +8,7 @@
 					:href="item.link">
 					{{ item.name }}
 				</a>
+				<a v-if="CanInstall" @click="onInstall" href="#">Установить как приложение</a>
 				<a @click="logout()" href="/">Выйти</a>
 			</div>
 		</transition>
@@ -25,6 +26,14 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				isMenuVissible: false,
 				isClose: false,
 				links: new Array()
+			}
+		},
+		computed: {
+			InstallPrompt() {
+				return this.$store.state.installPrompt;
+			},
+			CanInstall() {
+				return true;
 			}
 		},
 		methods: {
@@ -45,6 +54,9 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					localStorage.removeItem('role');
 					this.$router.push({ path: '/' });
 				});
+			},
+			onInstall() {
+				this.InstallPrompt.prompt();
 			}
 		},
 		beforeMount() {
