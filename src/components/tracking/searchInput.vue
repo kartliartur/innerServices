@@ -52,11 +52,12 @@
                 Waybill_GUID: ''
               });
               this.documentValue = "";
-              this.$parent.$data.timers = [];
-              localStorage.setItem("timers", []);
+              //this.$parent.$data.timers = [];
+              //localStorage.setItem("timers", []);
             },
 
             selectItem (value) {
+                this.documentValue = value.document_id;
                 this.fillData(value);
             },
 
@@ -74,11 +75,11 @@
                        this.styleList = "height: " + 28 * this.items.length + "px;"
                    }
                    if (this.items.length >= 3) {
-                       this.styleList = "height: 200px;"
+                       this.styleList = "height: 180px;"
                    }
                 } else {
                     this.items = this.options;
-                    this.styleList = "height: 200px;"
+                    this.styleList = "height: 180px;"
                 }
             }
         },
@@ -142,7 +143,7 @@
         }
 
         & .active {
-            height: 300px;
+            height: 180px;
             z-index: 99;
 
             & span {
