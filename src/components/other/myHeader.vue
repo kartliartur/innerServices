@@ -33,7 +33,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				return this.$store.state.installPrompt;
 			},
 			CanInstall() {
-				return true;
+				return this.$store.state.canInstall;
 			}
 		},
 		methods: {
@@ -57,6 +57,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			},
 			onInstall() {
 				this.InstallPrompt.prompt();
+				this.InstallPrompt.userChoice.then((choiceResult) => {
+    			if (choiceResult.outcome === 'accepted') {
+    			  store.commit('SET_CAN_INSTALL', false);
+    			}
 			}
 		},
 		beforeMount() {

@@ -217,6 +217,7 @@ export default new Vuex.Store({
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
 		base_url: 'https://erp.unlogic.ru',
 		installPrompt: null,
+		canInstall: true,
 	},
 	getters: {
 		getTtns: state => state.ttns,
@@ -232,9 +233,6 @@ export default new Vuex.Store({
 				}
 			}
 		},
-		/*canInstall: state => {
-			return 'BeforeInstallPromptEvent' in window && state.installPrompt instanceof BeforeInstallPromptEvent;
-		}*/
 	},
 	mutations: {
 		CHANGE_ACTIVE_TTN_INDEX: (state, active) => state.activeTtnIndex = active,
@@ -271,6 +269,7 @@ export default new Vuex.Store({
 		}),
 		CHANGE_MIS_DATE: (state, item) => state.missions[item.index].Deadline = item.date,
 		SET_INSTALL_PROMPT: (state, data) => state.installPrompt = data,
+		SET_CAN_INSTALL: (state, value) => state.canInstall = value,
 	},
 	actions: {
 		changeActiveTtnIndex: (context, active) => context.commit('CHANGE_ACTIVE_TTN_INDEX', +active),
