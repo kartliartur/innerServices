@@ -58,9 +58,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			onInstall() {
 				this.InstallPrompt.prompt();
 				this.InstallPrompt.userChoice.then((choiceResult) => {
-    			if (choiceResult.outcome === 'accepted') {
-    			  store.commit('SET_CAN_INSTALL', false);
-    			}
+					if (choiceResult.outcome === 'accepted') {
+						this.$store.commit('SET_CAN_INSTALL', false);
+					}
+				})
 			}
 		},
 		beforeMount() {
