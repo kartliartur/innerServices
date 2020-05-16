@@ -15,7 +15,7 @@ const staticAssets = [
     '../src/App.vue',
 ];
 
-self.addEventListener('install', async event => {
+/*self.addEventListener('install', async event => {
     const cache = await caches.open(staticCacheName);
     await cache.addAll(staticAssets);
 });
@@ -28,11 +28,11 @@ self.addEventListener('activate', async event => {
         }
     });
     await Promise.all(checkKeys);
-});
+});*/
 
 self.addEventListener('fetch', event => {
     //console.log(event.request.url);
-    event.respondWith(checkCache(event.request));
+   // event.respondWith(checkCache(event.request));
 });
 
 async function checkCache(req) {
