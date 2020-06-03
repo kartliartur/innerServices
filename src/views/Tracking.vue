@@ -128,7 +128,8 @@
                             } else {
                                 this.showNotification(res.data.report, 'red');
                             }
-                        }
+                        },
+                        () => { this.showNotification('Сервер временно недоступен', 'red'); }
                     );
                 } else {
                     this.showNotification('ГУИД накладной пуст', 'red');
