@@ -48,7 +48,7 @@ export default {
 						let k = 0;
 						for (let prop in this.$store.state.ttns[i]) {
 							if (prop.substr(0,2) != 'is') {
-								if (this.$store.state.ttns[i][prop].indexOf(this.searchValue) != -1)
+								if (String(this.$store.state.ttns[i][prop]).toUpperCase().indexOf(this.searchValue.toUpperCase()) !== -1)
 									k++;
 							}
 						}

@@ -24,7 +24,7 @@
 			</div>
 			<div class="row">
 				<span>Дата доставки(отправки):</span>
-				<input type="date" :value="isActiveIndex.Date_Delivery" @change="dateChange()" id="status_date">
+				<input type="date" :value="this.dateNow" @change="dateChange()" id="status_date">
 			</div>
 			<div class="row">
 				<span>Транспортная компания:</span>
@@ -65,7 +65,8 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					not_text: 'Ошибка',
 					not_color: 'red',
 					is_not_show: false,
-					currentDate: ''
+					currentDate: '',
+					dateNow: '',
 			}
 		},
 		methods: {
@@ -141,6 +142,11 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						ttnDriverNum: 'Нет'
 					}
 			}
+		},
+		beforeMount() {
+			this.dateNow = Funcs.dateToInputs(new Date())[2] + '-'
+					+ Funcs.dateToInputs(new Date())[1] + '-'
+					+ Funcs.dateToInputs(new Date())[0];
 		}
 	}
 </script>
