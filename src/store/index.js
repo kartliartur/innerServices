@@ -173,7 +173,11 @@ export default new Vuex.Store({
 					{
 						link: '/tracking',
 						name: 'Оформление остлеживания ТТН'
-					}
+					},
+					{
+						link: '/logist',
+						name: 'Изменение статуса ТТН'
+					}					
 				]
 			},
 			{
