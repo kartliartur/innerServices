@@ -51,7 +51,7 @@
 					<button @click="performMission = false">Закрыть</button>
 				</div>
 			</div>
-			<button @click="redirectMission = true">Вернуть на доработку</button>
+			<!--<button @click="redirectMission = true">Вернуть на доработку</button>
 			<div class="action-modal-wrap" v-show="redirectMission">
 				<div class="hover"></div>
 				<div class="return-form">
@@ -61,7 +61,7 @@
 					<button @click="execMission('Redirect')">Подтвердить</button>
 					<button @click="redirectMission = false">Закрыть</button>
 				</div>
-			</div>
+			</div>-->
 			<button @click="setComment = true">Комментарий</button>
 			<div class="action-modal-wrap" v-show="setComment">
 				<div class="hover"></div>
