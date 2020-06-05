@@ -13,6 +13,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/tracking',
+    name: 'tracking',
+    component: () => import('../views/Tracking.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/logist',
     name: 'logist',
     // route level code-splitting
@@ -54,14 +62,6 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  },
-  {
-    path: '/tracking',
-    name: 'tracking',
-    component: () => import('../views/Tracking.vue'),
-    meta: {
-      requiresAuth: true
-    }
   }
 ]
 
@@ -88,21 +88,18 @@ router.beforeEach((to, from, next) => {
         } 
       }
     }
-    let index = arr.length;
-    for (let k in arr) {
-      if (to.fullPath != arr[k].link)
-        index--;
-      else 
-        flag = arr[k].link;
-    }
-    if (index == 1 && flag != false)
-      flag = false;
-    else 
-      flag = arr[0].link;
-    if (!flag) {
-      next()
+
+    const availableLinks = Array.from(new Set(arr.map(item => item.link)));
+    //window.console.log(availableLinks)
+    availableLinks.forEach(link => {
+      if (link == to.fullPath) {
+        flag = true;
+      }
+    });
+    if (flag) {
+      next();
     } else {
-      router.push({ path: flag })
+      router.push({ path: availableLinks[0]})
     }
   } else {
     next()

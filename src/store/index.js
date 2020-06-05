@@ -38,6 +38,19 @@ export default new Vuex.Store({
 				]
 			},
 			{
+				name: 'tracking',
+				links: [
+					{
+						name: 'setStatus',
+						link: '/erp_base/hs/WaybillClient-Demo/update/waybill'
+					},
+					{
+						name: 'getTTNS',
+						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
+					}
+				]
+			},
+			{
 			name: 'logist',
 				links: [
 					{
@@ -73,19 +86,6 @@ export default new Vuex.Store({
 					{
 						name: 'approve',
 						link: '/erp_base/hs/tasks-Demo/approve/coordinator'
-					}
-				]
-			},
-			{
-			name: 'tracking',
-				links: [
-					{
-						name: 'setStatus',
-						link: '/erp_base/hs/WaybillClient-Demo/update/waybill'
-					},
-					{
-						name: 'getTTNS',
-						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
 					}
 				]
 			},
@@ -164,11 +164,11 @@ export default new Vuex.Store({
 					{
 						link: '/tracking',
 						name: 'Оформление остлеживания ТТН'
-					}/*,
+					},
 					{
 						link: '/logist',
 						name: 'Изменение статуса ТТН'
-					}*/
+					}
 				]
 			},
 			{
