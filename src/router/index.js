@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store'
+import Funcs from '../assets/js-funcs/default-funcs.js'
 
 Vue.use(VueRouter)
 
@@ -89,17 +90,16 @@ router.beforeEach((to, from, next) => {
       }
     }
 
-    const availableLinks = Array.from(new Set(arr.map(item => item.link)));
-    //window.console.log(availableLinks)
-    availableLinks.forEach(link => {
-      if (link == to.fullPath) {
+    const availableLinks = Funcs.uniqueItem(arr);
+    availableLinks.forEach(item => {
+      if (item.link == to.fullPath) {
         flag = true;
       }
     });
     if (flag) {
       next();
     } else {
-      router.push({ path: availableLinks[0]})
+      router.push({ path: availableLinks[0].link})
     }
   } else {
     next()

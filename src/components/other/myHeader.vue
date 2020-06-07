@@ -76,7 +76,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 					}
 				}
 			}
-			window.console.log(this.links);
+			this.links = Funcs.uniqueItem(this.links);
 		}
 	}
 </script>

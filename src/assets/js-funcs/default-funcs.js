@@ -57,5 +57,12 @@ export default {
 					preloadScreen.removeAttribute('style');
 				})		
 		})
-	}
+	},
+	uniqueItem: (arr) => {
+		let obj = {};
+		return arr.filter(item => {
+			var value = JSON.stringify(item);
+			return !(value in obj) && (obj[value] = item);
+		});
+	},
 }
