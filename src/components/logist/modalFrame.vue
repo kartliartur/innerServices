@@ -27,11 +27,11 @@
 				<input type="date" :value="this.dateNow" @change="dateChange()" id="status_date">
 			</div>
 			<div class="row">
-				<span>Транспортная компания:</span>
+				<span>Грузополучатель:</span>
 				<span>{{ isActiveIndex.Payment_Company }}</span>
 			</div>
 			<div class="row">
-				<span>Плательщик:</span>
+				<span>Контактное лицо:</span>
 				<span>{{ isActiveIndex.Releaser }}</span>
 			</div>
 			<div class="row">
