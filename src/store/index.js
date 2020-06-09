@@ -55,7 +55,7 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'getTTNS',
-						link: '/erp_base/hs/WaybillClient-Demo/get/Waybills'
+						link: '/erp_base/hs/WaybillClient-Demo/get/Waybills?CurrentUser=false'
 					},
 					{
 						name: 'setStatus',
