@@ -31,6 +31,10 @@
 				<span>{{ isActiveIndex.Payment_Company }}</span>
 			</div>
 			<div class="row">
+				<span>Адрес погрузки:</span>
+				<span>{{ isActiveIndex.Sending_Address }}</span>
+			</div>
+			<div class="row">
 				<span>Контактное лицо:</span>
 				<span>{{ isActiveIndex.Releaser }}</span>
 			</div>
@@ -129,8 +133,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 		computed: {
 			isActiveIndex() {
 				window.console.log(this.$store.state.activeTtnIndex);
-				if (this.$store.state.activeTtnIndex != null) 
+				if (this.$store.state.activeTtnIndex != null) {
+					window.console.log(this.$store.state.ttns[this.$store.state.activeTtnIndex]);
 					return this.$store.state.ttns[this.$store.state.activeTtnIndex];
+				}
 				else 
 					return {
 						ttnNumber: 'Нет',
