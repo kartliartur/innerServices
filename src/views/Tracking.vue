@@ -29,7 +29,9 @@
 
              <div class="tracking-item" v-show="this.getTimer()">
                  <label>Время до обновления: </label>
-                 <span class="status-item">{{ this.currentTimer }}</span>
+                 <span class="status-item">{{ this.currentTimer }}
+                     <!--<span class="reload_timer"><img alt="" src="../assets/reload_icon.png" width="15px"></span>-->
+                 </span>
               </div>
 
             <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.document_id || !this.phone)">Отслеживать</button>
@@ -303,6 +305,12 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+
+                /*& .reload_timer {
+                    .flex(row, flex-end, center);
+                    cursor: pointer;
+                    color: @green-color;
+                }*/
             }
         }
 
