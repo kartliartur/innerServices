@@ -64,15 +64,15 @@ export default {
 		}
   },
 	beforeCreate() {
-		let val = Funcs.dateToInputs(new Date())[2] + ''
-				+ Funcs.dateToInputs(new Date())[1] + ''
-				+ Funcs.dateToInputs(new Date())[5];
-		let val1 = Funcs.dateToInputs(new Date())[2] + ''
-				+ (Funcs.dateToInputs(new Date())[3]) + ''
-				+ Funcs.dateToInputs(new Date())[0];
+		// let val = Funcs.dateToInputs(new Date())[2] + ''
+		// 		+ Funcs.dateToInputs(new Date())[1] + ''
+		// 		+ Funcs.dateToInputs(new Date())[5];
+		// let val1 = Funcs.dateToInputs(new Date())[2] + ''
+		// 		+ (Funcs.dateToInputs(new Date())[3]) + ''
+		// 		+ Funcs.dateToInputs(new Date())[0];
 		let data = {
-			DateStart: val,
-			DateEnd: val1
+			DateStart: '20191101',
+			DateEnd: '20191101'
 		}
 		Funcs.doRequest(
 			'get',
@@ -86,11 +86,11 @@ export default {
 					} else {
 						for (let i = 0; i <  res.data.data.length; i++) {
 							res.data.data[i].TTN_Date = Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[2] + '-'
-														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1] + '-'
-														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0];
+														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0] + '-'
+														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1];
 							res.data.data[i].Date_Delivery = Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[2] + '-'
-															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1] + '-'
-															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0];
+															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0] + '-'
+															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1];
 							res.data.data[i].isVissible = true
 							res.data.data[i].isChecked = false;
 						}

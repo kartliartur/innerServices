@@ -39,12 +39,19 @@ export default {
 		search(e) {
 			e.preventDefault();
 			for (let i = 0; i < this.$store.state.ttns.length; i++) {
-				let arr = Funcs.dateToDef(this.$store.state.ttns[i].TTN_Date);
-				let arrFirst = Funcs.dateToDef(this.dateFirst);
-				let arrLast = Funcs.dateToDef(this.dateLast);
-				if (new Date(arr[0], arr[1], arr[2]) > new Date(arrFirst[0], arrFirst[1], arrFirst[2])
-					&& new Date(arr[0], arr[1], arr[2]) < new Date(arrLast[0], arrLast[1], arrLast[2])) {
-					if (this.searchValue != '') {
+				// let arr = Funcs.dateToDef(this.$store.state.ttns[i].TTN_Date);
+				// window.console.log(arr);
+				// let arrFirst = Funcs.dateToDef(this.dateFirst);
+				// let arrLast = Funcs.dateToDef(this.dateLast);
+				//const a = 0;
+				window.console.log((new Date(this.$store.state.ttns[i].TTN_Date) <= new Date(this.dateLast)) 
+						&& (new Date(this.$store.state.ttns[i].TTN_Date) >= new Date(this.dateFirst)));
+				window.console.log(this.$store.state.ttns[i].TTN_Date);
+				window.console.log(new Date(this.dateFirst));
+				window.console.log(new Date(this.dateLast));
+				if (this.searchValue != '') {
+					if ((new Date(this.$store.state.ttns[i].TTN_Date) <= new Date(this.dateLast)) 
+						&& (new Date(this.$store.state.ttns[i].TTN_Date) >= new Date(this.dateFirst))) {
 						let k = 0;
 						for (let prop in this.$store.state.ttns[i]) {
 							if (prop.substr(0,2) != 'is') {
@@ -52,15 +59,17 @@ export default {
 									k++;
 							}
 						}
-						if (k > 0)
+						if (k > 0) {
+							window.console.log(this.$store.state.ttns[i]);
 							this.$store.state.ttns[i].isVissible = true;
+						}
 						else
 							this.$store.state.ttns[i].isVissible = false;
 					} else {
-						this.$store.state.ttns[i].isVissible = true;
+						this.$store.state.ttns[i].isVissible = false;
 					}
 				} else {
-					this.$store.state.ttns[i].isVissible = false;
+					this.$store.state.ttns[i].isVissible = true;
 				}
 			}
 		}
