@@ -86,11 +86,11 @@ export default {
 					} else {
 						for (let i = 0; i <  res.data.data.length; i++) {
 							res.data.data[i].TTN_Date = Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[2] + '-'
-														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1] + '-'
-														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0];
+														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[0] + '-'
+														+ Funcs.dateToInputs(new Date(res.data.data[i].TTN_Date))[1];
 							res.data.data[i].Date_Delivery = Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[2] + '-'
-															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1] + '-'
-															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0];
+															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[0] + '-'
+															+ Funcs.dateToInputs(new Date(res.data.data[i].Date_Delivery))[1];
 							res.data.data[i].isVissible = true
 							res.data.data[i].isChecked = false;
 						}

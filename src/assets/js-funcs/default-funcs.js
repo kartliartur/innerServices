@@ -22,9 +22,9 @@ export default {
 	},
 	dateToDef: (date) => {
 		let year = date.substr(0, 4);
-		let month = +date.substr(5, 2);
-		let day = +date.substr(8,2);
-		return [year, month-1, day];
+		let month = date.substr(5, 2);
+		let day = date.substr(8,2);
+		return [year, month, day];
 	},
 	getTodayDateToInput() {
 		let today = new Date();
