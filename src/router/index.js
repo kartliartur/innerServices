@@ -73,7 +73,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.fullPath != '/') {
+  if ((localStorage.getItem('token') == null || localStorage.getItem('token') == undefined) && to.fullPath != '/') {
     router.push({ path: '/' })
   } else if (localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) {
     let role = localStorage.getItem('role').split(',');

@@ -9,7 +9,7 @@
 					{{ item.name }}
 				</a>
 				<a v-if="CanInstall" @click="onInstall" href="#">Установить как приложение</a>
-				<a href="https://passport.kartli.ch/auth/logout">Выйти</a>
+				<span @click="logout()">Выйти</span>
 			</div>
 		</transition>
 	</div>
@@ -44,6 +44,10 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 						this.$store.commit('SET_CAN_INSTALL', false);
 					}
 				})
+			},
+			logout() {
+				localStorage.setItem('token', null);
+				location.href = 'https://passport.kartli.ch/auth/logout';
 			}
 		},
 		beforeMount() {
