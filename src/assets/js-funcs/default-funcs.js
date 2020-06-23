@@ -24,8 +24,6 @@ export default {
 		let year = date.substr(0, 4);
 		let month = date.substr(5, 2);
 		let day = date.substr(8,2);
-		window.console.log(date);
-		window.console.log([year, month, day]);
 		return [year, month, day];
 	},
 	getTodayDateToInput() {

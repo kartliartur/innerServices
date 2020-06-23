@@ -39,19 +39,12 @@ export default {
 		search(e) {
 			e.preventDefault();
 			for (let i = 0; i < this.$store.state.ttns.length; i++) {
-				// let arr = Funcs.dateToDef(this.$store.state.ttns[i].TTN_Date);
-				// window.console.log(arr);
-				// let arrFirst = Funcs.dateToDef(this.dateFirst);
-				// let arrLast = Funcs.dateToDef(this.dateLast);
 				//const a = 0;
-				window.console.log((new Date(this.$store.state.ttns[i].TTN_Date) <= new Date(this.dateLast)) 
-						&& (new Date(this.$store.state.ttns[i].TTN_Date) >= new Date(this.dateFirst)));
-				window.console.log(this.$store.state.ttns[i].TTN_Date);
-				window.console.log(new Date(this.dateFirst));
-				window.console.log(new Date(this.dateLast));
 				if (this.searchValue != '') {
-					if ((new Date(this.$store.state.ttns[i].TTN_Date) <= new Date(this.dateLast)) 
-						&& (new Date(this.$store.state.ttns[i].TTN_Date) >= new Date(this.dateFirst))) {
+					const ttndate = this.$store.state.ttns[i].TTN_Date;
+					const date = Funcs.dateToDef(ttndate);
+					const checkerDate = new Date(date[0], date[2], date[1]);
+					if (checkerDate <= new Date(this.dateLast) && checkerDate >= new Date(this.dateFirst)) {
 						let k = 0;
 						for (let prop in this.$store.state.ttns[i]) {
 							if (prop.substr(0,2) != 'is') {
@@ -60,7 +53,6 @@ export default {
 							}
 						}
 						if (k > 0) {
-							window.console.log(this.$store.state.ttns[i]);
 							this.$store.state.ttns[i].isVissible = true;
 						}
 						else
