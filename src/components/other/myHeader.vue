@@ -38,22 +38,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 		},
 		methods: {
 			logout() {
-				Funcs.doRequest(
-					'get',
-					this.$store.getters.getLinkByName('auth', 'logout'),
-					null,
-					null,
-					res => {
-						window.console.log(res)
-					},
-					res => { window.console.log(res) }
-				);
-				setTimeout(() => {
-					localStorage.removeItem('token');
-					localStorage.removeItem('user');
-					localStorage.removeItem('role');
-					this.$router.push({ path: '/' });
-				});
+				location.href = 'https://passport.kartli.ch/auth/logout';
 			},
 			onInstall() {
 				this.InstallPrompt.prompt();

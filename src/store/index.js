@@ -108,10 +108,6 @@ export default new Vuex.Store({
 					{
 						name: 'login',
 						link: '/auth'
-					},
-					{
-						name: 'logout',
-						link: '/auth/logout'
 					}
 				]
 			}
