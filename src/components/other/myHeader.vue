@@ -9,7 +9,7 @@
 					{{ item.name }}
 				</a>
 				<a v-if="CanInstall" @click="onInstall" href="#">Установить как приложение</a>
-				<a @click="logout()" href="/">Выйти</a>
+				<a href="https://passport.kartli.ch/auth/logout">Выйти</a>
 			</div>
 		</transition>
 	</div>
@@ -37,9 +37,6 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			}
 		},
 		methods: {
-			logout() {
-				location.href = 'https://passport.kartli.ch/auth/logout';
-			},
 			onInstall() {
 				this.InstallPrompt.prompt();
 				this.InstallPrompt.userChoice.then((choiceResult) => {
