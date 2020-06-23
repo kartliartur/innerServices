@@ -53,6 +53,7 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 				for (let i = 0; i < this.$store.state.ttns.length; i++) {
 					let item = this.$store.state.ttns[i];
 					if (item.isChecked == true) {
+						window.console.log(item);
 						arr.push(new Object());
 						arr[arr.length-1].TTN_Status = this.currentStatus;
 						arr[arr.length-1].TTN_GUID = item.TTN_GUID;
