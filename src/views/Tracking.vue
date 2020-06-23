@@ -153,6 +153,7 @@
                 })
                 localStorage.setItem('timers', JSON.stringify(this.timers));
                 this.getTimer();
+                //this.autoRefresh();
               }
             },
             getTimer() {
@@ -190,6 +191,31 @@
                 this.startTimer(this.document_id);
               }
             },
+            /*refreshStatus() {
+                let data = {
+                    "TrackingPhone": this.phone
+                };
+                Funcs.doRequest(
+                    "post",
+                    this.$store.getters.getLinkByName('tracking', 'getStatus'),
+                    data,
+                    null,
+                    res => {
+                        if (!res.error) {
+                            window.console.log(res.data);
+                            let new_status = res.data.status;
+                            if (new_status != this.status) {
+                                this.status = new_status;
+                            } else {
+                                this.autoRefresh();
+                            }
+                        }
+                    }
+                )
+            },
+            autoRefresh() {
+                setTimeout(() => window.console.log(this.status), 5000);
+            },*/
             checkPhone () {
                 if (this.$refs.phone != undefined) {
                     if (this.phone != '') {
@@ -306,7 +332,7 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
 
-                /*& .reload_timer {
+                /*& .refresh_status {
                     .flex(row, flex-end, center);
                     cursor: pointer;
                     color: @green-color;

@@ -47,6 +47,10 @@ export default new Vuex.Store({
 					{
 						name: 'getTTNS',
 						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
+					},
+					{
+						name: ' getStatus',
+						link: '/erp_base/hs/WaybillClient-Demo/get/TrackingStatus'
 					}
 				]
 			},
@@ -219,7 +223,7 @@ export default new Vuex.Store({
 		missionRoles: [],
 		tasks: [],
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
-		base_url: 'https://erp.unlogic.ru',
+		base_url: 'https://erp.test.unlogic.ru',
 		installPrompt: null,
 		canInstall: true,
 	},
