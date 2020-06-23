@@ -107,11 +107,11 @@ export default new Vuex.Store({
 				links: [
 					{
 						name: 'login',
-						link: '/api/v1/auth/login'
+						link: '/auth'
 					},
 					{
 						name: 'logout',
-						link: '/api/v1/auth/logout'
+						link: '/auth/logout'
 					}
 				]
 			}
@@ -219,7 +219,7 @@ export default new Vuex.Store({
 		missionRoles: [],
 		tasks: [],
 		statusTypes: ['Товар отгружен', 'Отменено', 'Товар получен'],
-		base_url: 'https://erp.test.unlogic.ru',
+		base_url: 'https://passport.kartli.ch/erp/api/v1',
 		installPrompt: null,
 		canInstall: true,
 	},

@@ -1,11 +1,11 @@
 <template>
 	<div class="auth-window">
 		<img src="../../assets/logo.png" alt="kartli" width="200px">
-		<span>Для того, чтобы воспользоваться сервисом введите свое имя и пароль</span>
+		<span>Для того, чтобы воспользоваться сервисом нажмите на кнопку</span>
 		<form>
-			<input type="text" name="name" placeholder="Введите свое имя" v-model="name">
-			<input type="password" name="password" placeholder="Введите пароль" v-model="password">
-			<span class="alert"></span>
+<!-- 			<input type="text" name="name" placeholder="Введите свое имя" v-model="name">
+			<input type="password" name="password" placeholder="Введите пароль" v-model="password"> -->
+<!-- 			<span class="alert"></span> -->
 			<input type="submit" value="Войти" @click="login($event)">
 		</form>
 		<myNotification :text="not_text"
@@ -28,8 +28,8 @@ export default {
 	},
 	data: function () {
 		return {
-			name: new String(''),
-			password: new String(''),
+			// name: new String(''),
+			// password: new String(''),
 			not_text: 'Hello world',
 			not_color: '#000',
 			is_not_show: false
@@ -38,61 +38,63 @@ export default {
 	methods: {
 		login(event) {
 			event.preventDefault();
-			let data = {
-				username: this.name,
-				password: this.password
+			let cooks = document.cookie;
+			cooks = cooks.substring(cooks.indexOf('passport_session_id='));
+			cooks = cooks.replace('passport_session_id=', '');
+			const data = {
+				session: cooks
 			}
-			if (this.name.length > 0 && this.password.length > 0) {
-				axios
-				.post(this.$store.getters.getLinkByName('auth','login'), data)
-				.then(res => {
-					window.console.log('Рамиль pidr');
-					if (!res.data.error) {
-						if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
-							this.showNotification("У вас нет прав доступа", 'red');
-						} else {
-							localStorage.setItem('user', res.data.data.name);
-							localStorage.setItem('token', res.data.token);
-							localStorage.setItem('dept', res.data.data.Dept)
-							let roles = [];
-							for (let i in res.data.data.Access_Groups) {
-								let item = res.data.data.Access_Groups[i];
-								for (let j in this.$store.state.rolesLinks) {
-									let role = this.$store.state.rolesLinks[j];
-									if (item == role.name) {
-										roles.push(item);
-										break;
-									}
-								}
-							}
-							if (roles.length === 0) {
-								this.showNotification('Ваша роль отсутствует в системе', 'red');
-							} else
-								localStorage.setItem('role', roles);
-							if (localStorage.getItem('token') != null) {
-								this.$emit('loggedIn')
-								if(this.$route.params.nextUrl != null){
-									this.$router.push(this.$route.params.nextUrl)
-								} else {
-									this.$router.push('/tracking');
+			axios
+			.post(this.$store.getters.getLinkByName('auth','login'), data)
+			.then(res => {
+				window.console.log(res.data);
+				if (!res.data.error) {
+					if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
+						this.showNotification("У вас нет прав доступа", 'red');
+					} else {
+						localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
+						localStorage.setItem('token', cooks);
+						//localStorage.setItem('dept', res.data.data.Dept)
+						let roles = [];
+						for (let i in res.data.data.Access_Groups) {
+							let item = res.data.data.Access_Groups[i];
+							for (let j in this.$store.state.rolesLinks) {
+								let role = this.$store.state.rolesLinks[j];
+								window.console.log(item);
+								if (item == role.name) {
+									roles.push(item);
+									break;
 								}
 							}
 						}
-					} else {
-						this.showNotification(res.data.report, 'red');
+						window.console.log(roles);
+						if (roles.length === 0) {
+							this.showNotification('Ваша роль отсутствует в системе', 'red');
+						} else
+							localStorage.setItem('role', roles);
+						if (localStorage.getItem('token') != null) {
+							this.$emit('loggedIn')
+							if(this.$route.params.nextUrl != null){
+								this.$router.push(this.$route.params.nextUrl)
+							} else {
+								this.$router.push('/tracking');
+							}
+						}
 					}
-				})
-				.catch(res => {
-					if (res == 'Error: Request failed with status code 401') {
-						this.showNotification('Пользователя не существует', 'red');
-					} 
-					if (res == 'Error: Request failed with status code 403') {
-						this.showNotification('Недостаточно прав', 'red');
-					} else {
-						this.showNotification('Сервер временно недоступен', 'red');
-					}
-				});
-			}
+				} else {
+					this.showNotification(res.data.report, 'red');
+				}
+			})
+			.catch(res => {
+				if (res == 'Error: Request failed with status code 401') {
+					this.showNotification('Пользователя не существует', 'red');
+				} 
+				if (res == 'Error: Request failed with status code 403') {
+					this.showNotification('Недостаточно прав', 'red');
+				} else {
+					this.showNotification('Сервер временно недоступен', 'red');
+				}
+			});
 		},
 		showNotification(text, color) {
 			this.not_text = text;

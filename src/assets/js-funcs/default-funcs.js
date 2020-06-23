@@ -40,7 +40,7 @@ export default {
 			params: params,
 			headers:
 			{
-				'Authorization': 'Token ' + localStorage.getItem('token')
+				'Session': localStorage.getItem('token')
 			}
 		})
 		.then(res => {
