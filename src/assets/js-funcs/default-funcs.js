@@ -51,7 +51,7 @@ export default {
 			params: params,
 			headers:
 			{
-				'Session': localStorage.getItem('token')
+				'Session': this.getCookie()
 			}
 		})
 		.then(res => {
