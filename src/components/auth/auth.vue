@@ -18,7 +18,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 import myNotification from '@/components/other/notification.vue'
-//import Funcs from '@/assets/js-funcs/default-funcs.js'
+import Funcs from '@/assets/js-funcs/default-funcs.js'
 
 Vue.use(axios)
 
@@ -40,7 +40,7 @@ export default {
 		login(event) {
 			event.preventDefault();
 			const data = {
-				session: 'i6d0b7y0twjsmq814b74dbocodp0qm7e'
+				session: Funcs.getCookie()
 			}
 			axios
 			.post(this.$store.getters.getLinkByName('auth','login'), data)

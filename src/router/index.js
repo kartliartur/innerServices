@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
 import Home from '../views/Home.vue'
 import store from '../store'
 import Funcs from '../assets/js-funcs/default-funcs.js'
 
 Vue.use(VueRouter)
+Vue.use(axios)
 
 const routes = [
   {
@@ -80,8 +82,9 @@ router.beforeEach((to, from, next) => {
       session: Funcs.getCookie()
     }
     axios
-    .post(store.getters.getLinkByName('auth','login'), data)
+    .post(this.$store.getters.getLinkByName('auth','login'), data)
     .then(res => {
+      window.console.log(res.data);
       if (!res.data.error) {
         if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
           this.showNotification("У вас нет прав доступа", 'red');
@@ -92,8 +95,8 @@ router.beforeEach((to, from, next) => {
           let roles = [];
           for (let i in res.data.data.Access_Groups) {
             let item = res.data.data.Access_Groups[i];
-            for (let j in store.state.rolesLinks) {
-              let role = store.state.rolesLinks[j];
+            for (let j in this.$store.state.rolesLinks) {
+              let role = this.$store.state.rolesLinks[j];
               window.console.log(item);
               if (item == role.name) {
                 roles.push(item);
@@ -101,6 +104,7 @@ router.beforeEach((to, from, next) => {
               }
             }
           }
+          window.console.log(roles);
           if (roles.length === 0) {
             this.showNotification('Ваша роль отсутствует в системе', 'red');
           } else
@@ -117,6 +121,17 @@ router.beforeEach((to, from, next) => {
       } else {
         this.showNotification(res.data.report, 'red');
       }
+    })
+    .catch(res => {
+      if (res == 'Error: Request failed with status code 401') {
+        this.showNotification('Пользователя не существует', 'red');
+      } 
+      if (res == 'Error: Request failed with status code 403') {
+        this.showNotification('Недостаточно прав', 'red');
+      } else {
+        this.showNotification('Сервер временно недоступен', 'red');
+      }
+    });
     let role = localStorage.getItem('role').split(',');
     let flag = false;
     let arr = [];
