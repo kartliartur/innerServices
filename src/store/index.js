@@ -49,7 +49,7 @@ export default new Vuex.Store({
 						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
 					},
 					{
-						name: ' getStatus',
+						name: 'getStatus',
 						link: '/erp_base/hs/WaybillClient-Demo/get/TrackingStatus'
 					}
 				]

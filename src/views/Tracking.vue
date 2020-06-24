@@ -30,8 +30,9 @@
              <div class="tracking-item" v-show="this.getTimer()">
                  <label>Время до обновления: </label>
                  <span class="status-item">{{ this.currentTimer }}
-                     <!--<span class="reload_timer"><img alt="" src="../assets/reload_icon.png" width="15px"></span>-->
+                    <!--<span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>-->
                  </span>
+
               </div>
 
             <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.document_id || !this.phone)">Отслеживать</button>
@@ -195,26 +196,38 @@
                 let data = {
                     "TrackingPhone": this.phone
                 };
-                Funcs.doRequest(
-                    "post",
-                    this.$store.getters.getLinkByName('tracking', 'getStatus'),
-                    data,
-                    null,
-                    res => {
-                        if (!res.error) {
-                            window.console.log(res.data);
-                            let new_status = res.data.status;
-                            if (new_status != this.status) {
-                                this.status = new_status;
+                if (this.status == '' || this.status == 'Запрос отправлен') {
+                    Funcs.doRequest(
+                        "post",
+                        this.$store.getters.getLinkByName('tracking', 'getStatus'),
+                        data,
+                        null,
+                        res => {
+                            if (!res.error) {
+                                window.console.log(res.data.data.Tracking_Status, this.status);
+                                let new_status = res.data.data.Tracking_Status;
+                                if (new_status != this.status) {
+                                    this.status = new_status;
+                                    this.timers.splice(0, 1);
+                                    localStorage.setItem('timers', JSON.stringify(this.timers));
+                                } else {
+                                    this.autoRefresh();
+                                }
                             } else {
-                                this.autoRefresh();
+                                this.showNotification(res.data.report, 'red');
                             }
-                        }
-                    }
-                )
+                        },
+                        () => {
+                            this.showNotification('Сервер временно недоступен', 'red');
+                        },
+                        false
+                    )
+                }
             },
             autoRefresh() {
-                setTimeout(() => window.console.log(this.status), 5000);
+                setTimeout(() => {
+                    this.refreshStatus();
+                }, 5000);
             },*/
             checkPhone () {
                 if (this.$refs.phone != undefined) {
@@ -324,6 +337,7 @@
                 width: 60%;
             }
             & .status-item {
+                .flex(row, space-between, center);
                 .input();
                 width: 60%;
                 min-width: 180px;
@@ -332,11 +346,9 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
 
-                /*& .refresh_status {
-                    .flex(row, flex-end, center);
+                & .refresh_status {
                     cursor: pointer;
-                    color: @green-color;
-                }*/
+                }
             }
         }
 
