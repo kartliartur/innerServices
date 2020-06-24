@@ -73,9 +73,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if ((localStorage.getItem('token') == null || localStorage.getItem('token') == undefined) && to.fullPath != '/') {
+  if (Funcs.getCookie() === null && to.fullPath != '/') {
     router.push({ path: '/' })
-  } else if (localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) {
+  } else if (Funcs.getCookie() !== null) {
     let role = localStorage.getItem('role').split(',');
     let flag = false;
     let arr = [];

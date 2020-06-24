@@ -26,6 +26,17 @@ export default {
 		let day = date.substr(8,2);
 		return [year, month, day];
 	},
+	getCookie() {
+		let cooks = document.cookie;
+		const index = cooks.indexOf('passport_session_id=');
+		if (index === -1) {
+			cooks = null;
+		} else {
+			cooks = cooks.substring(index);
+			cooks = cooks.replace('passport_session_id=', '');
+		}
+		return cooks;
+	},
 	getTodayDateToInput() {
 		let today = new Date();
 		return this.dateToInputs(today);

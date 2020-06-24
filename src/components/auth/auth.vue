@@ -18,6 +18,7 @@
 import axios from 'axios'
 import Vue from 'vue'
 import myNotification from '@/components/other/notification.vue'
+//import Funcs from '@/assets/js-funcs/default-funcs.js'
 
 Vue.use(axios)
 
@@ -38,11 +39,8 @@ export default {
 	methods: {
 		login(event) {
 			event.preventDefault();
-			let cooks = document.cookie;
-			cooks = cooks.substring(cooks.indexOf('passport_session_id='));
-			cooks = cooks.replace('passport_session_id=', '');
 			const data = {
-				session: cooks
+				session: 'i6d0b7y0twjsmq814b74dbocodp0qm7e'
 			}
 			axios
 			.post(this.$store.getters.getLinkByName('auth','login'), data)
@@ -53,7 +51,7 @@ export default {
 						this.showNotification("У вас нет прав доступа", 'red');
 					} else {
 						localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
-						localStorage.setItem('token', cooks);
+						//localStorage.setItem('token', cooks);
 						//localStorage.setItem('dept', res.data.data.Dept)
 						let roles = [];
 						for (let i in res.data.data.Access_Groups) {
