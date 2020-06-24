@@ -104,9 +104,8 @@ router.beforeEach((to, from, next) => {
               }
             }
           }
-          window.console.log(roles);
           if (roles.length === 0) {
-            this.showNotification('Ваша роль отсутствует в системе', 'red');
+            router.push({ path: '/' });
           } else
             localStorage.setItem('role', roles);
           if (localStorage.getItem('token') != null) {
@@ -119,18 +118,11 @@ router.beforeEach((to, from, next) => {
           }
         }
       } else {
-        this.showNotification(res.data.report, 'red');
+        router.push({ path: '/' });
       }
     })
     .catch(res => {
-      if (res == 'Error: Request failed with status code 401') {
-        this.showNotification('Пользователя не существует', 'red');
-      } 
-      if (res == 'Error: Request failed with status code 403') {
-        this.showNotification('Недостаточно прав', 'red');
-      } else {
-        this.showNotification('Сервер временно недоступен', 'red');
-      }
+      router.push({ path: '/' });
     });
     let role = localStorage.getItem('role').split(',');
     let flag = false;
