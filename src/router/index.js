@@ -84,7 +84,6 @@ router.beforeEach((to, from, next) => {
     axios
     .post(store.getters.getLinkByName('auth','login'), data)
     .then(res => {
-      window.console.log(res.data);
       if (!res.data.error) {
         if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
           if (to.fullPath != '/')
@@ -142,13 +141,15 @@ router.beforeEach((to, from, next) => {
             router.push({ path: availableLinks[0].link})
           }
         }
-      } else {
-        if (to.fullPath != '/')
-          router.push({ path: '/' });
+      } else if (to.fullPath != '/') {
+        router.push({ path: '/' });
+        localStorage.setItem('user', null);
+        localStorage.setItem('role', null);
       }
     })
     .catch(() => {
-      router.push({ path: '/' });
+      if (to.fullPath != '/')
+        router.push({ path: '/' });
     });
   } else {
     next()
