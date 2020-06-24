@@ -116,6 +116,31 @@ router.beforeEach((to, from, next) => {
               router.push('/');
             }
           }
+          let role = localStorage.getItem('role').split(',');
+          let flag = false;
+          let arr = [];
+          for (let i in store.getters.getRoleLinks) {
+            let item = store.getters.getRoleLinks[i];
+            for (let j in role) {
+              if (role[j] == item.name) {
+                for (let i in item.links) {
+                  arr.push(item.links[i])
+                }
+              } 
+            }
+          }
+
+          const availableLinks = Funcs.uniqueItem(arr);
+          availableLinks.forEach(item => {
+            if (item.link == to.fullPath) {
+              flag = true;
+            }
+          });
+          if (flag) {
+            next();
+          } else {
+            router.push({ path: availableLinks[0].link})
+          }
         }
       } else {
         if (to.fullPath != '/')
@@ -125,31 +150,6 @@ router.beforeEach((to, from, next) => {
     .catch(() => {
       router.push({ path: '/' });
     });
-    let role = localStorage.getItem('role').split(',');
-    let flag = false;
-    let arr = [];
-    for (let i in store.getters.getRoleLinks) {
-      let item = store.getters.getRoleLinks[i];
-      for (let j in role) {
-        if (role[j] == item.name) {
-          for (let i in item.links) {
-            arr.push(item.links[i])
-          }
-        } 
-      }
-    }
-
-    const availableLinks = Funcs.uniqueItem(arr);
-    availableLinks.forEach(item => {
-      if (item.link == to.fullPath) {
-        flag = true;
-      }
-    });
-    if (flag) {
-      next();
-    } else {
-      router.push({ path: availableLinks[0].link})
-    }
   } else {
     next()
   }
