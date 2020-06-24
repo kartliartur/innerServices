@@ -87,7 +87,8 @@ router.beforeEach((to, from, next) => {
       window.console.log(res.data);
       if (!res.data.error) {
         if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
-          router.push({ path: '/' });
+          if (to.fullPath != '/')
+            router.push({ path: '/' });
         } else {
           localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
           //localStorage.setItem('token', cooks);
@@ -103,7 +104,7 @@ router.beforeEach((to, from, next) => {
               }
             }
           }
-          if (roles.length === 0) {
+          if (roles.length === 0 && to.fullPath != '/') {
             router.push({ path: '/' });
           } else
             localStorage.setItem('role', roles);
@@ -117,7 +118,8 @@ router.beforeEach((to, from, next) => {
           }
         }
       } else {
-        router.push({ path: '/' });
+        if (to.fullPath != '/')
+          router.push({ path: '/' });
       }
     })
     .catch(() => {
