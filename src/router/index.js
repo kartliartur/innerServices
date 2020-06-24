@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
       window.console.log(res.data);
       if (!res.data.error) {
         if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
-          this.showNotification("У вас нет прав доступа", 'red');
+          router.push({ path: '/' });
         } else {
           localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
           //localStorage.setItem('token', cooks);
@@ -95,9 +95,8 @@ router.beforeEach((to, from, next) => {
           let roles = [];
           for (let i in res.data.data.Access_Groups) {
             let item = res.data.data.Access_Groups[i];
-            for (let j in this.$store.state.rolesLinks) {
-              let role = this.$store.state.rolesLinks[j];
-              window.console.log(item);
+            for (let j in store.state.rolesLinks) {
+              let role = store.state.rolesLinks[j];
               if (item == role.name) {
                 roles.push(item);
                 break;
@@ -111,9 +110,9 @@ router.beforeEach((to, from, next) => {
           if (localStorage.getItem('token') != null) {
             this.$emit('loggedIn')
             if(this.$route.params.nextUrl != null){
-              this.$router.push(this.$route.params.nextUrl)
+              router.push(this.$route.params.nextUrl)
             } else {
-              this.$router.push('/tracking');
+              router.push('/tracking');
             }
           }
         }

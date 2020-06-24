@@ -80,7 +80,7 @@ export default {
 						}
 					}
 				} else {
-					this.showNotification(res.data.report, 'red');
+					location.href = 'https://passport.kartli.ch/auth/?next=https://internal.kartli.ch//'
 				}
 			})
 			.catch(res => {
