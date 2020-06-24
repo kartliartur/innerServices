@@ -121,7 +121,7 @@ router.beforeEach((to, from, next) => {
         router.push({ path: '/' });
       }
     })
-    .catch(res => {
+    .catch(() => {
       router.push({ path: '/' });
     });
     let role = localStorage.getItem('role').split(',');
