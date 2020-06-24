@@ -113,7 +113,7 @@ router.beforeEach((to, from, next) => {
             if(this.$route.params.nextUrl != null){
               router.push(this.$route.params.nextUrl)
             } else {
-              router.push('/tracking');
+              router.push('/');
             }
           }
         }
