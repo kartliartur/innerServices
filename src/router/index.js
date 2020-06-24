@@ -82,7 +82,7 @@ router.beforeEach((to, from, next) => {
       session: Funcs.getCookie()
     }
     axios
-    .post(this.$store.getters.getLinkByName('auth','login'), data)
+    .post(store.getters.getLinkByName('auth','login'), data)
     .then(res => {
       window.console.log(res.data);
       if (!res.data.error) {
