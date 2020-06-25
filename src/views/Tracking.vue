@@ -30,7 +30,7 @@
              <div class="tracking-item" v-show="this.getTimer()">
                  <label>Время до обновления: </label>
                  <span class="status-item">{{ this.currentTimer }}
-                    <!--<span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>-->
+                    <span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>
                  </span>
 
               </div>
@@ -154,7 +154,7 @@
                 })
                 localStorage.setItem('timers', JSON.stringify(this.timers));
                 this.getTimer();
-                //this.autoRefresh();
+                this.autoRefresh();
               }
             },
             getTimer() {
@@ -192,7 +192,7 @@
                 this.startTimer(this.document_id);
               }
             },
-            /*refreshStatus() {
+            refreshStatus() {
                 let data = {
                     "TrackingPhone": this.phone
                 };
@@ -228,7 +228,7 @@
                 setTimeout(() => {
                     this.refreshStatus();
                 }, 5000);
-            },*/
+            },
             checkPhone () {
                 if (this.$refs.phone != undefined) {
                     if (this.phone != '') {
