@@ -124,12 +124,13 @@ import Funcs from '../../assets/js-funcs/default-funcs.js'
 			background: @green-color;
 			z-index: 999;
 
-			& a {
+			& a, span {
 				color: #fff;
 				text-decoration: none;
 				padding: 5px 0;
 				margin: 5px 0;
 				border-bottom: 1px solid #fff;
+				cursor: pointer;
 			}
 		}
 
