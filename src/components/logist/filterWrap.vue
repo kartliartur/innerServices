@@ -42,8 +42,9 @@ export default {
 				//const a = 0;
 				if (this.searchValue != '') {
 					const ttndate = this.$store.state.ttns[i].TTN_Date;
-					const date = Funcs.dateToDef(ttndate);
-					const checkerDate = new Date(date[0], date[2], date[1]);
+					// const date = Funcs.dateToDef(ttndate);
+					// const checkerDate = new Date(date[0], date[2], date[1]);
+					const checkerDate = new Date(ttndate);
 					if (checkerDate <= new Date(this.dateLast) && checkerDate >= new Date(this.dateFirst)) {
 						let k = 0;
 						for (let prop in this.$store.state.ttns[i]) {
