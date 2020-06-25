@@ -26,7 +26,7 @@ export default {
 		let day = date.substring(0,2);
 		return [year, month, day];
 	},
-	getCookie() {
+	getCookie(name) {
 		let matches = document.cookie.match(new RegExp(
 			// eslint-disable-next-line no-useless-escape
 			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
