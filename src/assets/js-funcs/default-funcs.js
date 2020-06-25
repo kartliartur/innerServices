@@ -41,9 +41,11 @@ export default {
 		let today = new Date();
 		return this.dateToInputs(today);
 	},
-	doRequest(type, url, data, params, success, error) {
+	doRequest(type, url, data, params, success, error, preload = true) {
 		let preloadScreen = document.getElementById('preload');
-		preloadScreen.setAttribute('style', 'display: flex;');
+		if (preload)
+			preloadScreen.setAttribute('style', 'display: flex;');
+
 		axios({
 			method: type,
 			url: url,

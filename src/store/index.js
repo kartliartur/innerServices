@@ -47,6 +47,10 @@ export default new Vuex.Store({
 					{
 						name: 'getTTNS',
 						link: '/erp_base/hs/WaybillClient-Demo/get/waybills'
+					},
+					{
+						name: 'getStatus',
+						link: '/erp_base/hs/WaybillClient-Demo/get/TrackingStatus'
 					}
 				]
 			},

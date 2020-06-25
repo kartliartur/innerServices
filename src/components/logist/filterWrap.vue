@@ -63,6 +63,7 @@ export default {
 				} else {
 					this.$store.state.ttns[i].isVissible = true;
 				}
+				this.$store.state.ttns[i].isChecked = false;
 			}
 		}
 	},

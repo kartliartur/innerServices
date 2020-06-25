@@ -28,7 +28,7 @@
 			</div>
 			<div class="row">
 				<span>Грузополучатель:</span>
-				<span>{{ isActiveIndex.Payment_Company }}</span>
+				<span>{{ isActiveIndex.Consignee }}</span>
 			</div>
 			<div class="row">
 				<span>Адрес погрузки:</span>

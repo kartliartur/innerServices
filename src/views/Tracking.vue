@@ -29,7 +29,10 @@
 
              <div class="tracking-item" v-show="this.getTimer()">
                  <label>Время до обновления: </label>
-                 <span class="status-item">{{ this.currentTimer }}</span>
+                 <span class="status-item">{{ this.currentTimer }}
+                    <!--<span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>-->
+                 </span>
+
               </div>
 
             <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.document_id || !this.phone)">Отслеживать</button>
@@ -151,6 +154,7 @@
                 })
                 localStorage.setItem('timers', JSON.stringify(this.timers));
                 this.getTimer();
+                //this.autoRefresh();
               }
             },
             getTimer() {
@@ -188,6 +192,43 @@
                 this.startTimer(this.document_id);
               }
             },
+            /*refreshStatus() {
+                let data = {
+                    "TrackingPhone": this.phone
+                };
+                if (this.status == '' || this.status == 'Запрос отправлен') {
+                    Funcs.doRequest(
+                        "post",
+                        this.$store.getters.getLinkByName('tracking', 'getStatus'),
+                        data,
+                        null,
+                        res => {
+                            if (!res.error) {
+                                window.console.log(res.data.data.Tracking_Status, this.status);
+                                let new_status = res.data.data.Tracking_Status;
+                                if (new_status != this.status) {
+                                    this.status = new_status;
+                                    this.timers.splice(0, 1);
+                                    localStorage.setItem('timers', JSON.stringify(this.timers));
+                                } else {
+                                    this.autoRefresh();
+                                }
+                            } else {
+                                this.showNotification(res.data.report, 'red');
+                            }
+                        },
+                        () => {
+                            this.showNotification('Сервер временно недоступен', 'red');
+                        },
+                        false
+                    )
+                }
+            },
+            autoRefresh() {
+                setTimeout(() => {
+                    this.refreshStatus();
+                }, 5000);
+            },*/
             checkPhone () {
                 if (this.$refs.phone != undefined) {
                     if (this.phone != '') {
@@ -296,6 +337,7 @@
                 width: 60%;
             }
             & .status-item {
+                .flex(row, space-between, center);
                 .input();
                 width: 60%;
                 min-width: 180px;
@@ -303,6 +345,10 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+
+                & .refresh_status {
+                    cursor: pointer;
+                }
             }
         }
 
