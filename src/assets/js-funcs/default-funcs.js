@@ -27,15 +27,11 @@ export default {
 		return [year, month, day];
 	},
 	getCookie() {
-		let cooks = document.cookie;
-		const index = cooks.indexOf('passport_session_id=');
-		if (index === -1) {
-			cooks = null;
-		} else {
-			cooks = cooks.substring(index);
-			cooks = cooks.replace('passport_session_id=', '');
-		}
-		return cooks;
+		let matches = document.cookie.match(new RegExp(
+			// eslint-disable-next-line no-useless-escape
+			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		));
+		return matches ? decodeURIComponent(matches[1]) : undefined;
 	},
 	getTodayDateToInput() {
 		let today = new Date();
@@ -53,7 +49,7 @@ export default {
 			params: params,
 			headers:
 			{
-				'Session': this.getCookie()
+				'Session': this.getCookie("passport_session_id")
 			}
 		})
 		.then(res => {
