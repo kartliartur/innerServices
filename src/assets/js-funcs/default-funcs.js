@@ -21,9 +21,9 @@ export default {
 		return [day, month, year, month_after, month_before, before3day];
 	},
 	dateToDef: (date) => {
-		let year = date.substr(0, 4);
-		let month = date.substr(5, 2);
-		let day = date.substr(8,2);
+		let year = date.substring(6,10);
+		let month = date.substring(3, 5);
+		let day = date.substring(0,2);
 		return [year, month, day];
 	},
 	getTodayDateToInput() {
