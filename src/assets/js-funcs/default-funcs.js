@@ -26,12 +26,12 @@ export default {
 		let day = date.substring(0,2);
 		return [year, month, day];
 	},
-	getCookie(name) {
+	getCookie(name = "passport_session_id") {
 		let matches = document.cookie.match(new RegExp(
 			// eslint-disable-next-line no-useless-escape
 			"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
 		));
-		return matches ? decodeURIComponent(matches[1]) : undefined;
+		return matches ? decodeURIComponent(matches[1]) : null;
 	},
 	getTodayDateToInput() {
 		let today = new Date();
@@ -49,7 +49,7 @@ export default {
 			params: params,
 			headers:
 			{
-				'Session': this.getCookie("passport_session_id")
+				'Session': this.getCookie()
 			}
 		})
 		.then(res => {
