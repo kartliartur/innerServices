@@ -76,45 +76,36 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (Funcs.getCookie() === null && to.fullPath != '/') {
-    router.push({ path: '/' })
+    router.push({ path: '/' });
   } else if (Funcs.getCookie() !== null) {
-    const data = {
-      session: Funcs.getCookie()
-    }
     axios
-    .post(store.getters.getLinkByName('auth','login'), data)
+    .post(store.getters.getLinkByName('auth', 'login'), { session: Funcs.getCookie() })
     .then(res => {
-      if (!res.data.error) {
-        if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
-          if (to.fullPath != '/')
+      if (res.data.error) {
+        if (to.fullPath !== '/')
+          router.push({ path: '/' });
+        else 
+          next();
+      } else {
+        localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
+        let roles = [];
+        for (let i in res.data.data.Access_Groups) {
+          let item = res.data.data.Access_Groups[i];
+          for (let j in store.state.rolesLinks) {
+            let role = store.state.rolesLinks[j];
+            if (item == role.name) {
+              roles.push(item);
+              break;
+            }
+          }
+        }
+        if (roles.length === 0 && to.fullPath != '/') {
+          if (to.fullPath !== '/')
             router.push({ path: '/' });
+          else 
+            next();
         } else {
-          localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
-          //localStorage.setItem('token', cooks);
-          //localStorage.setItem('dept', res.data.data.Dept)
-          let roles = [];
-          for (let i in res.data.data.Access_Groups) {
-            let item = res.data.data.Access_Groups[i];
-            for (let j in store.state.rolesLinks) {
-              let role = store.state.rolesLinks[j];
-              if (item == role.name) {
-                roles.push(item);
-                break;
-              }
-            }
-          }
-          if (roles.length === 0 && to.fullPath != '/') {
-            router.push({ path: '/' });
-          } else
-            localStorage.setItem('role', roles);
-          if (Funcs.getCookie() !== null) {
-            this.$emit('loggedIn')
-            if(this.$route.params.nextUrl != null){
-              router.push(this.$route.params.nextUrl)
-            } else {
-              router.push('/');
-            }
-          }
+          localStorage.setItem('role', roles);
           let role = localStorage.getItem('role').split(',');
           let flag = false;
           let arr = [];
@@ -128,7 +119,6 @@ router.beforeEach((to, from, next) => {
               } 
             }
           }
-
           const availableLinks = Funcs.uniqueItem(arr);
           availableLinks.forEach(item => {
             if (item.link == to.fullPath) {
@@ -141,19 +131,96 @@ router.beforeEach((to, from, next) => {
             router.push({ path: availableLinks[0].link})
           }
         }
-      } else if (to.fullPath != '/') {
-        router.push({ path: '/' });
-        localStorage.setItem('user', null);
-        localStorage.setItem('role', null);
       }
     })
     .catch(() => {
-      if (to.fullPath != '/')
+      if (to.fullPath !== '/')
         router.push({ path: '/' });
+      else 
+        next();      
     });
   } else {
-    next()
+    next();
   }
+  // if (Funcs.getCookie() === null && to.fullPath != '/') {
+  //   router.push({ path: '/' })
+  // } else if (Funcs.getCookie() !== null) {
+  //   const data = {
+  //     session: Funcs.getCookie()
+  //   }
+  //   axios
+  //   .post(store.getters.getLinkByName('auth','login'), data)
+  //   .then(res => {
+  //     if (!res.data.error) {
+  //       if (res.data.data.Access_Groups == undefined || res.data.data.Access_Groups == null || res.data.data.Access_Groups.length == 0) {
+  //         if (to.fullPath != '/')
+  //           router.push({ path: '/' });
+  //       } else {
+  //         localStorage.setItem('user', res.data.data.first_name + res.data.data.last_name);
+  //         //localStorage.setItem('token', cooks);
+  //         //localStorage.setItem('dept', res.data.data.Dept)
+  //         let roles = [];
+  //         for (let i in res.data.data.Access_Groups) {
+  //           let item = res.data.data.Access_Groups[i];
+  //           for (let j in store.state.rolesLinks) {
+  //             let role = store.state.rolesLinks[j];
+  //             if (item == role.name) {
+  //               roles.push(item);
+  //               break;
+  //             }
+  //           }
+  //         }
+  //         if (roles.length === 0 && to.fullPath != '/') {
+  //           router.push({ path: '/' });
+  //         } else
+  //           localStorage.setItem('role', roles);
+  //         if (Funcs.getCookie() !== null) {
+  //           this.$emit('loggedIn')
+  //           if(this.$route.params.nextUrl != null){
+  //             router.push(this.$route.params.nextUrl)
+  //           } else {
+  //             router.push('/');
+  //           }
+  //         }
+  //         let role = localStorage.getItem('role').split(',');
+  //         let flag = false;
+  //         let arr = [];
+  //         for (let i in store.getters.getRoleLinks) {
+  //           let item = store.getters.getRoleLinks[i];
+  //           for (let j in role) {
+  //             if (role[j] == item.name) {
+  //               for (let i in item.links) {
+  //                 arr.push(item.links[i])
+  //               }
+  //             } 
+  //           }
+  //         }
+
+  //         const availableLinks = Funcs.uniqueItem(arr);
+  //         availableLinks.forEach(item => {
+  //           if (item.link == to.fullPath) {
+  //             flag = true;
+  //           }
+  //         });
+  //         if (flag) {
+  //           next();
+  //         } else {
+  //           router.push({ path: availableLinks[0].link})
+  //         }
+  //       }
+  //     } else if (to.fullPath != '/') {
+  //       router.push({ path: '/' });
+  //       localStorage.setItem('user', null);
+  //       localStorage.setItem('role', null);
+  //     }
+  //   })
+  //   .catch(() => {
+  //     if (to.fullPath != '/')
+  //       router.push({ path: '/' });
+  //   });
+  // } else {
+  //   next()
+  // }
 })
 
 
