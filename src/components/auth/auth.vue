@@ -72,7 +72,7 @@ export default {
 							localStorage.setItem('role', roles);
 					}
 				} else {
-					this.showNotification(res.data.data, 'red');
+					this.showNotification(res.data.report, 'red');
 				}
 			})
 			.catch(res => {
