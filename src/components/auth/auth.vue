@@ -72,7 +72,7 @@ export default {
 							localStorage.setItem('role', roles);
 					}
 				} else {
-					location.href = 'https://passport.kartli.ch/auth/?next=https://internal.kartli.ch//'
+					this.showNotification(res.data.data, 'red');
 				}
 			})
 			.catch(res => {
