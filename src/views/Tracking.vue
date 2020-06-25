@@ -24,16 +24,11 @@
 
             <div class="tracking-item">
                 <label>Статус: </label>
-                <span class="status-item">{{ this.status }}</span>
+                <span class="status-item">{{ this.status }}
+                    <span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>
+                </span>
+
              </div>
-
-             <div class="tracking-item" v-show="this.getTimer()">
-                 <label>Время до обновления: </label>
-                 <span class="status-item">{{ this.currentTimer }}
-                    <!--<span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>-->
-                 </span>
-
-              </div>
 
             <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.document_id || !this.phone)">Отслеживать</button>
 
@@ -84,7 +79,6 @@
             },
             fillData (value) {
                 if (value) {
-                    let old_doc_id = this.document_id;
                     this.$children[1].$data.documentValue = value.document_id;
                     this.document_id = value.document_id;
                     this.status = value.status;
@@ -95,10 +89,6 @@
                     localStorage.setItem('phone', value.phone);
                     localStorage.setItem('status', value.status);
                     localStorage.setItem('driver', value.driver);
-                    if (old_doc_id != this.document_id) {
-                        this.timers = [];
-                        localStorage.setItem('timers', []);
-                    }
                 }
             },
             tracking () {
@@ -121,7 +111,7 @@
                                     localStorage.setItem("document_id", this.document_id);
                                     localStorage.setItem("phone", this.phone);
                                     localStorage.setItem("driver", this.driver);
-                                    this.startTimer(this.document_id);
+                                    this.autoRefresh();
                                 } else {
                                     localStorage.removeItem("document_id");
                                     localStorage.removeItem("phone");
@@ -138,7 +128,7 @@
                     this.showNotification('ГУИД накладной пуст', 'red');
                 }
             },
-            startTimer(doc_id) {
+            /*startTimer(doc_id) {
               let k = 0;
               for (let i in this.timers) {
                 let item = this.timers[i];
@@ -154,7 +144,7 @@
                 })
                 localStorage.setItem('timers', JSON.stringify(this.timers));
                 this.getTimer();
-                //this.autoRefresh();
+
               }
             },
             getTimer() {
@@ -191,8 +181,8 @@
                 //this.showNotification('Статус не изменился', 'red');
                 this.startTimer(this.document_id);
               }
-            },
-            /*refreshStatus() {
+            },*/
+            refreshStatus() {
                 let data = {
                     "TrackingPhone": this.phone
                 };
@@ -208,8 +198,8 @@
                                 let new_status = res.data.data.Tracking_Status;
                                 if (new_status != this.status) {
                                     this.status = new_status;
-                                    this.timers.splice(0, 1);
-                                    localStorage.setItem('timers', JSON.stringify(this.timers));
+                                    /*this.timers.splice(0, 1);
+                                    localStorage.setItem('timers', JSON.stringify(this.timers));*/
                                 } else {
                                     this.autoRefresh();
                                 }
@@ -228,7 +218,7 @@
                 setTimeout(() => {
                     this.refreshStatus();
                 }, 5000);
-            },*/
+            },
             checkPhone () {
                 if (this.$refs.phone != undefined) {
                     if (this.phone != '') {
