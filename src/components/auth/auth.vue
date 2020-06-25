@@ -70,14 +70,6 @@ export default {
 							this.showNotification('Ваша роль отсутствует в системе', 'red');
 						} else
 							localStorage.setItem('role', roles);
-						if (Funcs.getCookie() !== null) {
-							this.$emit('loggedIn')
-							if(this.$route.params.nextUrl != null){
-								this.$router.push(this.$route.params.nextUrl)
-							} else {
-								this.$router.push('/tracking');
-							}
-						}
 					}
 				} else {
 					location.href = 'https://passport.kartli.ch/auth/?next=https://internal.kartli.ch//'
