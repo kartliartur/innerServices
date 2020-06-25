@@ -21,21 +21,21 @@ export default {
 		return [day, month, year, month_after, month_before, before3day];
 	},
 	dateToDef: (date) => {
-		let year = date.substr(0, 4);
-		let month = date.substr(5, 2);
-		let day = date.substr(8,2);
+		let year = date.substring(6,10);
+		let month = date.substring(3, 5);
+		let day = date.substring(0,2);
 		return [year, month, day];
 	},
 	getCookie() {
-		let cooks = document.cookie;
-		const index = cooks.indexOf('passport_session_id=');
-		if (index === -1) {
-			cooks = null;
-		} else {
-			cooks = cooks.substring(index);
-			cooks = cooks.replace('passport_session_id=', '');
-		}
-		return cooks;
+		// let cooks = document.cookie;
+		// const index = cooks.indexOf('passport_session_id=');
+		// if (index === -1) {
+		// 	cooks = null;
+		// } else {
+		// 	cooks = cooks.substring(index);
+		// 	cooks = cooks.replace('passport_session_id=', '');
+		// }
+		return 'lthrwzyo0kqjgvld7mpy67is4a9hxldu';
 	},
 	getTodayDateToInput() {
 		let today = new Date();
