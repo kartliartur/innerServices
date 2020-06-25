@@ -70,7 +70,7 @@ export default {
 							this.showNotification('Ваша роль отсутствует в системе', 'red');
 						} else
 							localStorage.setItem('role', roles);
-						if (localStorage.getItem('token') != null) {
+						if (Funcs.getCookie() !== null) {
 							this.$emit('loggedIn')
 							if(this.$route.params.nextUrl != null){
 								this.$router.push(this.$route.params.nextUrl)

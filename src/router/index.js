@@ -107,7 +107,7 @@ router.beforeEach((to, from, next) => {
             router.push({ path: '/' });
           } else
             localStorage.setItem('role', roles);
-          if (localStorage.getItem('token') != null) {
+          if (Funcs.getCookie() !== null) {
             this.$emit('loggedIn')
             if(this.$route.params.nextUrl != null){
               router.push(this.$route.params.nextUrl)
