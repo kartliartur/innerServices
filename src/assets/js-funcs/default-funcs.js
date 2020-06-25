@@ -27,15 +27,15 @@ export default {
 		return [year, month, day];
 	},
 	getCookie() {
-		// let cooks = document.cookie;
-		// const index = cooks.indexOf('passport_session_id=');
-		// if (index === -1) {
-		// 	cooks = null;
-		// } else {
-		// 	cooks = cooks.substring(index);
-		// 	cooks = cooks.replace('passport_session_id=', '');
-		// }
-		return 'lthrwzyo0kqjgvld7mpy67is4a9hxldu';
+		let cooks = document.cookie;
+		const index = cooks.indexOf('passport_session_id=');
+		if (index === -1) {
+			cooks = null;
+		} else {
+			cooks = cooks.substring(index);
+			cooks = cooks.replace('passport_session_id=', '');
+		}
+		return cooks;
 	},
 	getTodayDateToInput() {
 		let today = new Date();
