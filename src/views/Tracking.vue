@@ -25,9 +25,8 @@
             <div class="tracking-item">
                 <label>Статус: </label>
                 <span class="status-item">{{ this.status }}
-                    <span class="refresh_status" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>
+                    <span class="refresh_status" v-if="this.refresh_status_visible" @click="refreshStatus"><img alt="" src="../assets/reload_icon.png" width="15px"></span>
                 </span>
-
              </div>
 
             <button class="tracking_button" type="button" @click="tracking" :disabled="(!this.document_id || !this.phone)">Отслеживать</button>
@@ -58,14 +57,13 @@
                 value: {},
                 phone: "",
                 driver: '',
-                timers: new Array(),
-                currentTimer: '',
                 Waybill_GUID : "",
                 options: [],
                 disabled: false,
                 not_text: '',
                 not_color: '',
-                is_not_show: false
+                is_not_show: false,
+                refresh_status_visible: false,
             }
         },
         methods: {
@@ -111,6 +109,7 @@
                                     localStorage.setItem("document_id", this.document_id);
                                     localStorage.setItem("phone", this.phone);
                                     localStorage.setItem("driver", this.driver);
+                                    this.refresh_status_visible = true;
                                     this.autoRefresh();
                                 } else {
                                     localStorage.removeItem("document_id");
@@ -128,60 +127,6 @@
                     this.showNotification('ГУИД накладной пуст', 'red');
                 }
             },
-            /*startTimer(doc_id) {
-              let k = 0;
-              for (let i in this.timers) {
-                let item = this.timers[i];
-                if (item.document_id == doc_id)
-                  k++;
-              }
-              if (k === 0) {
-                let curDate = new Date();
-                curDate.setMinutes(curDate.getMinutes() + 3);
-                this.timers.push({
-                  document_id: doc_id,
-                  stop_time: curDate
-                })
-                localStorage.setItem('timers', JSON.stringify(this.timers));
-                this.getTimer();
-
-              }
-            },
-            getTimer() {
-              if (this.timers.length === 0)
-                return false;
-              let result = false;
-              let index = 0;
-              for (let i in this.timers) {
-                let item = this.timers[i];
-                if (item.document_id == this.document_id) {
-                  index = i;
-                  result = new Date(item.stop_time) - new Date();
-                  let secs = new Date(result).getSeconds() >= 10 ? new Date(result).getSeconds() : '0' + new Date(result).getSeconds();
-                  this.currentTimer = '0' + new Date(result).getMinutes() + ' : ' + secs
-                  result = true;
-                }
-              }
-              if (new Date(this.timers[index].stop_time) > new Date()) {
-                setTimeout(() => {
-                  this.getTimer();
-                }, 1000);
-              } else {
-                this.stopTimer(index);
-                result = false;
-              }
-              return result;
-            },
-            stopTimer(idx) {
-              this.timers.splice(idx, 1);
-              localStorage.setItem('timers', JSON.stringify(this.timers));
-              let old_status = this.status;
-              this.getDataFromServer();
-              if (old_status === this.status) {
-                //this.showNotification('Статус не изменился', 'red');
-                this.startTimer(this.document_id);
-              }
-            },*/
             refreshStatus() {
                 let data = {
                     "TrackingPhone": this.phone
@@ -198,8 +143,7 @@
                                 let new_status = res.data.data.Tracking_Status;
                                 if (new_status != this.status) {
                                     this.status = new_status;
-                                    /*this.timers.splice(0, 1);
-                                    localStorage.setItem('timers', JSON.stringify(this.timers));*/
+                                    this.refresh_status_visible = false;
                                 } else {
                                     this.autoRefresh();
                                 }
@@ -266,7 +210,7 @@
                                for (let i in this.options) {
                                    let item = this.options[i];
                                    if (item.document_id == localStorage.getItem('document_id')) {
-                                       if (item.status != localStorage.getItem('status')) {
+                                       /*if (item.status != localStorage.getItem('status')) {
                                          let k = 0;
                                          for (let j in this.timers) {
                                            let elem = this.timers[j];
@@ -277,7 +221,7 @@
                                          }
                                          this.timers.splice(k,1);
                                          localStorage.setItem('timers', JSON.stringify(this.timers));
-                                       }
+                                       }*/
                                        this.fillData(item);
                                    }
                                }
@@ -297,7 +241,6 @@
             this.status = (localStorage.getItem('status') && localStorage.getItem('status') !== "undefined") ? localStorage.getItem('status') : "";
             this.document_id = (localStorage.getItem('document_id') && localStorage.getItem('document_id') !== "undefined") ? localStorage.getItem('document_id') : "";
             this.driver = (localStorage.getItem('driver') && localStorage.getItem('driver') !== "undefined") ? localStorage.getItem('driver') : "";
-            this.timers = (localStorage.getItem('timers') && localStorage.getItem('timers') !== "undefined") ? JSON.parse(localStorage.getItem('timers')) : new Array();
         },
         created() {
            this.getDataFromServer();
