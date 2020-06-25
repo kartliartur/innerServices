@@ -44,8 +44,6 @@ export default {
 					const ttndate = this.$store.state.ttns[i].TTN_Date;
 					const date = Funcs.dateToDef(ttndate);
 					const checkerDate = new Date(date[0], date[1], date[2]);
-					window.console.log(checkerDate);
-					window.console.log(date[0], date[2], date[1]);
 					if (checkerDate <= new Date(this.dateLast) && checkerDate >= new Date(this.dateFirst)) {
 						let k = 0;
 						for (let prop in this.$store.state.ttns[i]) {
