@@ -9,7 +9,7 @@
           :ttn-number="item.Number"
           :ttn-date="item.TTN_Date"
           :ttn-status="item.TTN_Status"
-          :ttn-company="item.Payment_Company"
+          :ttn-consignee="item.Consignee"
           :ttn-index="idx"
           :is-open="isModalOpen"
           v-show="item.isVissible"

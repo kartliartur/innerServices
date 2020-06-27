@@ -7,7 +7,7 @@
 				<span>{{ ttnNumber }}</span>
 				<span>{{ ttnStatus }}</span>
 				<span>от {{ ttnDate }}</span>
-				<span class="company_name">{{ ttnCompany }}</span>
+				<span class="company_name">{{ ttnConsignee }}</span>
 			</div>
 			<input type="checkbox" 
 					v-model="$store.state.ttns[ttnIndex].isChecked">
@@ -18,7 +18,7 @@
 <script>
 	export default {
 		name: 'logistBlock',
-		props: ['isOpen', 'ttnNumber', 'ttnStatus', 'ttnDate', 'ttnCompany', 'ttnIndex'],
+		props: ['isOpen', 'ttnNumber', 'ttnStatus', 'ttnDate', 'ttnConsignee', 'ttnIndex'],
 		methods: {
 			openModal() {
 				this.$emit('toggleModal', true);
