@@ -11,14 +11,16 @@ export default {
 		let month_after = date.getMonth()+2;
 		let month_before = date.getMonth();
 		let before3day = date.setDate(date.getDate() - 3);
+		let month_filter = month;
 		before3day = date.getDate();
-		if (day <= 3) month = month_before;
+		if (day <= 3) month_filter = month_before;
 		if (month < 10) month = '0' + month;
 		if (month_after < 10) month_after = '0' + month_after;
 		if (month_before < 10) month_before = '0' + month_before;
+		if (month_filter < 10) month_filter = '0' + month_filter;
 		if (day < 10) day = '0' + day;
 		if (before3day < 10) before3day = '0' + before3day;
-		return [day, month, year, month_after, month_before, before3day];
+		return [day, month, year, month_after, month_before, before3day, month_filter];
 	},
 	dateToDef: (date) => {
 		let year = date.substring(6,10);

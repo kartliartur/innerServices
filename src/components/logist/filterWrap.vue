@@ -69,7 +69,7 @@ export default {
 	},
 	beforeMount() {
 		let val = Funcs.dateToInputs(new Date())[2] + '-'
-				+ Funcs.dateToInputs(new Date())[1] + '-'
+				+ Funcs.dateToInputs(new Date())[6] + '-'
 				+ Funcs.dateToInputs(new Date())[5];
 		let val1 = Funcs.dateToInputs(new Date())[2] + '-'
 				+ (Funcs.dateToInputs(new Date())[3]) + '-'
